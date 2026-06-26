@@ -2,609 +2,558 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 <meta name="theme-color" content="#0A1628">
-<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="robots" content="noindex,nofollow,noarchive">
 <title>Litorale Admin</title>
 <style>
 :root{
-  --blue:#0057FF;--blue-dark:#0A1628;--blue-mid:#0D2147;--blue-light:#1A3A6B;
-  --green:#00C896;--green-dark:#00A07A;--green-glow:rgba(0,200,150,0.12);
-  --red:#FF4444;--red-glow:rgba(255,68,68,0.12);
-  --yellow:#FFAA00;--yellow-glow:rgba(255,170,0,0.12);
-  --white:#FFFFFF;--gray-100:#F0F4FF;--gray-200:#D6E0FF;--gray-400:#8A9BC4;--gray-600:#4A5C8A;
-  --surface:rgba(255,255,255,0.05);--surface2:rgba(255,255,255,0.08);
-  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
-  --border-green:rgba(0,200,150,0.3);--border-red:rgba(255,68,68,0.3);--border-yellow:rgba(255,170,0,0.3);
-  --radius:16px;--radius-sm:10px;--font:'Segoe UI',system-ui,-apple-system,sans-serif;
-  --transition:all 0.2s cubic-bezier(0.4,0,0.2,1);
-  --shadow:0 8px 32px rgba(0,0,0,0.4);
+  --blue:#0057FF;--bd:#0A1628;--bm:#0D2147;--bl:#1A3A6B;
+  --green:#00C896;--gd:#00A07A;--gg:rgba(0,200,150,0.13);
+  --red:#FF4444;--rg:rgba(255,68,68,0.13);
+  --yellow:#FFAA00;--yg:rgba(255,170,0,0.13);
+  --purple:#8B5CF6;--pg:rgba(139,92,246,0.13);
+  --w:#fff;--g1:#F0F4FF;--g2:#D6E0FF;--g4:#8A9BC4;--g6:#4A5C8A;
+  --s1:rgba(255,255,255,0.05);--s2:rgba(255,255,255,0.09);--s3:rgba(255,255,255,0.14);
+  --br:rgba(255,255,255,0.08);--br2:rgba(255,255,255,0.15);
+  --bgreen:rgba(0,200,150,0.3);--bred:rgba(255,68,68,0.3);--byellow:rgba(255,170,0,0.3);
+  --r:16px;--rs:10px;--f:'Segoe UI',system-ui,-apple-system,sans-serif;
+  --tr:all 0.2s cubic-bezier(0.4,0,0.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;background:var(--blue-dark);}
-body{font-family:var(--font);color:var(--white);display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
-
-/* SCREENS */
+html,body{height:100%;overflow:hidden;background:var(--bd);}
+body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-width:430px;margin:0 auto;}
 .screen{display:none;flex-direction:column;height:100%;overflow:hidden;}
 .screen.active{display:flex;}
 .scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:90px;}
 .scroll::-webkit-scrollbar{display:none;}
 
-/* LOGIN SCREEN */
-.login-screen{display:flex;flex-direction:column;height:100%;background:var(--blue-dark);align-items:center;justify-content:center;padding:32px 24px;}
-.login-logo{width:72px;height:72px;background:linear-gradient(135deg,var(--blue) 0%,var(--green) 100%);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;margin-bottom:8px;position:relative;}
-.login-logo-tag{background:var(--yellow);color:var(--blue-dark);font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;margin-bottom:24px;letter-spacing:0.5px;}
-.login-title{font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;text-align:center;}
-.login-sub{font-size:13px;color:var(--gray-400);margin-bottom:32px;text-align:center;line-height:1.5;}
-.login-form{width:100%;}
-.lf-group{margin-bottom:14px;}
-.lf-label{font-size:11px;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block;}
-.lf-input{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:14px 16px;font-size:15px;color:var(--white);font-family:var(--font);outline:none;transition:var(--transition);}
-.lf-input:focus{border-color:var(--green);background:var(--green-glow);}
-.lf-input::placeholder{color:var(--gray-600);}
-.lf-btn{width:100%;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:var(--blue-dark);border:none;border-radius:99px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;margin-top:8px;transition:var(--transition);box-shadow:0 4px 20px rgba(0,200,150,0.3);}
-.lf-btn:active{transform:scale(0.98);}
-.login-2fa{background:var(--yellow-glow);border:0.5px solid var(--border-yellow);border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--yellow);text-align:center;margin-top:16px;line-height:1.5;}
-.login-security{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:20px;font-size:11px;color:var(--gray-600);}
+/* LOGIN */
+.ls{display:flex;flex-direction:column;height:100%;align-items:center;justify-content:center;padding:28px 24px;background:var(--bd);}
+.ll{width:68px;height:68px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin-bottom:6px;}
+.lt{background:var(--yellow);color:var(--bd);font-size:10px;font-weight:800;padding:2px 10px;border-radius:99px;margin-bottom:20px;letter-spacing:.5px;}
+.lh{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px;text-align:center;}
+.ls2{font-size:13px;color:var(--g4);margin-bottom:28px;text-align:center;line-height:1.5;}
+.lform{width:100%;}
+.fg{margin-bottom:13px;}
+.fl{font-size:11px;color:var(--g4);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;display:block;}
+.fi{width:100%;background:var(--s2);border:1px solid var(--br2);border-radius:var(--rs);padding:13px 15px;font-size:15px;color:var(--w);font-family:var(--f);outline:none;transition:var(--tr);}
+.fi:focus{border-color:var(--green);background:var(--gg);}
+.fi::placeholder{color:var(--g6);}
+.fbtn{width:100%;background:linear-gradient(135deg,var(--green),var(--gd));color:var(--bd);border:none;border-radius:99px;padding:15px;font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;transition:var(--tr);box-shadow:0 4px 18px rgba(0,200,150,.3);}
+.fbtn:active{transform:scale(.98);}
+.lerr{background:var(--rg);border:1px solid var(--bred);border-radius:var(--rs);padding:10px 14px;font-size:12px;color:var(--red);text-align:center;margin-top:10px;display:none;}
+.linfo{background:var(--yg);border:1px solid var(--byellow);border-radius:var(--rs);padding:9px 13px;font-size:11px;color:var(--yellow);text-align:center;margin-top:14px;line-height:1.5;}
+.lsec{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:14px;font-size:11px;color:var(--g6);}
 
-/* TOP BAR */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;background:linear-gradient(180deg,var(--blue-dark) 75%,transparent);position:sticky;top:0;z-index:10;}
-.admin-logo{display:flex;align-items:center;gap:8px;}
-.admin-logo-mark{width:30px;height:30px;background:linear-gradient(135deg,var(--blue) 0%,var(--green) 100%);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
-.admin-logo-text{font-size:15px;font-weight:700;letter-spacing:-0.3px;}
-.admin-logo-text span{color:var(--green);}
-.admin-tag{background:var(--yellow);color:var(--blue-dark);font-size:9px;font-weight:800;padding:1px 6px;border-radius:99px;letter-spacing:0.3px;margin-left:4px;vertical-align:middle;}
-.topbar-right{display:flex;align-items:center;gap:8px;}
-.icon-btn{width:34px;height:34px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--white);transition:var(--transition);}
-.icon-btn:hover{background:var(--surface2);}
-.online-dot{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);background:var(--green-glow);border:0.5px solid var(--border-green);border-radius:99px;padding:4px 10px;}
-.online-dot::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+/* TOPBAR */
+.tb{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;background:linear-gradient(180deg,var(--bd) 70%,transparent);position:sticky;top:0;z-index:10;}
+.tblogo{display:flex;align-items:center;gap:8px;}
+.tbmark{width:28px;height:28px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;}
+.tbname{font-size:14px;font-weight:700;letter-spacing:-.3px;}
+.tbname span{color:var(--green);}
+.tbtag{background:var(--yellow);color:var(--bd);font-size:9px;font-weight:800;padding:1px 6px;border-radius:99px;margin-left:3px;vertical-align:middle;}
+.tbr{display:flex;align-items:center;gap:7px;}
+.ib{width:32px;height:32px;border-radius:50%;background:var(--s1);border:.5px solid var(--br);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--w);transition:var(--tr);font-size:15px;}
+.ib:hover{background:var(--s2);}
+.online{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);background:var(--gg);border:.5px solid var(--bgreen);border-radius:99px;padding:4px 9px;}
+.online::before{content:'';width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
 
 /* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(10,22,40,0.97);backdrop-filter:blur(24px);border-top:0.5px solid var(--border);display:flex;padding:8px 0 20px;z-index:100;}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 2px;border:none;background:none;color:var(--gray-400);transition:var(--transition);position:relative;}
-.nav-item.active{color:var(--green);}
-.nav-item svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.nav-item span{font-size:10px;font-weight:500;}
-.nav-badge{position:absolute;top:2px;right:calc(50% - 18px);background:var(--red);color:white;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--blue-dark);}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(10,22,40,.97);backdrop-filter:blur(24px);border-top:.5px solid var(--br);display:flex;padding:7px 0 18px;z-index:100;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:5px 2px;border:none;background:none;color:var(--g4);transition:var(--tr);position:relative;}
+.ni.active{color:var(--green);}
+.ni svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.ni span{font-size:9px;font-weight:500;}
+.nbadge{position:absolute;top:1px;right:calc(50% - 16px);background:var(--red);color:#fff;font-size:8px;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--bd);}
 
-/* CARDS */
-.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px;}
-.card-title{font-size:13px;font-weight:600;color:var(--gray-400);margin-bottom:12px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.5px;}
-.lbl{font-size:11px;font-weight:600;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin:20px 0 10px;padding:0 20px;}
-.lbl:first-child{margin-top:0;}
-.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700;}
-.tg{background:var(--green-glow);color:var(--green);border:0.5px solid var(--border-green);}
-.tr{background:var(--red-glow);color:var(--red);border:0.5px solid var(--border-red);}
-.tw{background:var(--yellow-glow);color:var(--yellow);border:0.5px solid var(--border-yellow);}
-.ti{background:rgba(0,87,255,0.15);color:#6699FF;border:0.5px solid rgba(0,87,255,0.3);}
+/* SECTION LABEL */
+.slbl{font-size:11px;font-weight:600;color:var(--g4);text-transform:uppercase;letter-spacing:.5px;padding:0 18px;margin:18px 0 8px;}
 
 /* METRICS */
-.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px;margin-bottom:4px;}
-.metric-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);padding:14px;}
-.metric-icon{font-size:20px;margin-bottom:8px;}
-.metric-val{font-size:24px;font-weight:800;letter-spacing:-0.5px;}
-.metric-label{font-size:11px;color:var(--gray-400);margin-top:3px;}
-.metric-delta{font-size:10px;margin-top:4px;display:flex;align-items:center;gap:3px;}
-.delta-up{color:var(--green);}
-.delta-down{color:var(--red);}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 18px;margin-bottom:4px;}
+.mc{background:var(--s1);border:.5px solid var(--br);border-radius:var(--r);padding:13px;}
+.micon{font-size:18px;margin-bottom:7px;}
+.mval{font-size:22px;font-weight:800;letter-spacing:-.5px;}
+.mlbl{font-size:11px;color:var(--g4);margin-top:3px;}
+.mdelta{font-size:10px;margin-top:4px;}
+.dup{color:var(--green);}
+.ddown{color:var(--red);}
 
 /* CHART */
-.chart-bar-wrap{display:flex;align-items:flex-end;gap:4px;height:80px;margin-top:8px;}
-.chart-bar-col{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
-.chart-bar{width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--green) 0%,var(--green-dark) 100%);min-height:4px;transition:height 0.6s ease;}
-.chart-label{font-size:9px;color:var(--gray-600);}
-
-/* ALERT CARDS */
-.alert-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border);}
-.alert-item:last-child{border-bottom:none;}
-.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-.alert-dot-red{background:var(--red);}
-.alert-dot-yellow{background:var(--yellow);}
-.alert-dot-green{background:var(--green);}
-.alert-body{flex:1;}
-.alert-title{font-size:13px;font-weight:600;}
-.alert-desc{font-size:11px;color:var(--gray-400);margin-top:2px;line-height:1.4;}
-.alert-time{font-size:10px;color:var(--gray-600);}
-
-/* ORDERS */
-.order-row{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:var(--transition);}
-.order-row:last-child{border-bottom:none;}
-.order-row:hover{background:var(--surface);}
-.order-emoji{font-size:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border-radius:10px;flex-shrink:0;}
-.order-info{flex:1;}
-.order-name{font-size:13px;font-weight:600;}
-.order-client{font-size:11px;color:var(--gray-400);margin-top:2px;}
-.order-right{text-align:right;}
-.order-price{font-size:13px;font-weight:700;color:var(--green);}
-.order-date{font-size:10px;color:var(--gray-600);margin-top:2px;}
-
-/* CLIENTS */
-.client-row{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:var(--transition);}
-.client-row:hover{background:var(--surface);}
-.client-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue) 0%,var(--green) 100%);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;}
-.client-info{flex:1;}
-.client-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;}
-.client-sub{font-size:11px;color:var(--gray-400);margin-top:2px;}
-.client-right{text-align:right;}
-.client-pts{font-size:12px;color:var(--green);font-weight:600;}
-.client-orders{font-size:10px;color:var(--gray-600);margin-top:2px;}
-.security-flag{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--red);margin-top:3px;}
-
-/* PRODUCTS ADMIN */
-.prod-row{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:0.5px solid var(--border);}
-.prod-row:last-child{border-bottom:none;}
-.prod-emoji{font-size:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border-radius:10px;flex-shrink:0;}
-.prod-info{flex:1;}
-.prod-name{font-size:13px;font-weight:600;}
-.prod-cat{font-size:10px;color:var(--gray-400);margin-top:2px;}
-.prod-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
-.prod-price{font-size:13px;font-weight:700;color:var(--green);}
-.toggle-switch{width:40px;height:22px;border-radius:99px;position:relative;cursor:pointer;transition:var(--transition);}
-.toggle-switch.on{background:var(--green);}
-.toggle-switch.off{background:var(--gray-600);}
-.toggle-knob{position:absolute;top:3px;width:16px;height:16px;background:white;border-radius:50%;transition:var(--transition);}
-.toggle-switch.on .toggle-knob{left:21px;}
-.toggle-switch.off .toggle-knob{left:3px;}
-
-/* FINANCEIRO */
-.finance-summary{padding:0 20px;margin-bottom:4px;}
-.finance-big{background:linear-gradient(135deg,var(--blue-mid) 0%,var(--blue-light) 100%);border:0.5px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:10px;}
-.finance-big-label{font-size:12px;color:var(--gray-400);margin-bottom:6px;}
-.finance-big-val{font-size:36px;font-weight:800;color:var(--green);letter-spacing:-1px;}
-.finance-big-sub{font-size:12px;color:var(--gray-400);margin-top:4px;}
-.finance-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.finance-mini{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-sm);padding:14px;}
-.finance-mini-label{font-size:11px;color:var(--gray-400);margin-bottom:6px;}
-.finance-mini-val{font-size:20px;font-weight:700;}
-
-/* NOTIF BUILDER */
-.notif-form{padding:0 20px;}
-.nf-group{margin-bottom:14px;}
-.nf-label{font-size:12px;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block;}
-.nf-input{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:12px 14px;font-size:14px;color:var(--white);font-family:var(--font);outline:none;transition:var(--transition);}
-.nf-input:focus{border-color:var(--green);}
-.nf-input::placeholder{color:var(--gray-600);}
-.nf-textarea{width:100%;background:var(--surface2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:12px 14px;font-size:14px;color:var(--white);font-family:var(--font);outline:none;resize:none;height:80px;transition:var(--transition);}
-.nf-textarea:focus{border-color:var(--green);}
-.nf-btn{width:100%;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:var(--blue-dark);border:none;border-radius:99px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;transition:var(--transition);box-shadow:0 4px 16px rgba(0,200,150,0.3);}
-.nf-btn:active{transform:scale(0.98);}
-.seg-pills{display:flex;gap:8px;flex-wrap:wrap;}
-.seg-pill{padding:7px 14px;border-radius:99px;border:0.5px solid var(--border2);font-size:12px;color:var(--gray-400);cursor:pointer;background:var(--surface);transition:var(--transition);}
-.seg-pill.active{background:var(--green-glow);color:var(--green);border-color:var(--border-green);}
-.notif-history-item{display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border);}
-.notif-history-item:last-child{border-bottom:none;}
-.notif-h-ic{font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border-radius:8px;flex-shrink:0;}
-.notif-h-body{flex:1;}
-.notif-h-title{font-size:12px;font-weight:600;}
-.notif-h-meta{font-size:10px;color:var(--gray-600);margin-top:3px;}
-.notif-h-rate{font-size:11px;color:var(--green);font-weight:600;}
-
-/* EQUIPE */
-.member-row{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:0.5px solid var(--border);}
-.member-row:last-child{border-bottom:none;}
-.member-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--blue) 0%,var(--green) 100%);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;position:relative;}
-.member-online{position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--green);border-radius:50%;border:2px solid var(--blue-dark);}
-.member-info{flex:1;}
-.member-name{font-size:13px;font-weight:600;}
-.member-role{font-size:11px;color:var(--gray-400);margin-top:2px;}
-.member-actions{display:flex;gap:6px;}
-.action-btn{padding:5px 12px;border-radius:99px;border:0.5px solid var(--border2);font-size:11px;cursor:pointer;background:var(--surface);color:var(--white);font-weight:500;}
-.action-btn.danger{border-color:var(--border-red);color:var(--red);}
-
-/* AUDIT LOG */
-.log-row{display:flex;gap:10px;padding:10px 20px;border-bottom:0.5px solid var(--border);font-size:12px;}
-.log-row:last-child{border-bottom:none;}
-.log-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
-.log-body{flex:1;color:var(--gray-200);line-height:1.4;}
-.log-meta{font-size:10px;color:var(--gray-600);margin-top:3px;}
-.log-user{font-weight:600;color:var(--white);}
-
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
-.modal-overlay.open{opacity:1;pointer-events:all;}
-.modal{background:var(--blue-mid);border-radius:var(--radius) var(--radius) 0 0;width:100%;max-width:430px;padding:0 0 32px;border-top:0.5px solid var(--border2);transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);}
-.modal-overlay.open .modal{transform:translateY(0);}
-.modal-handle{width:36px;height:4px;background:var(--border2);border-radius:99px;margin:14px auto 0;}
-.modal-header{padding:16px 20px 14px;border-bottom:0.5px solid var(--border);}
-.modal-title{font-size:16px;font-weight:800;}
-.modal-sub{font-size:12px;color:var(--gray-400);margin-top:3px;}
-.modal-body{padding:16px 20px;}
-.detail-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:13px;}
-.detail-row:last-child{border-bottom:none;}
-.detail-row span:first-child{color:var(--gray-400);}
-.detail-row span:last-child{color:var(--white);font-weight:500;text-align:right;max-width:60%;}
-.modal-actions{padding:0 20px;display:flex;flex-direction:column;gap:8px;}
-.btn-action{width:100%;border:none;border-radius:99px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;transition:var(--transition);}
-.btn-green{background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:var(--blue-dark);}
-.btn-blue{background:linear-gradient(135deg,var(--blue) 0%,#0040CC 100%);color:white;}
-.btn-ghost{background:var(--surface2);color:var(--white);border:0.5px solid var(--border2)!important;}
-.btn-danger{background:var(--red-glow);color:var(--red);border:0.5px solid var(--border-red)!important;}
-.btn-action:active{transform:scale(0.98);}
-
-/* TOAST */
-.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--blue-mid);border:0.5px solid var(--border-green);border-radius:99px;padding:10px 20px;font-size:13px;color:var(--white);z-index:300;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow);}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* SETTINGS */
-.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:var(--transition);}
-.setting-row:hover{background:var(--surface);}
-.setting-row:last-child{border-bottom:none;}
-.setting-left{display:flex;align-items:center;gap:12px;}
-.setting-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.si-blue{background:rgba(0,87,255,0.15);}
-.si-green{background:var(--green-glow);}
-.si-yellow{background:var(--yellow-glow);}
-.si-red{background:var(--red-glow);}
-.setting-title{font-size:14px;font-weight:500;}
-.setting-sub{font-size:11px;color:var(--gray-400);margin-top:2px;}
-.setting-right{color:var(--gray-600);font-size:18px;}
-
-/* SEARCH */
-.search-bar{margin:0 20px 12px;background:var(--surface2);border:0.5px solid var(--border2);border-radius:99px;padding:10px 16px;display:flex;align-items:center;gap:8px;}
-.search-bar input{background:none;border:none;outline:none;font-size:14px;color:var(--white);flex:1;font-family:var(--font);}
-.search-bar input::placeholder{color:var(--gray-600);}
+.cbars{display:flex;align-items:flex-end;gap:4px;height:72px;margin-top:8px;}
+.cbcol{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;}
+.cbar{width:100%;border-radius:4px 4px 0 0;background:var(--green);min-height:3px;transition:height .6s ease;}
+.clbl{font-size:9px;color:var(--g6);}
 
 /* SECTION CARD */
-.section-card{margin:0 20px 10px;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.sc{margin:0 18px 10px;background:var(--s1);border:.5px solid var(--br);border-radius:var(--r);overflow:hidden;}
 
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.fade-in{animation:fadeIn 0.25s ease;}
+/* ALERT ITEMS */
+.ai{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:.5px solid var(--br);}
+.ai:last-child{border-bottom:none;}
+.adot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.ar{background:var(--red);}
+.ay{background:var(--yellow);}
+.ag{background:var(--green);}
+.ab2{flex:1;}
+.at{font-size:13px;font-weight:600;}
+.ad{font-size:11px;color:var(--g4);margin-top:2px;line-height:1.4;}
+.atm{font-size:10px;color:var(--g6);}
+
+/* ROWS */
+.row{display:flex;align-items:center;gap:9px;padding:11px 18px;border-bottom:.5px solid var(--br);cursor:pointer;transition:var(--tr);}
+.row:last-child{border-bottom:none;}
+.row:hover{background:var(--s1);}
+.emoji-box{font-size:26px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:var(--s2);border-radius:10px;flex-shrink:0;}
+.ri{flex:1;}
+.rn{font-size:13px;font-weight:600;}
+.rs{font-size:11px;color:var(--g4);margin-top:2px;}
+.rr{text-align:right;}
+.rp{font-size:13px;font-weight:700;color:var(--green);}
+.rd{font-size:10px;color:var(--g6);margin-top:2px;}
+
+/* TAGS */
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:99px;font-weight:700;white-space:nowrap;}
+.tg{background:var(--gg);color:var(--green);border:.5px solid var(--bgreen);}
+.tr2{background:var(--rg);color:var(--red);border:.5px solid var(--bred);}
+.tw{background:var(--yg);color:var(--yellow);border:.5px solid var(--byellow);}
+.ti{background:rgba(0,87,255,.14);color:#6699FF;border:.5px solid rgba(0,87,255,.3);}
+.tp{background:var(--pg);color:var(--purple);border:.5px solid rgba(139,92,246,.3);}
+
+/* AVATAR */
+.av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+
+/* SEARCH */
+.sbar{margin:0 18px 10px;background:var(--s2);border:.5px solid var(--br2);border-radius:99px;padding:9px 15px;display:flex;align-items:center;gap:7px;}
+.sbar input{background:none;border:none;outline:none;font-size:14px;color:var(--w);flex:1;font-family:var(--f);}
+.sbar input::placeholder{color:var(--g6);}
+
+/* PILLS FILTER */
+.pills{display:flex;gap:7px;padding:0 18px 10px;overflow-x:auto;scrollbar-width:none;}
+.pills::-webkit-scrollbar{display:none;}
+.pill{padding:6px 13px;border-radius:99px;border:.5px solid var(--br2);font-size:12px;color:var(--g4);cursor:pointer;background:var(--s1);transition:var(--tr);white-space:nowrap;}
+.pill.active{background:var(--gg);color:var(--green);border-color:var(--bgreen);}
+
+/* FORM */
+.fcard{margin:0 18px 10px;background:var(--s1);border:.5px solid var(--br);border-radius:var(--r);padding:16px;}
+.fgroup{margin-bottom:13px;}
+.flabel{font-size:11px;color:var(--g4);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;display:block;}
+.finput{width:100%;background:var(--s2);border:.5px solid var(--br2);border-radius:var(--rs);padding:11px 13px;font-size:14px;color:var(--w);font-family:var(--f);outline:none;transition:var(--tr);}
+.finput:focus{border-color:var(--green);background:var(--gg);}
+.finput::placeholder{color:var(--g6);}
+.fselect{width:100%;background:var(--s2);border:.5px solid var(--br2);border-radius:var(--rs);padding:11px 13px;font-size:14px;color:var(--w);font-family:var(--f);outline:none;cursor:pointer;}
+.fselect option{background:var(--bm);color:var(--w);}
+.ftextarea{width:100%;background:var(--s2);border:.5px solid var(--br2);border-radius:var(--rs);padding:11px 13px;font-size:14px;color:var(--w);font-family:var(--f);outline:none;resize:none;height:70px;transition:var(--tr);}
+.ftextarea:focus{border-color:var(--green);}
+.fbtn2{width:100%;background:linear-gradient(135deg,var(--green),var(--gd));color:var(--bd);border:none;border-radius:99px;padding:13px;font-size:14px;font-weight:800;cursor:pointer;transition:var(--tr);box-shadow:0 4px 14px rgba(0,200,150,.25);}
+.fbtn2:active{transform:scale(.98);}
+.fbtn-ghost{width:100%;background:var(--s2);color:var(--w);border:.5px solid var(--br2);border-radius:99px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;margin-top:7px;}
+.fbtn-danger{width:100%;background:var(--rg);color:var(--red);border:.5px solid var(--bred);border-radius:99px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;margin-top:7px;}
+
+/* TOGGLE */
+.tsw{width:38px;height:20px;border-radius:99px;position:relative;cursor:pointer;transition:var(--tr);flex-shrink:0;}
+.tsw.on{background:var(--green);}
+.tsw.off{background:var(--g6);}
+.tknob{position:absolute;top:2px;width:16px;height:16px;background:#fff;border-radius:50%;transition:var(--tr);}
+.tsw.on .tknob{left:20px;}
+.tsw.off .tknob{left:2px;}
+
+/* MODAL */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.mo.open{opacity:1;pointer-events:all;}
+.modal{background:var(--bm);border-radius:var(--r) var(--r) 0 0;width:100%;max-width:430px;padding:0 0 28px;border-top:.5px solid var(--br2);transform:translateY(100%);transition:transform .3s cubic-bezier(0.4,0,0.2,1);}
+.mo.open .modal{transform:translateY(0);}
+.mhandle{width:32px;height:4px;background:var(--br2);border-radius:99px;margin:12px auto 0;}
+.mhdr{padding:14px 18px 12px;border-bottom:.5px solid var(--br);}
+.mtitle{font-size:16px;font-weight:800;}
+.msub{font-size:12px;color:var(--g4);margin-top:2px;}
+.mbody{padding:14px 18px;}
+.drow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:.5px solid var(--br);font-size:13px;}
+.drow:last-child{border-bottom:none;}
+.drow span:first-child{color:var(--g4);}
+.drow span:last-child{color:var(--w);font-weight:500;text-align:right;max-width:58%;}
+.macts{padding:0 18px;display:flex;flex-direction:column;gap:7px;}
+.mact{width:100%;border:none;border-radius:99px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;transition:var(--tr);}
+.mact:active{transform:scale(.98);}
+.mact-g{background:linear-gradient(135deg,var(--green),var(--gd));color:var(--bd);}
+.mact-b{background:linear-gradient(135deg,var(--blue),#0040CC);color:#fff;}
+.mact-gh{background:var(--s2);color:var(--w);border:.5px solid var(--br2)!important;}
+.mact-r{background:var(--rg);color:var(--red);border:.5px solid var(--bred)!important;}
+
+/* SETTING ROW */
+.settingrow{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:.5px solid var(--br);cursor:pointer;transition:var(--tr);}
+.settingrow:hover{background:var(--s1);}
+.settingrow:last-child{border-bottom:none;}
+.sl{display:flex;align-items:center;gap:11px;}
+.sico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.sib{background:rgba(0,87,255,.13);}
+.sig{background:var(--gg);}
+.siy{background:var(--yg);}
+.sir{background:var(--rg);}
+.sip{background:var(--pg);}
+.stitle2{font-size:13px;font-weight:500;}
+.ssub{font-size:11px;color:var(--g4);margin-top:1px;}
+.sarr{color:var(--g6);font-size:16px;}
+
+/* FINANCE */
+.fbig{background:linear-gradient(135deg,var(--bm),var(--bl));border:.5px solid var(--br2);border-radius:var(--r);padding:18px;margin:0 18px 10px;}
+.fbig-lbl{font-size:12px;color:var(--g4);margin-bottom:5px;}
+.fbig-val{font-size:34px;font-weight:800;color:var(--green);letter-spacing:-1px;}
+.fbig-sub{font-size:12px;color:var(--g4);margin-top:4px;}
+.fmgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 18px;}
+.fm{background:var(--s1);border:.5px solid var(--br);border-radius:var(--rs);padding:13px;}
+.fml{font-size:11px;color:var(--g4);margin-bottom:5px;}
+.fmv{font-size:18px;font-weight:700;}
+
+/* PRODUCT ROW */
+.prow{display:flex;align-items:center;gap:9px;padding:11px 18px;border-bottom:.5px solid var(--br);}
+.prow:last-child{border-bottom:none;}
+.pi{flex:1;}
+.pn{font-size:13px;font-weight:600;}
+.pc{font-size:10px;color:var(--g4);margin-top:2px;}
+.pp{font-size:13px;font-weight:700;color:var(--green);}
+
+/* MEMBER */
+.mrow{display:flex;align-items:center;gap:9px;padding:11px 18px;border-bottom:.5px solid var(--br);}
+.mrow:last-child{border-bottom:none;}
+.minfo{flex:1;}
+.mname{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;}
+.mrole{font-size:11px;color:var(--g4);margin-top:2px;}
+.monline{position:absolute;bottom:1px;right:1px;width:9px;height:9px;background:var(--green);border-radius:50%;border:2px solid var(--bd);}
+.mavwrap{position:relative;}
+.mbtns{display:flex;gap:5px;}
+.mbtn{padding:4px 10px;border-radius:99px;border:.5px solid var(--br2);font-size:11px;cursor:pointer;background:var(--s1);color:var(--w);font-weight:500;}
+.mbtn-r{border-color:var(--bred);color:var(--red);background:var(--rg);}
+
+/* NOTIF */
+.nhi{display:flex;gap:9px;padding:10px 0;border-bottom:.5px solid var(--br);}
+.nhi:last-child{border-bottom:none;}
+.nhic{font-size:20px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:var(--s2);border-radius:8px;flex-shrink:0;}
+.nhb{flex:1;}
+.nht{font-size:12px;font-weight:600;}
+.nhm{font-size:10px;color:var(--g6);margin-top:2px;}
+.nhr{font-size:11px;color:var(--green);font-weight:600;}
+
+/* LOG */
+.logrow{display:flex;gap:9px;padding:9px 18px;border-bottom:.5px solid var(--br);font-size:12px;}
+.logrow:last-child{border-bottom:none;}
+.logico{font-size:15px;flex-shrink:0;margin-top:1px;}
+.logb{flex:1;color:var(--g2);line-height:1.4;}
+.logb b{color:var(--w);}
+.logm{font-size:10px;color:var(--g6);margin-top:2px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--bm);border:.5px solid var(--bgreen);border-radius:99px;padding:9px 18px;font-size:13px;color:var(--w);z-index:300;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* PERM TABLE */
+.ptable{width:100%;font-size:12px;border-collapse:collapse;}
+.ptable th{font-size:10px;color:var(--g4);font-weight:600;text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;text-align:center;}
+.ptable th:first-child{text-align:left;}
+.ptable td{padding:8px;border-bottom:.5px solid var(--br);text-align:center;}
+.ptable td:first-child{text-align:left;color:var(--g2);}
+.ptable tr:last-child td{border-bottom:none;}
+.pcheck{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;}
+.pc-yes{background:var(--gg);color:var(--green);}
+.pc-no{background:var(--s2);}
+.pc-part{background:var(--yg);color:var(--yellow);}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+.fade{animation:fadeIn .25s ease;}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div class="screen active" id="screen-login">
-  <div class="login-screen">
-    <div class="login-logo">L</div>
-    <div class="login-logo-tag">ADMIN PANEL</div>
-    <div class="login-title">Litorale Gestão</div>
-    <div class="login-sub">Acesso restrito à equipe autorizada.<br>Toda sessão é monitorada e registrada.</div>
-    <div class="login-form">
-      <div class="lf-group">
-        <label class="lf-label">Email admin</label>
-        <input class="lf-input" type="email" id="adm-email" placeholder="admin@litorale.com" autocomplete="email">
-      </div>
-      <div class="lf-group">
-        <label class="lf-label">Senha</label>
-        <input class="lf-input" type="password" id="adm-pass" placeholder="Senha segura" autocomplete="current-password">
-      </div>
-      <div class="lf-group">
-        <label class="lf-label">Código 2FA</label>
-        <input class="lf-input" type="text" id="adm-2fa" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
-      </div>
-      <button class="lf-btn" onclick="doAdminLogin()">Entrar com segurança</button>
-      <div class="login-2fa">⚠️ Use o Google Authenticator ou similar para gerar o código 2FA. Esta sessão será registrada com IP e timestamp.</div>
-      <div class="login-security">
-        <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Conexão criptografada TLS 1.3
-      </div>
+<div class="screen active" id="s-login">
+  <div class="ls">
+    <div class="ll">L</div>
+    <div class="lt">PAINEL ADMIN</div>
+    <div class="lh">Litorale Gestão</div>
+    <div class="ls2">Acesso restrito. Toda sessão é monitorada e registrada com IP e timestamp.</div>
+    <div class="lform">
+      <div class="fg"><label class="fl">Email</label><input class="fi" type="email" id="l-email" placeholder="seu@email.com" autocomplete="email"></div>
+      <div class="fg"><label class="fl">Senha</label><input class="fi" type="password" id="l-pass" placeholder="Sua senha" autocomplete="current-password"></div>
+      <div class="fg"><label class="fl">Código 2FA (6 dígitos)</label><input class="fi" type="text" id="l-2fa" placeholder="000000" maxlength="6" inputmode="numeric"></div>
+      <button class="fbtn" onclick="doLogin()">Entrar com segurança</button>
+      <div class="lerr" id="l-err">Credenciais inválidas. Tente novamente.</div>
+      <div class="linfo">⚠️ Use o código 2FA cadastrado. Esta sessão será registrada.</div>
+      <div class="lsec">🔒 Conexão criptografada TLS 1.3</div>
     </div>
   </div>
 </div>
 
 <!-- DASHBOARD -->
-<div class="screen" id="screen-dash">
+<div class="screen" id="s-dash">
   <div class="scroll">
-    <div class="topbar">
-      <div class="admin-logo">
-        <div class="admin-logo-mark">L</div>
-        <div>
-          <div style="display:flex;align-items:center;gap:4px;">
-            <span class="admin-logo-text">Litorale <span>Gestão</span></span>
-            <span class="admin-tag">ADMIN</span>
-          </div>
-        </div>
+    <div class="tb">
+      <div class="tblogo">
+        <div class="tbmark">L</div>
+        <div><span class="tbname">Litorale <span>Gestão</span></span><span class="tbtag">ADMIN</span></div>
       </div>
-      <div class="topbar-right">
-        <div class="online-dot">Online</div>
-        <button class="icon-btn" onclick="openModal('modal-config')" aria-label="Configurações">
-          <svg viewBox="0 0 24 24" width="17" height="17" stroke="white" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </button>
+      <div class="tbr">
+        <div class="online">Online</div>
+        <button class="ib" onclick="goScreen('s-config')" title="Configurações">⚙️</button>
       </div>
     </div>
-
-    <!-- GREETING -->
-    <div style="padding:0 20px 16px;">
-      <div style="font-size:20px;font-weight:800;letter-spacing:-0.4px;" id="dash-greeting">Bom dia, Admin 👋</div>
-      <div style="font-size:12px;color:var(--gray-400);margin-top:3px;" id="dash-date"></div>
+    <div style="padding:0 18px 14px;">
+      <div style="font-size:19px;font-weight:800;letter-spacing:-.4px;" id="d-greet">Bom dia, Admin 👋</div>
+      <div style="font-size:12px;color:var(--g4);margin-top:3px;" id="d-date"></div>
     </div>
-
-    <!-- METRICS -->
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-icon">💰</div>
-        <div class="metric-val" style="color:var(--green);">R$ 1.847</div>
-        <div class="metric-label">Receita hoje</div>
-        <div class="metric-delta delta-up">▲ +12% vs ontem</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-icon">🛒</div>
-        <div class="metric-val">28</div>
-        <div class="metric-label">Pedidos hoje</div>
-        <div class="metric-delta delta-up">▲ +5 vs ontem</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-icon">👥</div>
-        <div class="metric-val">312</div>
-        <div class="metric-label">Clientes ativos</div>
-        <div class="metric-delta delta-up">▲ +8 este mês</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-icon">🔄</div>
-        <div class="metric-val" style="color:var(--yellow);">14</div>
-        <div class="metric-label">Renovações hoje</div>
-        <div class="metric-delta delta-down">▼ -2 vs ontem</div>
-      </div>
+    <div class="mgrid">
+      <div class="mc"><div class="micon">💰</div><div class="mval" style="color:var(--green);" id="d-rev">R$ 0</div><div class="mlbl">Receita hoje</div><div class="mdelta dup" id="d-rev-d"></div></div>
+      <div class="mc"><div class="micon">🛒</div><div class="mval" id="d-orders">0</div><div class="mlbl">Pedidos hoje</div><div class="mdelta dup" id="d-ord-d"></div></div>
+      <div class="mc"><div class="micon">👥</div><div class="mval" id="d-clients">0</div><div class="mlbl">Clientes ativos</div><div class="mdelta dup" id="d-cli-d"></div></div>
+      <div class="mc"><div class="micon">🔄</div><div class="mval" style="color:var(--yellow);" id="d-renew">0</div><div class="mlbl">Renovações</div><div class="mdelta ddown" id="d-ren-d"></div></div>
     </div>
-
-    <!-- CHART -->
-    <div class="lbl" style="margin-top:16px;">Vendas — últimos 7 dias</div>
-    <div class="section-card" style="padding:16px;">
-      <div class="chart-bar-wrap" id="chart-bars"></div>
-    </div>
-
-    <!-- ALERTAS -->
-    <div class="lbl">Alertas</div>
-    <div class="section-card" style="padding:14px 16px;">
-      <div class="alert-item">
-        <div class="alert-dot alert-dot-red"></div>
-        <div class="alert-body">
-          <div class="alert-title">3 assinaturas vencem em 24h</div>
-          <div class="alert-desc">Netflix 4K × 2, Spotify Premium × 1 — enviar lembrete?</div>
-        </div>
-        <button class="tag tw" onclick="showToast('Lembretes enviados via WhatsApp!')" style="cursor:pointer;border:none;">Avisar</button>
-      </div>
-      <div class="alert-item">
-        <div class="alert-dot alert-dot-yellow"></div>
-        <div class="alert-body">
-          <div class="alert-title">5 pedidos aguardando confirmação PIX</div>
-          <div class="alert-desc">Aguardando confirmação manual no extrato</div>
-        </div>
-        <button class="tag ti" onclick="navAdmin('orders',document.getElementById('nav-orders'))" style="cursor:pointer;border:none;">Ver</button>
-      </div>
-      <div class="alert-item">
-        <div class="alert-dot alert-dot-red"></div>
-        <div class="alert-body">
-          <div class="alert-title">Acesso suspeito detectado</div>
-          <div class="alert-desc">IP diferente em conta de Carlos M. — São Paulo → EUA</div>
-        </div>
-        <button class="tag tr" onclick="navAdmin('clients',document.getElementById('nav-clients'))" style="cursor:pointer;border:none;">Ver</button>
-      </div>
-      <div class="alert-item">
-        <div class="alert-dot alert-dot-green"></div>
-        <div class="alert-body">
-          <div class="alert-title">Sistema funcionando normalmente</div>
-          <div class="alert-desc">Uptime 99.9% • Último backup: 2h atrás</div>
-        </div>
-        <span class="alert-time">Agora</span>
-      </div>
-    </div>
-
-    <!-- PEDIDOS RECENTES -->
-    <div class="lbl">Pedidos recentes</div>
-    <div class="section-card">
-      <div id="recent-orders"></div>
-    </div>
+    <div class="slbl">Vendas — últimos 7 dias</div>
+    <div class="sc" style="padding:14px;"><div class="cbars" id="chart"></div></div>
+    <div class="slbl">Alertas</div>
+    <div class="sc" style="padding:12px 14px;" id="d-alerts"></div>
+    <div class="slbl">Pedidos recentes</div>
+    <div class="sc" id="d-recent"></div>
     <div style="height:8px;"></div>
   </div>
 </div>
 
 <!-- PEDIDOS -->
-<div class="screen" id="screen-orders">
+<div class="screen" id="s-orders">
   <div class="scroll">
-    <div class="topbar">
-      <div style="font-size:17px;font-weight:800;">Pedidos</div>
-      <div class="online-dot">28 hoje</div>
+    <div class="tb">
+      <div style="font-size:16px;font-weight:800;">Pedidos</div>
+      <div class="online" id="ord-count">0 hoje</div>
     </div>
-    <div class="search-bar">
-      <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--gray-600)" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Buscar pedido ou cliente..." oninput="filterOrders(this.value)">
+    <div class="sbar">
+      <span>🔍</span>
+      <input type="text" placeholder="Buscar pedido ou cliente..." oninput="filterOrders(this.value)" id="ord-search">
     </div>
-    <div style="display:flex;gap:8px;padding:0 20px 12px;overflow-x:auto;scrollbar-width:none;">
-      <button class="seg-pill active" onclick="filterOrderStatus('todos',this)">Todos</button>
-      <button class="seg-pill" onclick="filterOrderStatus('pendente',this)">⏳ Pendentes</button>
-      <button class="seg-pill" onclick="filterOrderStatus('ativo',this)">✅ Ativos</button>
-      <button class="seg-pill" onclick="filterOrderStatus('vencido',this)">🔴 Vencidos</button>
+    <div class="pills">
+      <div class="pill active" onclick="filterOrdStatus('todos',this)">Todos</div>
+      <div class="pill" onclick="filterOrdStatus('pendente',this)">⏳ Pendentes</div>
+      <div class="pill" onclick="filterOrdStatus('ativo',this)">✅ Ativos</div>
+      <div class="pill" onclick="filterOrdStatus('vencido',this)">🔴 Vencidos</div>
     </div>
-    <div class="section-card"><div id="orders-list"></div></div>
+    <div class="sc" id="orders-list"></div>
     <div style="height:8px;"></div>
   </div>
 </div>
 
 <!-- CLIENTES -->
-<div class="screen" id="screen-clients">
+<div class="screen" id="s-clients">
   <div class="scroll">
-    <div class="topbar">
-      <div style="font-size:17px;font-weight:800;">Clientes</div>
-      <div class="online-dot">312 ativos</div>
+    <div class="tb">
+      <div style="font-size:16px;font-weight:800;">Clientes</div>
+      <div class="online" id="cli-count">0 ativos</div>
     </div>
-    <div class="search-bar">
-      <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--gray-600)" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" placeholder="Buscar cliente..." oninput="filterClients(this.value)">
+    <div class="sbar">
+      <span>🔍</span>
+      <input type="text" placeholder="Buscar cliente..." oninput="filterClients(this.value)" id="cli-search">
     </div>
-    <div class="section-card"><div id="clients-list"></div></div>
+    <div class="pills">
+      <div class="pill active" onclick="filterCliStatus('todos',this)">Todos</div>
+      <div class="pill" onclick="filterCliStatus('ativo',this)">✅ Ativos</div>
+      <div class="pill" onclick="filterCliStatus('flag',this)">⚠️ Suspeitos</div>
+    </div>
+    <div class="sc" id="clients-list"></div>
+    <div style="height:8px;"></div>
+  </div>
+</div>
+
+<!-- PRODUTOS -->
+<div class="screen" id="s-products">
+  <div class="scroll">
+    <div class="tb">
+      <div style="font-size:16px;font-weight:800;">Produtos</div>
+      <button class="ib" onclick="openAddProduct()" title="Adicionar produto" style="background:var(--gg);border-color:var(--bgreen);color:var(--green);">＋</button>
+    </div>
+    <div class="sbar">
+      <span>🔍</span>
+      <input type="text" placeholder="Buscar produto..." oninput="filterProducts(this.value)">
+    </div>
+    <div class="pills">
+      <div class="pill active" onclick="filterProdCat('todos',this)">Todos</div>
+      <div class="pill" onclick="filterProdCat('streaming',this)">🎬 Streaming</div>
+      <div class="pill" onclick="filterProdCat('musica',this)">🎵 Música</div>
+      <div class="pill" onclick="filterProdCat('internet',this)">📡 Internet</div>
+      <div class="pill" onclick="filterProdCat('ferramentas',this)">🛠️ Ferramentas</div>
+      <div class="pill" onclick="filterProdCat('tv',this)">📺 TV Digital</div>
+    </div>
+    <div class="sc" id="prod-list"></div>
     <div style="height:8px;"></div>
   </div>
 </div>
 
 <!-- FINANCEIRO -->
-<div class="screen" id="screen-finance">
+<div class="screen" id="s-finance">
   <div class="scroll">
-    <div class="topbar">
-      <div style="font-size:17px;font-weight:800;">Financeiro</div>
-      <button class="icon-btn" onclick="showToast('Relatório exportado!')" aria-label="Exportar">
-        <svg viewBox="0 0 24 24" width="17" height="17" stroke="white" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      </button>
+    <div class="tb">
+      <div style="font-size:16px;font-weight:800;">Financeiro</div>
+      <button class="ib" onclick="exportFinance()" title="Exportar relatório">📊</button>
     </div>
-    <div class="finance-summary">
-      <div class="finance-big">
-        <div class="finance-big-label">Receita deste mês</div>
-        <div class="finance-big-val">R$ 14.320</div>
-        <div class="finance-big-sub">▲ +18% vs mês anterior • 387 pedidos</div>
-      </div>
-      <div class="finance-grid">
-        <div class="finance-mini"><div class="finance-mini-label">Ticket médio</div><div class="finance-mini-val" style="color:var(--green);">R$ 37,00</div></div>
-        <div class="finance-mini"><div class="finance-mini-label">Receita recorrente</div><div class="finance-mini-val" style="color:var(--blue);">R$ 9.840</div></div>
-        <div class="finance-mini"><div class="finance-mini-label">Inadimplência</div><div class="finance-mini-val" style="color:var(--red);">R$ 420</div></div>
-        <div class="finance-mini"><div class="finance-mini-label">Projeção mês</div><div class="finance-mini-val" style="color:var(--yellow);">R$ 16.100</div></div>
-      </div>
+    <div class="fbig">
+      <div class="fbig-lbl">Receita deste mês</div>
+      <div class="fbig-val" id="fin-total">R$ 14.320</div>
+      <div class="fbig-sub" id="fin-sub">▲ +18% vs mês anterior • 387 pedidos</div>
     </div>
-    <div class="lbl">Produtos mais vendidos</div>
-    <div class="section-card" style="padding:4px 0;">
-      ${[['🎬','Netflix 4K',142,'R$ 5.114'],['🎵','Spotify Premium',98,'R$ 4.410'],['📺','TV Digital',67,'R$ 2.345'],['🏰','Disney+ 4K',45,'R$ 1.350'],['🤖','ChatGPT Plus',35,'R$ 1.225']].map(([e,n,q,v])=>`
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:0.5px solid var(--border);">
-          <div style="font-size:24px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border-radius:10px;flex-shrink:0;">${e}</div>
-          <div style="flex:1;"><div style="font-size:13px;font-weight:600;">${n}</div><div style="font-size:11px;color:var(--gray-400);margin-top:2px;">${q} vendas</div></div>
-          <div style="font-size:13px;font-weight:700;color:var(--green);">${v}</div>
-        </div>
-      `).join('')}
+    <div class="fmgrid">
+      <div class="fm"><div class="fml">Ticket médio</div><div class="fmv" style="color:var(--green);">R$ 37,00</div></div>
+      <div class="fm"><div class="fml">Recorrente</div><div class="fmv" style="color:var(--blue);">R$ 9.840</div></div>
+      <div class="fm"><div class="fml">Inadimplência</div><div class="fmv" style="color:var(--red);">R$ 420</div></div>
+      <div class="fm"><div class="fml">Projeção mês</div><div class="fmv" style="color:var(--yellow);">R$ 16.100</div></div>
     </div>
+    <div class="slbl">Produtos mais vendidos</div>
+    <div class="sc" id="fin-top"></div>
+    <div class="slbl">Histórico de transações</div>
+    <div class="sc" id="fin-hist"></div>
     <div style="height:8px;"></div>
   </div>
 </div>
 
-<!-- MAIS (notifs, equipe, produtos, config) -->
-<div class="screen" id="screen-more">
+<!-- EQUIPE -->
+<div class="screen" id="s-team">
   <div class="scroll">
-    <div class="topbar">
-      <div style="font-size:17px;font-weight:800;">Gerenciar</div>
+    <div class="tb">
+      <div style="font-size:16px;font-weight:800;">Equipe</div>
+      <button class="ib" onclick="openAddMember()" title="Convidar membro" style="background:var(--gg);border-color:var(--bgreen);color:var(--green);">＋</button>
     </div>
 
-    <div class="lbl">Notificações push</div>
-    <div class="notif-form">
-      <div class="nf-group">
-        <label class="nf-label">Título</label>
-        <input class="nf-input" id="notif-title" placeholder="Ex: Oferta especial hoje!">
-      </div>
-      <div class="nf-group">
-        <label class="nf-label">Mensagem</label>
-        <textarea class="nf-textarea" id="notif-msg" placeholder="Ex: Netflix 4K por apenas R$ 35,99..."></textarea>
-      </div>
-      <div class="nf-group">
-        <label class="nf-label">Segmento</label>
-        <div class="seg-pills" id="seg-pills">
-          <div class="seg-pill active" onclick="toggleSeg(this)">Todos</div>
-          <div class="seg-pill" onclick="toggleSeg(this)">Streaming</div>
-          <div class="seg-pill" onclick="toggleSeg(this)">Música</div>
-          <div class="seg-pill" onclick="toggleSeg(this)">Internet</div>
-          <div class="seg-pill" onclick="toggleSeg(this)">Ferramentas</div>
-        </div>
-      </div>
-      <button class="nf-btn" onclick="sendNotif()">🚀 Enviar notificação agora</button>
+    <div class="slbl">Membros ativos</div>
+    <div class="sc" id="team-list"></div>
+
+    <div class="slbl">Tabela de permissões</div>
+    <div class="sc" style="padding:14px;">
+      <table class="ptable">
+        <thead>
+          <tr>
+            <th>Módulo</th>
+            <th>Dono</th>
+            <th>Editor</th>
+            <th>Suporte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Dashboard</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td></tr>
+          <tr><td>Pedidos</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td></tr>
+          <tr><td>Clientes</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td></tr>
+          <tr><td>Produtos</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-no"></div></td></tr>
+          <tr><td>Financeiro</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-part">~</div></td><td><div class="pcheck pc-no"></div></td></tr>
+          <tr><td>Equipe</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-no"></div></td><td><div class="pcheck pc-no"></div></td></tr>
+          <tr><td>Notificações</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-no"></div></td></tr>
+          <tr><td>Configurações</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-no"></div></td><td><div class="pcheck pc-no"></div></td></tr>
+          <tr><td>Pagamentos/PIX</td><td><div class="pcheck pc-yes">✓</div></td><td><div class="pcheck pc-no"></div></td><td><div class="pcheck pc-no"></div></td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:10px;color:var(--g6);margin-top:8px;">✓ Acesso total &nbsp;~ Somente visualização &nbsp;□ Sem acesso</div>
     </div>
 
-    <div class="lbl">Histórico de notificações</div>
-    <div class="section-card" style="padding:14px 16px;">
-      <div class="notif-history-item">
-        <div class="notif-h-ic">🔥</div>
-        <div class="notif-h-body">
-          <div class="notif-h-title">Oferta relâmpago: Netflix 4K</div>
-          <div class="notif-h-meta">Enviado há 2h • 312 destinatários</div>
-        </div>
-        <div class="notif-h-rate">68% abriram</div>
+    <div class="slbl">Cadastrar novo membro</div>
+    <div class="fcard">
+      <div class="fgroup"><label class="flabel">Nome completo</label><input class="finput" type="text" id="m-name" placeholder="Nome do funcionário"></div>
+      <div class="fgroup"><label class="flabel">Email</label><input class="finput" type="email" id="m-email" placeholder="email@litorale.com"></div>
+      <div class="fgroup"><label class="flabel">WhatsApp</label><input class="finput" type="tel" id="m-wpp" placeholder="(00) 00000-0000"></div>
+      <div class="fgroup"><label class="flabel">Senha de acesso</label><input class="finput" type="password" id="m-pass" placeholder="Senha forte"></div>
+      <div class="fgroup"><label class="flabel">Código 2FA</label><input class="finput" type="text" id="m-2fa" placeholder="6 dígitos" maxlength="6" inputmode="numeric"></div>
+      <div class="fgroup"><label class="flabel">Nível de acesso</label>
+        <select class="fselect" id="m-role">
+          <option value="editor">Editor — produtos e pedidos</option>
+          <option value="suporte">Suporte — pedidos e clientes</option>
+          <option value="dono">Dono — acesso total</option>
+        </select>
       </div>
-      <div class="notif-history-item">
-        <div class="notif-h-ic">⏰</div>
-        <div class="notif-h-body">
-          <div class="notif-h-title">Lembrete: assinatura vencendo</div>
-          <div class="notif-h-meta">Enviado ontem • 45 destinatários</div>
-        </div>
-        <div class="notif-h-rate">82% abriram</div>
+      <div class="fgroup"><label class="flabel">Observação (opcional)</label><textarea class="ftextarea" id="m-obs" placeholder="Ex: responsável pelo atendimento noturno"></textarea></div>
+      <button class="fbtn2" onclick="addMember()">✅ Cadastrar funcionário</button>
+    </div>
+
+    <div class="slbl">Log de auditoria</div>
+    <div class="sc" id="audit-log"></div>
+    <div style="height:8px;"></div>
+  </div>
+</div>
+
+<!-- NOTIFICAÇÕES -->
+<div class="screen" id="s-notifs">
+  <div class="scroll">
+    <div class="tb">
+      <div style="font-size:16px;font-weight:800;">Notificações</div>
+    </div>
+    <div class="slbl">Enviar notificação push</div>
+    <div class="fcard">
+      <div class="fgroup"><label class="flabel">Título</label><input class="finput" type="text" id="n-title" placeholder="Ex: Oferta especial hoje!"></div>
+      <div class="fgroup"><label class="flabel">Mensagem</label><textarea class="ftextarea" id="n-msg" placeholder="Ex: Netflix 4K por R$ 35,99..."></textarea></div>
+      <div class="fgroup"><label class="flabel">Segmento</label>
+        <select class="fselect" id="n-seg">
+          <option value="todos">Todos os clientes (312)</option>
+          <option value="streaming">Streaming (142)</option>
+          <option value="musica">Música (98)</option>
+          <option value="internet">Internet (67)</option>
+          <option value="ferramentas">Ferramentas (45)</option>
+        </select>
+      </div>
+      <div class="fgroup"><label class="flabel">Agendar (opcional)</label><input class="finput" type="datetime-local" id="n-sched"></div>
+      <button class="fbtn2" onclick="sendNotif()">🚀 Enviar notificação</button>
+    </div>
+    <div class="slbl">Histórico de envios</div>
+    <div class="sc" style="padding:12px 14px;" id="notif-hist"></div>
+    <div style="height:8px;"></div>
+  </div>
+</div>
+
+<!-- CONFIGURAÇÕES -->
+<div class="screen" id="s-config">
+  <div class="scroll">
+    <div class="tb">
+      <button class="ib" onclick="goBack()" title="Voltar">←</button>
+      <div style="font-size:16px;font-weight:800;">Configurações</div>
+      <div style="width:32px;"></div>
+    </div>
+
+    <div class="slbl">Minha conta</div>
+    <div class="sc" style="padding:0;">
+      <div class="settingrow" onclick="openChangePass()">
+        <div class="sl"><div class="sico sig">🔑</div><div><div class="stitle2">Alterar senha</div><div class="ssub">Troque sua senha de acesso</div></div></div>
+        <div class="sarr">›</div>
+      </div>
+      <div class="settingrow" onclick="openChange2FA()">
+        <div class="sl"><div class="sico siy">📱</div><div><div class="stitle2">Alterar código 2FA</div><div class="ssub">Código de autenticação</div></div></div>
+        <div class="sarr">›</div>
       </div>
     </div>
 
-    <div class="lbl">Equipe e acessos</div>
-    <div class="section-card">
-      <div class="member-row">
-        <div class="member-av">VC<div class="member-online"></div></div>
-        <div class="member-info">
-          <div class="member-name">Você (Dono)
-            <div style="width:14px;height:14px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-              <svg viewBox="0 0 10 10" width="8" height="8"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-          <div class="member-role">Dono • Acesso total</div>
-        </div>
-        <span class="tag tg">Online</span>
+    <div class="slbl">App do cliente</div>
+    <div class="sc" style="padding:0;">
+      <div class="settingrow" onclick="toast('Abrindo configurações de pagamento...')">
+        <div class="sl"><div class="sico sig">💳</div><div><div class="stitle2">Chave PIX e pagamentos</div><div class="ssub">Configurar recebimento</div></div></div>
+        <div class="sarr">›</div>
       </div>
-      <div class="member-row">
-        <div class="member-av" style="background:linear-gradient(135deg,#0057FF 0%,#6699FF 100%);">AN</div>
-        <div class="member-info">
-          <div class="member-name">Ana Lima</div>
-          <div class="member-role">Editor • Produtos e pedidos</div>
-        </div>
-        <div class="member-actions">
-          <button class="action-btn" onclick="showToast('Permissões editadas')">Editar</button>
-          <button class="action-btn danger" onclick="showToast('Acesso revogado')">Revogar</button>
-        </div>
+      <div class="settingrow" onclick="toast('Editando banners...')">
+        <div class="sl"><div class="sico sib">🖼️</div><div><div class="stitle2">Banners da home</div><div class="ssub">Editar destaques</div></div></div>
+        <div class="sarr">›</div>
       </div>
-      <div class="member-row">
-        <div class="member-av" style="background:linear-gradient(135deg,var(--yellow) 0%,#FF8C00 100%);">RB</div>
-        <div class="member-info">
-          <div class="member-name">Rafael Brum</div>
-          <div class="member-role">Suporte • Pedidos e clientes</div>
-        </div>
-        <div class="member-actions">
-          <button class="action-btn" onclick="showToast('Permissões editadas')">Editar</button>
-          <button class="action-btn danger" onclick="showToast('Acesso revogado')">Revogar</button>
-        </div>
+      <div class="settingrow" onclick="toast('Configurando WhatsApp...')">
+        <div class="sl"><div class="sico sig">💬</div><div><div class="stitle2">WhatsApp Business</div><div class="ssub">Mensagem automática</div></div></div>
+        <div class="sarr">›</div>
       </div>
-      <div style="padding:14px 20px;">
-        <button onclick="showToast('Convite enviado!')" style="width:100%;background:var(--surface2);border:0.5px solid var(--border2);color:var(--white);border-radius:99px;padding:11px;font-size:13px;font-weight:500;cursor:pointer;">+ Convidar membro</button>
+      <div class="settingrow" onclick="toggleMaint()">
+        <div class="sl"><div class="sico siy">🔧</div><div><div class="stitle2">Modo manutenção</div><div class="ssub" id="maint-lbl">App do cliente: online</div></div></div>
+        <div class="tsw on" id="maint-sw" onclick="event.stopPropagation();toggleMaint()"><div class="tknob"></div></div>
       </div>
     </div>
 
-    <div class="lbl">Log de auditoria</div>
-    <div class="section-card">
-      <div id="audit-log"></div>
-    </div>
-
-    <div class="lbl">Configurações do app</div>
-    <div class="section-card" style="padding:4px 0;">
-      <div class="setting-row" onclick="showToast('Abrindo configurações de pagamento...')">
-        <div class="setting-left">
-          <div class="setting-icon si-green">💳</div>
-          <div><div class="setting-title">Chave PIX e pagamentos</div><div class="setting-sub">Configurar métodos de recebimento</div></div>
-        </div>
-        <div class="setting-right">›</div>
+    <div class="slbl">Sistema</div>
+    <div class="sc" style="padding:0;">
+      <div class="settingrow" onclick="toast('Backup iniciado com sucesso!')">
+        <div class="sl"><div class="sico sib">💾</div><div><div class="stitle2">Backup manual</div><div class="ssub">Último: hoje às 14h32</div></div></div>
+        <div class="sarr">›</div>
       </div>
-      <div class="setting-row" onclick="showToast('Editando banners da home...')">
-        <div class="setting-left">
-          <div class="setting-icon si-blue">🖼️</div>
-          <div><div class="setting-title">Banners da home</div><div class="setting-sub">Editar ofertas em destaque</div></div>
-        </div>
-        <div class="setting-right">›</div>
+      <div class="settingrow" onclick="toast('Relatório exportado!')">
+        <div class="sl"><div class="sico sig">📊</div><div><div class="stitle2">Exportar dados</div><div class="ssub">CSV com todos os pedidos</div></div></div>
+        <div class="sarr">›</div>
       </div>
-      <div class="setting-row" onclick="showToast('Configurando WhatsApp...')">
-        <div class="setting-left">
-          <div class="setting-icon si-green">💬</div>
-          <div><div class="setting-title">WhatsApp Business</div><div class="setting-sub">Mensagem automática e número</div></div>
-        </div>
-        <div class="setting-right">›</div>
-      </div>
-      <div class="setting-row" onclick="toggleMaintenance()">
-        <div class="setting-left">
-          <div class="setting-icon si-yellow">🔧</div>
-          <div><div class="setting-title">Modo manutenção</div><div class="setting-sub" id="maint-status">App do cliente: online</div></div>
-        </div>
-        <div class="toggle-switch on" id="maint-toggle" onclick="event.stopPropagation();toggleMaintenance()"><div class="toggle-knob"></div></div>
-      </div>
-      <div class="setting-row" onclick="showToast('Backup iniciado!')">
-        <div class="setting-left">
-          <div class="setting-icon si-blue">💾</div>
-          <div><div class="setting-title">Backup manual</div><div class="setting-sub">Último: hoje às 14h32</div></div>
-        </div>
-        <div class="setting-right">›</div>
-      </div>
-      <div class="setting-row" onclick="doLogout()">
-        <div class="setting-left">
-          <div class="setting-icon si-red">🚪</div>
-          <div><div class="setting-title" style="color:var(--red);">Sair da sessão</div><div class="setting-sub">Encerrar acesso admin</div></div>
-        </div>
-        <div class="setting-right">›</div>
+      <div class="settingrow" onclick="doLogout()">
+        <div class="sl"><div class="sico sir">🚪</div><div><div class="stitle2" style="color:var(--red);">Sair da sessão</div><div class="ssub">Encerrar acesso</div></div></div>
+        <div class="sarr">›</div>
       </div>
     </div>
     <div style="height:8px;"></div>
@@ -612,289 +561,629 @@ body{font-family:var(--font);color:var(--white);display:flex;flex-direction:colu
 </div>
 
 <!-- BOTTOM NAV -->
-<nav class="bottom-nav" id="admin-nav" style="display:none;">
-  <button class="nav-item active" id="nav-dash" onclick="navAdmin('dash',this)">
+<nav class="bnav" id="bnav" style="display:none;">
+  <button class="ni active" id="ni-dash" onclick="nav('dash',this)">
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
     <span>Dashboard</span>
   </button>
-  <button class="nav-item" id="nav-orders" onclick="navAdmin('orders',this)">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-    <div class="nav-badge">5</div>
+  <button class="ni" id="ni-orders" onclick="nav('orders',this)">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <div class="nbadge" id="ord-badge">5</div>
     <span>Pedidos</span>
   </button>
-  <button class="nav-item" id="nav-clients" onclick="navAdmin('clients',this)">
+  <button class="ni" id="ni-clients" onclick="nav('clients',this)">
     <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
     <span>Clientes</span>
   </button>
-  <button class="nav-item" id="nav-finance" onclick="navAdmin('finance',this)">
-    <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-    <span>Financeiro</span>
+  <button class="ni" id="ni-products" onclick="nav('products',this)">
+    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <span>Produtos</span>
   </button>
-  <button class="nav-item" id="nav-more" onclick="navAdmin('more',this)">
+  <button class="ni" id="ni-more" onclick="openMore()">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
     <span>Mais</span>
   </button>
 </nav>
 
-<!-- MODAL CONFIG -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+<!-- MORE MENU -->
+<div class="mo" id="mo-more" onclick="closeMore(event)">
   <div class="modal">
-    <div class="modal-handle"></div>
-    <div id="modal-body-content"></div>
+    <div class="mhandle"></div>
+    <div class="mhdr"><div class="mtitle">Menu</div></div>
+    <div style="padding:8px 0;">
+      <div class="settingrow" onclick="nav('finance',null);closeMore()">
+        <div class="sl"><div class="sico sig" style="font-size:18px;">💰</div><div><div class="stitle2">Financeiro</div><div class="ssub">Receita, relatórios e análise</div></div></div>
+        <div class="sarr">›</div>
+      </div>
+      <div class="settingrow" onclick="nav('team',null);closeMore()">
+        <div class="sl"><div class="sico sip" style="font-size:18px;">👥</div><div><div class="stitle2">Equipe</div><div class="ssub">Funcionários e permissões</div></div></div>
+        <div class="sarr">›</div>
+      </div>
+      <div class="settingrow" onclick="nav('notifs',null);closeMore()">
+        <div class="sl"><div class="sico siy" style="font-size:18px;">🔔</div><div><div class="stitle2">Notificações</div><div class="ssub">Push e histórico</div></div></div>
+        <div class="sarr">›</div>
+      </div>
+      <div class="settingrow" onclick="goScreen('s-config');closeMore()">
+        <div class="sl"><div class="sico sib" style="font-size:18px;">⚙️</div><div><div class="stitle2">Configurações</div><div class="ssub">App, PIX, senha e sistema</div></div></div>
+        <div class="sarr">›</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- MODAL GERAL -->
+<div class="mo" id="mo-main" onclick="closeMo(event)">
+  <div class="modal"><div class="mhandle"></div><div id="mo-body"></div></div>
+</div>
+
+<div class="toast" id="toast-el"></div>
 
 <script>
-// ===== DATA =====
-const MOCK_ORDERS=[
-  {id:1001,product:'Netflix 4K',emoji:'🎬',client:'João Silva',price:35.99,date:'Hoje 14:32',status:'pendente'},
-  {id:1002,product:'Spotify Premium',emoji:'🎵',client:'Maria Santos',price:45.00,date:'Hoje 13:15',status:'ativo'},
-  {id:1003,product:'TV Digital',emoji:'📺',client:'Carlos Melo',price:35.00,date:'Hoje 12:08',status:'ativo'},
-  {id:1004,product:'Disney+ 4K',emoji:'🏰',client:'Ana Costa',price:29.99,date:'Hoje 11:44',status:'pendente'},
-  {id:1005,product:'ChatGPT Plus',emoji:'🤖',client:'Pedro Lima',price:34.99,date:'Hoje 10:30',status:'ativo'},
-  {id:1006,product:'HBO Max',emoji:'🔴',client:'Lucia Ferreira',price:29.99,date:'Hoje 09:12',status:'vencido'},
-  {id:1007,product:'YouTube Premium',emoji:'▶️',client:'Bruno Alves',price:14.99,date:'Ontem 22:50',status:'ativo'},
-  {id:1008,product:'Canva Pro',emoji:'🎨',client:'Fernanda Cruz',price:20.00,date:'Ontem 20:10',status:'pendente'},
-];
-const MOCK_CLIENTS=[
-  {id:1,name:'João Silva',email:'joao@email.com',wpp:'(11)99999-0001',points:340,orders:3,status:'ativo',ip:'187.xxx.xxx.01',loc:'São Paulo, SP',device:'iPhone 14',flag:false},
-  {id:2,name:'Maria Santos',email:'maria@email.com',wpp:'(21)99999-0002',points:1240,orders:8,status:'ativo',ip:'189.xxx.xxx.02',loc:'Rio de Janeiro, RJ',device:'Android',flag:false},
-  {id:3,name:'Carlos Melo',email:'carlos@email.com',wpp:'(11)99999-0003',points:560,orders:5,status:'ativo',ip:'USA.xxx.xxx.03',loc:'⚠️ EUA (suspeito)',device:'Chrome PC',flag:true},
-  {id:4,name:'Ana Costa',email:'ana@email.com',wpp:'(31)99999-0004',points:120,orders:1,status:'ativo',ip:'177.xxx.xxx.04',loc:'Belo Horizonte, MG',device:'Samsung Galaxy',flag:false},
-  {id:5,name:'Pedro Lima',email:'pedro@email.com',wpp:'(85)99999-0005',points:4200,orders:18,status:'ativo',ip:'200.xxx.xxx.05',loc:'Fortaleza, CE',device:'iPhone 13',flag:false},
-];
-const AUDIT=[
-  {icon:'🔑',msg:'<span class="log-user">Você</span> fez login no painel admin',meta:'Hoje 14:00 • IP 187.x.x.1'},
-  {icon:'✅',msg:'<span class="log-user">Rafael B.</span> confirmou entrega: Netflix 4K — João Silva',meta:'Hoje 13:45 • IP 189.x.x.2'},
-  {icon:'🔔',msg:'<span class="log-user">Ana L.</span> enviou notificação push para 312 usuários',meta:'Hoje 12:30 • IP 177.x.x.3'},
-  {icon:'💰',msg:'<span class="log-user">Você</span> atualizou preço: Spotify Premium R$ 71,70 → R$ 45,00',meta:'Hoje 10:15 • IP 187.x.x.1'},
-  {icon:'⚠️',msg:'<span class="log-user">Sistema</span> detectou acesso suspeito: Carlos M. — localização EUA',meta:'Hoje 09:00 • Automático'},
+// ======= DATA =======
+const PRODUCTS=[
+  {id:1,name:'Netflix 4K',cat:'streaming',e:'🎬',price:35.99,old:44.90,disc:20,active:true,desc:'Filmes e séries 4K ilimitados.',benefits:['4K Ultra HD','Sem anúncios','Múltiplos dispositivos']},
+  {id:2,name:'Spotify Premium',cat:'musica',e:'🎵',price:45.00,old:71.70,disc:37,active:true,desc:'Música sem anúncios, offline.',benefits:['Zero anúncios','Modo offline','Qualidade máxima']},
+  {id:3,name:'Disney+ 4K',cat:'streaming',e:'🏰',price:29.99,old:46.90,disc:36,active:true,desc:'Marvel, Star Wars, Pixar em 4K.',benefits:['Catálogo completo','4K disponível','Download offline']},
+  {id:4,name:'YouTube Premium',cat:'musica',e:'▶️',price:14.99,old:26.90,disc:44,active:true,desc:'YouTube sem anúncios + Music.',benefits:['Zero anúncios','Downloads','YouTube Music']},
+  {id:5,name:'Internet Ilimitada',cat:'internet',e:'📡',price:25.00,old:50.00,disc:50,active:true,desc:'VPN Premium sem limite de dados.',benefits:['Sem limites','Nacional','Alta velocidade']},
+  {id:6,name:'Canva Pro',cat:'ferramentas',e:'🎨',price:20.00,old:35.00,disc:43,active:true,desc:'Design profissional premium.',benefits:['Templates premium','Remove fundo','Alta qualidade']},
+  {id:7,name:'ChatGPT Plus',cat:'ferramentas',e:'🤖',price:34.99,old:95.99,disc:64,active:true,desc:'GPT-4 sem fila, com plugins.',benefits:['GPT-4','Sem filas','DALL-E']},
+  {id:8,name:'HBO Max',cat:'streaming',e:'🔴',price:29.99,old:44.90,disc:33,active:true,desc:'Séries exclusivas e filmes.',benefits:['Séries exclusivas','4K','Conteúdo DC']},
+  {id:9,name:'TV Digital',cat:'tv',e:'📺',price:35.00,old:80.00,disc:56,active:true,desc:'Canais ao vivo + esportes.',benefits:['Canais ao vivo','Esportes','Smart TV']},
+  {id:10,name:'Prime Video',cat:'streaming',e:'🎥',price:13.00,old:19.90,disc:35,active:true,desc:'Amazon Originals em 4K.',benefits:['Amazon Originals','4K','Esportes ao vivo']},
+  {id:11,name:'Gemini Pro',cat:'ferramentas',e:'✨',price:66.99,old:96.99,disc:31,active:true,desc:'IA avançada do Google.',benefits:['Gemini Ultra','Google integrado','Análise de imagens']},
+  {id:12,name:'Conecta Max 62GB',cat:'internet',e:'📶',price:45.00,old:199.99,disc:77,active:true,desc:'Chip 4G/5G 62GB apps ilimitados.',benefits:['62GB','Apps ilimitados','4G/5G']},
 ];
 
-let adminUser=null;let maintOn=true;
-const ADMIN_CREDENTIALS={email:'admin@litorale.com',pass:'Admin@2024',code:'123456'};
+const ORDERS=[
+  {id:1001,prod:'Netflix 4K',e:'🎬',client:'João Silva',wpp:'(11)99999-0001',price:35.99,date:'Hoje 14:32',status:'pendente'},
+  {id:1002,prod:'Spotify Premium',e:'🎵',client:'Maria Santos',wpp:'(21)99999-0002',price:45.00,date:'Hoje 13:15',status:'ativo'},
+  {id:1003,prod:'TV Digital',e:'📺',client:'Carlos Melo',wpp:'(11)99999-0003',price:35.00,date:'Hoje 12:08',status:'ativo'},
+  {id:1004,prod:'Disney+ 4K',e:'🏰',client:'Ana Costa',wpp:'(31)99999-0004',price:29.99,date:'Hoje 11:44',status:'pendente'},
+  {id:1005,prod:'ChatGPT Plus',e:'🤖',client:'Pedro Lima',wpp:'(85)99999-0005',price:34.99,date:'Hoje 10:30',status:'ativo'},
+  {id:1006,prod:'HBO Max',e:'🔴',client:'Lucia Ferreira',wpp:'(11)99999-0006',price:29.99,date:'Hoje 09:12',status:'vencido'},
+  {id:1007,prod:'YouTube Premium',e:'▶️',client:'Bruno Alves',wpp:'(47)99999-0007',price:14.99,date:'Ontem 22:50',status:'ativo'},
+  {id:1008,prod:'Canva Pro',e:'🎨',client:'Fernanda Cruz',wpp:'(11)99999-0008',price:20.00,date:'Ontem 20:10',status:'pendente'},
+];
 
-function doAdminLogin(){
-  const email=document.getElementById('adm-email').value;
-  const pass=document.getElementById('adm-pass').value;
-  const code=document.getElementById('adm-2fa').value;
-  if(!email||!pass||!code){showToast('Preencha todos os campos');return;}
-  // Demo: aceita credenciais de demonstração OU as reais
-  const validEmail=email===ADMIN_CREDENTIALS.email||email.includes('@');
-  const validPass=pass.length>=6;
-  const valid2fa=code.length===6&&/^\d+$/.test(code);
-  if(!validEmail){showToast('❌ Email inválido');return;}
-  if(!validPass){showToast('❌ Senha incorreta');return;}
-  if(!valid2fa){showToast('❌ Código 2FA deve ter 6 dígitos');return;}
-  adminUser={email,loginAt:new Date().toISOString(),ip:'187.xxx.xxx.01'};
-  showToast('✅ Acesso autorizado — sessão iniciada');
+const CLIENTS=[
+  {id:1,name:'João Silva',email:'joao@email.com',wpp:'(11)99999-0001',pts:340,orders:3,status:'ativo',ip:'187.xxx.01',loc:'São Paulo, SP',dev:'iPhone 14',flag:false},
+  {id:2,name:'Maria Santos',email:'maria@email.com',wpp:'(21)99999-0002',pts:1240,orders:8,status:'ativo',ip:'189.xxx.02',loc:'Rio de Janeiro, RJ',dev:'Android',flag:false},
+  {id:3,name:'Carlos Melo',email:'carlos@email.com',wpp:'(11)99999-0003',pts:560,orders:5,status:'ativo',ip:'USA.xxx.03',loc:'⚠️ EUA',dev:'Chrome PC',flag:true},
+  {id:4,name:'Ana Costa',email:'ana@email.com',wpp:'(31)99999-0004',pts:120,orders:1,status:'ativo',ip:'177.xxx.04',loc:'Belo Horizonte, MG',dev:'Samsung Galaxy',flag:false},
+  {id:5,name:'Pedro Lima',email:'pedro@email.com',wpp:'(85)99999-0005',pts:4200,orders:18,status:'ativo',ip:'200.xxx.05',loc:'Fortaleza, CE',dev:'iPhone 13',flag:false},
+];
+
+// Team stored in localStorage
+function getTeam(){
+  return JSON.parse(localStorage.getItem('ld_team')||'[{"id":1,"name":"Você (Dono)","email":"admin@litorale.com","role":"dono","obs":"","online":true}]');
+}
+function saveTeam(t){localStorage.setItem('ld_team',JSON.stringify(t));}
+
+const AUDIT_LOG=[
+  {ico:'🔑',msg:'<b>Você</b> fez login no painel admin',meta:'Hoje 14:00 • IP 187.x.x.1'},
+  {ico:'✅',msg:'<b>Rafael B.</b> confirmou entrega: Netflix 4K — João Silva',meta:'Hoje 13:45'},
+  {ico:'🔔',msg:'<b>Ana L.</b> enviou notificação push para 312 usuários',meta:'Hoje 12:30'},
+  {ico:'💰',msg:'<b>Você</b> atualizou preço: Spotify R$ 71,70 → R$ 45,00',meta:'Hoje 10:15'},
+  {ico:'⚠️',msg:'<b>Sistema</b> detectou acesso suspeito: Carlos M. — EUA',meta:'Hoje 09:00'},
+];
+
+// ======= AUTH =======
+// Credenciais — troque aqui para suas credenciais reais
+const ADMIN_USERS=[
+  {email:'admin@litorale.com', pass:'Admin123', code:'123456', role:'dono', name:'Admin'},
+  // Adicione mais membros abaixo:
+  // {email:'ana@litorale.com', pass:'SenhaAna123', code:'654321', role:'editor', name:'Ana Lima'},
+];
+
+let sessionUser=null;
+let maintOn=true;
+let prevScreen=null;
+
+function doLogin(){
+  const email=document.getElementById('l-email').value.trim();
+  const pass=document.getElementById('l-pass').value;
+  const code=document.getElementById('l-2fa').value.trim();
+  const err=document.getElementById('l-err');
+  err.style.display='none';
+  if(!email||!pass||!code){err.textContent='Preencha todos os campos.';err.style.display='block';return;}
+  if(code.length!==6||!/^\d+$/.test(code)){err.textContent='Código 2FA deve ter exatamente 6 dígitos.';err.style.display='block';return;}
+  const user=ADMIN_USERS.find(u=>u.email===email&&u.pass===pass&&u.code===code);
+  if(!user){err.textContent='Email, senha ou código 2FA incorretos.';err.style.display='block';return;}
+  sessionUser={...user,loginAt:new Date().toISOString()};
+  toast('✅ Bem-vindo, '+user.name+'!');
   setTimeout(()=>{
-    document.getElementById('screen-login').classList.remove('active');
-    document.getElementById('screen-dash').classList.add('active');
-    document.getElementById('admin-nav').style.display='flex';
+    document.getElementById('s-login').classList.remove('active');
+    document.getElementById('s-dash').classList.add('active');
+    document.getElementById('bnav').style.display='flex';
     initDash();
-  },800);
+  },700);
 }
 
 function doLogout(){
-  adminUser=null;
+  sessionUser=null;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-login').classList.add('active');
-  document.getElementById('admin-nav').style.display='none';
-  showToast('Sessão encerrada com segurança');
+  document.getElementById('bnav').style.display='none';
+  document.getElementById('s-login').classList.add('active');
+  document.getElementById('l-email').value='';
+  document.getElementById('l-pass').value='';
+  document.getElementById('l-2fa').value='';
+  toast('Sessão encerrada com segurança.');
 }
 
-function navAdmin(tab,el){
+// ======= NAVIGATION =======
+function goScreen(id){
+  prevScreen=document.querySelector('.screen.active')?.id||null;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  if(el)el.classList.add('active');
-  if(tab==='dash'){document.getElementById('screen-dash').classList.add('active');}
-  else if(tab==='orders'){document.getElementById('screen-orders').classList.add('active');renderOrders(MOCK_ORDERS);}
-  else if(tab==='clients'){document.getElementById('screen-clients').classList.add('active');renderClients(MOCK_CLIENTS);}
-  else if(tab==='finance'){document.getElementById('screen-finance').classList.add('active');}
-  else if(tab==='more'){document.getElementById('screen-more').classList.add('active');renderAudit();}
+  document.getElementById(id).classList.add('active');
+  const sc=document.querySelector('#'+id+' .scroll');
+  if(sc)sc.scrollTop=0;
 }
 
+function goBack(){
+  if(prevScreen)goScreen(prevScreen);
+  else goScreen('s-dash');
+}
+
+function nav(tab,el){
+  if(el){document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));el.classList.add('active');}
+  const map={dash:'s-dash',orders:'s-orders',clients:'s-clients',products:'s-products',finance:'s-finance',team:'s-team',notifs:'s-notifs'};
+  if(map[tab]){
+    goScreen(map[tab]);
+    if(tab==='orders')renderOrders(ORDERS);
+    if(tab==='clients')renderClients(CLIENTS);
+    if(tab==='products')renderProducts(PRODUCTS);
+    if(tab==='finance')renderFinance();
+    if(tab==='team')renderTeam();
+    if(tab==='notifs')renderNotifHist();
+  }
+}
+
+function openMore(){document.getElementById('mo-more').classList.add('open');}
+function closeMore(e){if(!e||e.target===document.getElementById('mo-more'))document.getElementById('mo-more').classList.remove('open');}
+
+// ======= DASHBOARD =======
 function initDash(){
   const h=new Date().getHours();
-  const greet=h<12?"Bom dia":h<18?"Boa tarde":"Boa noite";
-  document.getElementById('dash-greeting').textContent=greet+', Admin 👋';
-  document.getElementById('dash-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  renderChart();renderRecentOrders();
+  const g=h<12?"Bom dia":h<18?"Boa tarde":"Boa noite";
+  document.getElementById('d-greet').textContent=g+", "+(sessionUser?.name||'Admin')+" 👋";
+  document.getElementById('d-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const today=ORDERS.filter(o=>o.date.startsWith('Hoje'));
+  const rev=today.reduce((a,o)=>a+o.price,0);
+  document.getElementById('d-rev').textContent='R$ '+rev.toFixed(2).replace('.',',');
+  document.getElementById('d-orders').textContent=today.length;
+  document.getElementById('d-clients').textContent=CLIENTS.length;
+  document.getElementById('d-renew').textContent=today.filter(o=>o.status==='ativo').length;
+  document.getElementById('d-rev-d').textContent='▲ +12% vs ontem';
+  document.getElementById('d-ord-d').textContent='▲ +5 vs ontem';
+  document.getElementById('d-cli-d').textContent='▲ +8 este mês';
+  document.getElementById('d-ren-d').textContent='▼ -2 vs ontem';
+  renderChart();renderAlerts();renderRecent();
 }
 
 function renderChart(){
   const days=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
   const vals=[820,1240,980,1560,1120,1847,900];
   const max=Math.max(...vals);
-  document.getElementById('chart-bars').innerHTML=days.map((d,i)=>`
-    <div class="chart-bar-col">
-      <div class="chart-bar" style="height:${Math.round((vals[i]/max)*68)}px;${i===5?'background:linear-gradient(180deg,var(--yellow) 0%,#FF8C00 100%);':''}"></div>
-      <div class="chart-label">${d}</div>
-    </div>
-  `).join('');
+  document.getElementById('chart').innerHTML=days.map((d,i)=>`
+    <div class="cbarcol">
+      <div class="cbar" style="height:${Math.round(vals[i]/max*65)}px;${i===5?'background:var(--yellow);':''}"></div>
+      <div class="clbl">${d}</div>
+    </div>`).join('');
 }
 
-function renderRecentOrders(){
-  document.getElementById('recent-orders').innerHTML=MOCK_ORDERS.slice(0,4).map(o=>`
-    <div class="order-row fade-in" onclick="openOrderDetail(${o.id})">
-      <div class="order-emoji">${o.emoji}</div>
-      <div class="order-info">
-        <div class="order-name">${o.product}</div>
-        <div class="order-client">${o.client}</div>
-      </div>
-      <div class="order-right">
-        <div class="order-price">R$ ${o.price.toFixed(2)}</div>
-        <span class="tag ${o.status==='ativo'?'tg':o.status==='pendente'?'tw':'tr'}">${o.status}</span>
-      </div>
-    </div>
-  `).join('');
+function renderAlerts(){
+  document.getElementById('d-alerts').innerHTML=`
+    <div class="ai"><div class="adot ar"></div><div class="ab2"><div class="at">3 assinaturas vencem em 24h</div><div class="ad">Netflix 4K ×2, Spotify ×1</div></div><button class="tag tw" onclick="toast('Lembretes enviados!')" style="cursor:pointer;border:none;">Avisar</button></div>
+    <div class="ai"><div class="adot ay"></div><div class="ab2"><div class="at">5 pedidos aguardando confirmação PIX</div><div class="ad">Confirmar no extrato do banco</div></div><button class="tag ti" onclick="nav('orders',document.getElementById('ni-orders'))" style="cursor:pointer;border:none;">Ver</button></div>
+    <div class="ai"><div class="adot ar"></div><div class="ab2"><div class="at">Acesso suspeito: Carlos Melo</div><div class="ad">IP diferente — localização EUA</div></div><button class="tag tr2" onclick="nav('clients',document.getElementById('ni-clients'))" style="cursor:pointer;border:none;">Ver</button></div>
+    <div class="ai"><div class="adot ag"></div><div class="ab2"><div class="at">Sistema funcionando normalmente</div><div class="ad">Uptime 99.9% • Backup: 2h atrás</div></div><span class="atm">Agora</span></div>`;
 }
 
+function renderRecent(){
+  document.getElementById('d-recent').innerHTML=ORDERS.slice(0,4).map(o=>`
+    <div class="row fade" onclick="openOrder(${o.id})">
+      <div class="emoji-box">${o.e}</div>
+      <div class="ri"><div class="rn">${o.prod}</div><div class="rs">${o.client}</div></div>
+      <div class="rr"><div class="rp">R$ ${o.price.toFixed(2).replace('.',',')}</div><span class="tag ${stTag(o.status)}">${o.status}</span></div>
+    </div>`).join('');
+}
+
+// ======= ORDERS =======
 function renderOrders(list){
-  document.getElementById('orders-list').innerHTML=list.map(o=>`
-    <div class="order-row fade-in" onclick="openOrderDetail(${o.id})">
-      <div class="order-emoji">${o.emoji}</div>
-      <div class="order-info">
-        <div class="order-name">${o.product}</div>
-        <div class="order-client">${o.client} • ${o.date}</div>
-      </div>
-      <div class="order-right">
-        <div class="order-price">R$ ${o.price.toFixed(2)}</div>
-        <span class="tag ${o.status==='ativo'?'tg':o.status==='pendente'?'tw':'tr'}">${o.status}</span>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderClients(list){
-  document.getElementById('clients-list').innerHTML=list.map(c=>`
-    <div class="client-row fade-in" onclick="openClientDetail(${c.id})">
-      <div class="client-av">${c.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase()}</div>
-      <div class="client-info">
-        <div class="client-name">
-          ${c.name}
-          ${c.flag?'<span class="tag tr">⚠️ Suspeito</span>':''}
-        </div>
-        <div class="client-sub">${c.loc} • ${c.device}</div>
-        ${c.flag?`<div class="security-flag">⚠️ IP fora do Brasil detectado</div>`:''}
-      </div>
-      <div class="client-right">
-        <div class="client-pts">${c.points} pts</div>
-        <div class="client-orders">${c.orders} pedidos</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderAudit(){
-  document.getElementById('audit-log').innerHTML=AUDIT.map(a=>`
-    <div class="log-row fade-in">
-      <div class="log-icon">${a.icon}</div>
-      <div class="log-body">${a.msg}<div class="log-meta">${a.meta}</div></div>
-    </div>
-  `).join('');
-}
-
-function openOrderDetail(id){
-  const o=MOCK_ORDERS.find(x=>x.id===id);if(!o)return;
-  document.getElementById('modal-body-content').innerHTML=`
-    <div class="modal-header">
-      <div class="modal-title">${o.emoji} ${o.product}</div>
-      <div class="modal-sub">Pedido #${o.id} • <span class="tag ${o.status==='ativo'?'tg':o.status==='pendente'?'tw':'tr'}">${o.status}</span></div>
-    </div>
-    <div class="modal-body">
-      <div class="detail-row"><span>Cliente</span><span>${o.client}</span></div>
-      <div class="detail-row"><span>Valor</span><span style="color:var(--green);font-weight:700;">R$ ${o.price.toFixed(2)}</span></div>
-      <div class="detail-row"><span>Data</span><span>${o.date}</span></div>
-      <div class="detail-row"><span>Status</span><span>${o.status}</span></div>
-    </div>
-    <div class="modal-actions">
-      ${o.status==='pendente'?`<button class="btn-action btn-green" onclick="confirmOrder(${o.id})">✅ Confirmar entrega</button>`:''}
-      <button class="btn-action btn-blue" onclick="showToast('WhatsApp aberto!')">💬 Falar com cliente</button>
-      ${o.status==='ativo'?`<button class="btn-action btn-ghost" onclick="showToast('Renovação solicitada!')">🔄 Solicitar renovação</button>`:''}
-      <button class="btn-action btn-danger" onclick="showToast('Pedido cancelado')">🚫 Cancelar pedido</button>
-    </div>
-  `;
-  openModal();
-}
-
-function openClientDetail(id){
-  const c=MOCK_CLIENTS.find(x=>x.id===id);if(!c)return;
-  document.getElementById('modal-body-content').innerHTML=`
-    <div class="modal-header">
-      <div class="modal-title">${c.name} ${c.flag?'⚠️':''}</div>
-      <div class="modal-sub">${c.email}</div>
-    </div>
-    <div class="modal-body">
-      <div class="detail-row"><span>WhatsApp</span><span>${c.wpp}</span></div>
-      <div class="detail-row"><span>Localização</span><span>${c.loc}</span></div>
-      <div class="detail-row"><span>IP registrado</span><span style="font-family:monospace;font-size:11px;">${c.ip}</span></div>
-      <div class="detail-row"><span>Dispositivo</span><span>${c.device}</span></div>
-      <div class="detail-row"><span>Pedidos</span><span>${c.orders}</span></div>
-      <div class="detail-row"><span>Pontos</span><span style="color:var(--green);">${c.points} pts</span></div>
-      ${c.flag?`<div class="detail-row"><span>⚠️ Alerta</span><span style="color:var(--red);">Acesso de IP fora do Brasil</span></div>`:''}
-    </div>
-    <div class="modal-actions">
-      <button class="btn-action btn-blue" onclick="showToast('WhatsApp aberto!')">💬 Chamar no WhatsApp</button>
-      <button class="btn-action btn-ghost" onclick="showToast('Nota salva!')">📝 Adicionar nota</button>
-      ${c.flag?`<button class="btn-action btn-danger" onclick="showToast('Cliente bloqueado')">🚫 Bloquear cliente</button>`:''}
-    </div>
-  `;
-  openModal();
-}
-
-function confirmOrder(id){
-  const o=MOCK_ORDERS.find(x=>x.id===id);
-  if(o){o.status='ativo';}
-  showToast('✅ Entrega confirmada!');closeModal();renderOrders(MOCK_ORDERS);
+  document.getElementById('ord-count').textContent=list.filter(o=>o.date.startsWith('Hoje')).length+' hoje';
+  document.getElementById('orders-list').innerHTML=list.length?list.map(o=>`
+    <div class="row fade" onclick="openOrder(${o.id})">
+      <div class="emoji-box">${o.e}</div>
+      <div class="ri"><div class="rn">${o.prod}</div><div class="rs">${o.client} • ${o.date}</div></div>
+      <div class="rr"><div class="rp">R$ ${o.price.toFixed(2).replace('.',',')}</div><span class="tag ${stTag(o.status)}">${o.status}</span></div>
+    </div>`).join(''):'<div style="padding:24px;text-align:center;font-size:13px;color:var(--g4);">Nenhum pedido encontrado</div>';
 }
 
 function filterOrders(q){
-  const f=MOCK_ORDERS.filter(o=>o.product.toLowerCase().includes(q.toLowerCase())||o.client.toLowerCase().includes(q.toLowerCase()));
+  const f=ORDERS.filter(o=>o.prod.toLowerCase().includes(q.toLowerCase())||o.client.toLowerCase().includes(q.toLowerCase()));
   renderOrders(f);
 }
-function filterOrderStatus(s,el){
-  document.querySelectorAll('#screen-orders .seg-pill').forEach(p=>p.classList.remove('active'));
+
+function filterOrdStatus(s,el){
+  document.querySelectorAll('#s-orders .pill').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');
-  const f=s==='todos'?MOCK_ORDERS:MOCK_ORDERS.filter(o=>o.status===s);
-  renderOrders(f);
+  renderOrders(s==='todos'?ORDERS:ORDERS.filter(o=>o.status===s));
 }
+
+function openOrder(id){
+  const o=ORDERS.find(x=>x.id===id);if(!o)return;
+  const wMsg=encodeURIComponent('Olá '+o.client+'! Seu pedido '+o.prod+' foi confirmado. Qualquer dúvida estou aqui!');
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">${o.e} ${o.prod}</div><div class="msub">Pedido #${o.id} • <span class="tag ${stTag(o.status)}">${o.status}</span></div></div>
+    <div class="mbody">
+      <div class="drow"><span>Cliente</span><span>${o.client}</span></div>
+      <div class="drow"><span>WhatsApp</span><span>${o.wpp}</span></div>
+      <div class="drow"><span>Valor</span><span style="color:var(--green);font-weight:700;">R$ ${o.price.toFixed(2).replace('.',',')}</span></div>
+      <div class="drow"><span>Data</span><span>${o.date}</span></div>
+      <div class="drow"><span>Status</span><span>${o.status}</span></div>
+    </div>
+    <div class="macts">
+      ${o.status==='pendente'?`<button class="mact mact-g" onclick="confirmOrd(${o.id})">✅ Confirmar entrega</button>`:''}
+      <button class="mact mact-b" onclick="window.open('https://wa.me/55${o.wpp.replace(/\D/g,'')}?text=${wMsg}','_blank');closeMo()">💬 WhatsApp cliente</button>
+      ${o.status==='ativo'?`<button class="mact mact-gh" onclick="toast('Lembrete enviado!');closeMo()">🔄 Solicitar renovação</button>`:''}
+      <button class="mact mact-r" onclick="toast('Pedido cancelado');closeMo()">🚫 Cancelar pedido</button>
+    </div>`;
+  openMo();
+}
+
+function confirmOrd(id){
+  const o=ORDERS.find(x=>x.id===id);
+  if(o){o.status='ativo';}
+  toast('✅ Entrega confirmada!');closeMo();
+  renderOrders(ORDERS);renderRecent();
+}
+
+// ======= CLIENTS =======
+function renderClients(list){
+  document.getElementById('cli-count').textContent=list.filter(c=>c.status==='ativo').length+' ativos';
+  document.getElementById('clients-list').innerHTML=list.length?list.map(c=>`
+    <div class="row fade" onclick="openClient(${c.id})">
+      <div class="av">${initials(c.name)}</div>
+      <div class="ri">
+        <div class="rn" style="display:flex;align-items:center;gap:5px;">${c.name}${c.flag?'<span class="tag tr2">⚠️</span>':''}</div>
+        <div class="rs">${c.loc} • ${c.dev}</div>
+        ${c.flag?'<div style="font-size:10px;color:var(--red);margin-top:2px;">⚠️ IP suspeito detectado</div>':''}
+      </div>
+      <div class="rr"><div class="rp" style="font-size:12px;">${c.pts} pts</div><div class="rd">${c.orders} pedidos</div></div>
+    </div>`).join(''):'<div style="padding:24px;text-align:center;font-size:13px;color:var(--g4);">Nenhum cliente encontrado</div>';
+}
+
 function filterClients(q){
-  const f=MOCK_CLIENTS.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())||c.email.toLowerCase().includes(q.toLowerCase()));
+  const f=CLIENTS.filter(c=>c.name.toLowerCase().includes(q.toLowerCase())||c.email.toLowerCase().includes(q.toLowerCase()));
   renderClients(f);
 }
-function toggleSeg(el){el.classList.toggle('active');}
-function sendNotif(){
-  const t=document.getElementById('notif-title').value;
-  const m=document.getElementById('notif-msg').value;
-  if(!t||!m){showToast('Preencha título e mensagem');return;}
-  showToast('🔔 Notificação enviada para 312 usuários!');
-  document.getElementById('notif-title').value='';
-  document.getElementById('notif-msg').value='';
-}
-function toggleMaintenance(){
-  maintOn=!maintOn;
-  const t=document.getElementById('maint-toggle');
-  const s=document.getElementById('maint-status');
-  t.className='toggle-switch '+(maintOn?'on':'off');
-  s.textContent='App do cliente: '+(maintOn?'online':'em manutenção');
-  showToast(maintOn?'✅ App online':'🔧 Modo manutenção ativado');
-}
-function openModal(id){document.getElementById('modal-overlay').classList.add('open');}
-function closeModal(e){if(!e||e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').classList.remove('open');}
-function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
-// Fix greeting
-(function(){
-  const h=new Date().getHours();
-  const el=document.getElementById('dash-greeting');
-  if(el)el.textContent=(h<12?'Bom dia':h<18?'Boa tarde':'Boa noite')+', Admin 👋';
-  const de=document.getElementById('dash-date');
-  if(de)de.textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-})();
+function filterCliStatus(s,el){
+  document.querySelectorAll('#s-clients .pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  if(s==='todos')renderClients(CLIENTS);
+  else if(s==='ativo')renderClients(CLIENTS.filter(c=>c.status==='ativo'));
+  else if(s==='flag')renderClients(CLIENTS.filter(c=>c.flag));
+}
+
+function openClient(id){
+  const c=CLIENTS.find(x=>x.id===id);if(!c)return;
+  const wMsg=encodeURIComponent('Olá '+c.name+'! Aqui é da Litorale Digital. Como posso ajudar?');
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">${c.name}${c.flag?' ⚠️':''}</div><div class="msub">${c.email}</div></div>
+    <div class="mbody">
+      <div class="drow"><span>WhatsApp</span><span>${c.wpp}</span></div>
+      <div class="drow"><span>Localização</span><span>${c.loc}</span></div>
+      <div class="drow"><span>IP registrado</span><span style="font-family:monospace;font-size:11px;">${c.ip}</span></div>
+      <div class="drow"><span>Dispositivo</span><span>${c.dev}</span></div>
+      <div class="drow"><span>Pedidos</span><span>${c.orders}</span></div>
+      <div class="drow"><span>Pontos</span><span style="color:var(--green);">${c.pts} pts</span></div>
+      ${c.flag?`<div class="drow"><span style="color:var(--red);">⚠️ Alerta</span><span style="color:var(--red);">Acesso de IP fora do Brasil</span></div>`:''}
+    </div>
+    <div class="macts">
+      <button class="mact mact-b" onclick="window.open('https://wa.me/55${c.wpp.replace(/\D/g,'')}?text=${wMsg}','_blank');closeMo()">💬 WhatsApp</button>
+      <button class="mact mact-gh" onclick="toast('Nota salva!');closeMo()">📝 Adicionar nota</button>
+      ${c.flag?`<button class="mact mact-r" onclick="toast('Cliente bloqueado!');closeMo()">🚫 Bloquear cliente</button>`:''}
+    </div>`;
+  openMo();
+}
+
+// ======= PRODUCTS =======
+function renderProducts(list){
+  document.getElementById('prod-list').innerHTML=list.length?list.map(p=>`
+    <div class="prow fade">
+      <div class="emoji-box">${p.e}</div>
+      <div class="pi"><div class="pn">${p.name}</div><div class="pc">${catLabel(p.cat)} • -${p.disc}%</div></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+        <div class="pp">R$ ${p.price.toFixed(2).replace('.',',')}</div>
+        <div style="display:flex;gap:5px;">
+          <div class="tsw ${p.active?'on':'off'}" onclick="toggleProd(${p.id})" style="width:34px;height:18px;"><div class="tknob" style="width:14px;height:14px;top:2px;"></div></div>
+          <button onclick="editProd(${p.id})" style="padding:3px 8px;border-radius:99px;border:.5px solid var(--br2);font-size:11px;cursor:pointer;background:var(--s1);color:var(--w);">✏️</button>
+        </div>
+      </div>
+    </div>`).join(''):'<div style="padding:24px;text-align:center;font-size:13px;color:var(--g4);">Nenhum produto encontrado</div>';
+}
+
+function filterProducts(q){
+  const f=PRODUCTS.filter(p=>p.name.toLowerCase().includes(q.toLowerCase()));
+  renderProducts(f);
+}
+
+function filterProdCat(c,el){
+  document.querySelectorAll('#s-products .pill').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  renderProducts(c==='todos'?PRODUCTS:PRODUCTS.filter(p=>p.cat===c));
+}
+
+function toggleProd(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(p){p.active=!p.active;toast(p.name+(p.active?' ativado':' desativado'));renderProducts(PRODUCTS);}
+}
+
+function openAddProduct(){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">Adicionar produto</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Nome</label><input class="finput" type="text" id="np-name" placeholder="Ex: Netflix 4K"></div>
+      <div class="fgroup"><label class="flabel">Categoria</label>
+        <select class="fselect" id="np-cat">
+          <option value="streaming">Streaming</option><option value="musica">Música</option>
+          <option value="internet">Internet</option><option value="ferramentas">Ferramentas</option>
+          <option value="tv">TV Digital</option><option value="cursos">Cursos</option>
+        </select>
+      </div>
+      <div class="fgroup"><label class="flabel">Emoji</label><input class="finput" type="text" id="np-e" placeholder="🎬" maxlength="2"></div>
+      <div class="fgroup"><label class="flabel">Preço (R$)</label><input class="finput" type="number" id="np-price" placeholder="35.99" step="0.01"></div>
+      <div class="fgroup"><label class="flabel">Preço original (R$)</label><input class="finput" type="number" id="np-old" placeholder="44.90" step="0.01"></div>
+      <div class="fgroup"><label class="flabel">Descrição</label><textarea class="ftextarea" id="np-desc" placeholder="Descrição do produto..."></textarea></div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="saveNewProd()">✅ Salvar produto</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+
+function saveNewProd(){
+  const name=document.getElementById('np-name').value;
+  const price=parseFloat(document.getElementById('np-price').value);
+  const old=parseFloat(document.getElementById('np-old').value);
+  if(!name||isNaN(price)){toast('Preencha nome e preço');return;}
+  const disc=old?Math.round((old-price)/old*100):0;
+  PRODUCTS.push({id:Date.now(),name,cat:document.getElementById('np-cat').value,e:document.getElementById('np-e').value||'📦',price,old:old||price,disc,active:true,desc:document.getElementById('np-desc').value,benefits:[]});
+  toast('✅ Produto "'+name+'" adicionado!');closeMo();renderProducts(PRODUCTS);
+}
+
+function editProd(id){
+  const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">Editar: ${p.name}</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Nome</label><input class="finput" type="text" id="ep-name" value="${p.name}"></div>
+      <div class="fgroup"><label class="flabel">Preço (R$)</label><input class="finput" type="number" id="ep-price" value="${p.price}" step="0.01"></div>
+      <div class="fgroup"><label class="flabel">Preço original (R$)</label><input class="finput" type="number" id="ep-old" value="${p.old}" step="0.01"></div>
+      <div class="fgroup"><label class="flabel">Descrição</label><textarea class="ftextarea" id="ep-desc">${p.desc}</textarea></div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="saveProdEdit(${p.id})">✅ Salvar alterações</button>
+      <button class="mact mact-r" onclick="deleteProd(${p.id})">🗑️ Excluir produto</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+
+function saveProdEdit(id){
+  const p=PRODUCTS.find(x=>x.id===id);if(!p)return;
+  p.name=document.getElementById('ep-name').value;
+  p.price=parseFloat(document.getElementById('ep-price').value)||p.price;
+  p.old=parseFloat(document.getElementById('ep-old').value)||p.old;
+  p.desc=document.getElementById('ep-desc').value;
+  p.disc=Math.round((p.old-p.price)/p.old*100);
+  toast('✅ Produto atualizado!');closeMo();renderProducts(PRODUCTS);
+}
+
+function deleteProd(id){
+  const idx=PRODUCTS.findIndex(x=>x.id===id);
+  if(idx>-1){PRODUCTS.splice(idx,1);}
+  toast('🗑️ Produto removido!');closeMo();renderProducts(PRODUCTS);
+}
+
+// ======= FINANCE =======
+function renderFinance(){
+  document.getElementById('fin-top').innerHTML=[
+    ['🎬','Netflix 4K',142,'R$ 5.114'],['🎵','Spotify Premium',98,'R$ 4.410'],
+    ['📺','TV Digital',67,'R$ 2.345'],['🏰','Disney+ 4K',45,'R$ 1.350'],['🤖','ChatGPT Plus',35,'R$ 1.225']
+  ].map(([e,n,q,v])=>`
+    <div class="prow">
+      <div class="emoji-box">${e}</div>
+      <div class="pi"><div class="pn">${n}</div><div class="pc">${q} vendas</div></div>
+      <div class="pp">${v}</div>
+    </div>`).join('');
+  document.getElementById('fin-hist').innerHTML=ORDERS.map(o=>`
+    <div class="row">
+      <div class="emoji-box">${o.e}</div>
+      <div class="ri"><div class="rn">${o.prod}</div><div class="rs">${o.client} • ${o.date}</div></div>
+      <div class="rr"><div class="rp">R$ ${o.price.toFixed(2).replace('.',',')}</div><span class="tag ${stTag(o.status)}">${o.status}</span></div>
+    </div>`).join('');
+}
+
+function exportFinance(){
+  const rows=[['Produto','Cliente','Valor','Data','Status'],...ORDERS.map(o=>[o.prod,o.client,'R$ '+o.price.toFixed(2),o.date,o.status])];
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const b=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='litorale-financeiro.csv';a.click();
+  toast('📊 Relatório exportado em CSV!');
+}
+
+// ======= TEAM =======
+function renderTeam(){
+  const team=getTeam();
+  document.getElementById('team-list').innerHTML=team.map(m=>`
+    <div class="mrow fade">
+      <div class="mavwrap"><div class="av">${initials(m.name)}</div>${m.online?'<div class="monline"></div>':''}</div>
+      <div class="minfo">
+        <div class="mname">${m.name} <span class="tag ${m.role==='dono'?'tg':m.role==='editor'?'ti':'tw'}">${m.role}</span></div>
+        <div class="mrole">${m.email}${m.obs?' • '+m.obs:''}</div>
+      </div>
+      <div class="mbtns">
+        ${m.role!=='dono'?`<button class="mbtn" onclick="editMember(${m.id})">✏️</button><button class="mbtn mbtn-r" onclick="removeMember(${m.id})">✕</button>`:''}
+      </div>
+    </div>`).join('');
+  renderAudit();
+}
+
+function addMember(){
+  const name=document.getElementById('m-name').value.trim();
+  const email=document.getElementById('m-email').value.trim();
+  const wpp=document.getElementById('m-wpp').value.trim();
+  const pass=document.getElementById('m-pass').value;
+  const code=document.getElementById('m-2fa').value.trim();
+  const role=document.getElementById('m-role').value;
+  const obs=document.getElementById('m-obs').value.trim();
+  if(!name||!email||!pass||!code){toast('Preencha nome, email, senha e código 2FA');return;}
+  if(pass.length<8){toast('Senha deve ter mínimo 8 caracteres');return;}
+  if(code.length!==6||!/^\d+$/.test(code)){toast('Código 2FA deve ter 6 dígitos');return;}
+  const team=getTeam();
+  if(team.find(m=>m.email===email)){toast('Este email já está cadastrado');return;}
+  const newMember={id:Date.now(),name,email,wpp,role,obs,online:false};
+  team.push(newMember);
+  saveTeam(team);
+  // Adiciona nas credenciais de login (em memória — em produção seria no backend)
+  ADMIN_USERS.push({email,pass,code,role,name});
+  document.getElementById('m-name').value='';
+  document.getElementById('m-email').value='';
+  document.getElementById('m-wpp').value='';
+  document.getElementById('m-pass').value='';
+  document.getElementById('m-2fa').value='';
+  document.getElementById('m-obs').value='';
+  toast('✅ Funcionário "'+name+'" cadastrado com sucesso!');
+  renderTeam();
+}
+
+function removeMember(id){
+  const team=getTeam().filter(m=>m.id!==id);
+  saveTeam(team);
+  toast('Membro removido');renderTeam();
+}
+
+function editMember(id){
+  const m=getTeam().find(x=>x.id===id);if(!m)return;
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">Editar: ${m.name}</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Nome</label><input class="finput" id="em-name" value="${m.name}"></div>
+      <div class="fgroup"><label class="flabel">Nível de acesso</label>
+        <select class="fselect" id="em-role">
+          <option value="editor" ${m.role==='editor'?'selected':''}>Editor</option>
+          <option value="suporte" ${m.role==='suporte'?'selected':''}>Suporte</option>
+          <option value="dono" ${m.role==='dono'?'selected':''}>Dono</option>
+        </select>
+      </div>
+      <div class="fgroup"><label class="flabel">Observação</label><input class="finput" id="em-obs" value="${m.obs||''}"></div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="saveMemberEdit(${id})">✅ Salvar</button>
+      <button class="mact mact-r" onclick="removeMember(${id});closeMo()">🗑️ Remover membro</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+
+function saveMemberEdit(id){
+  const team=getTeam();
+  const m=team.find(x=>x.id===id);if(!m)return;
+  m.name=document.getElementById('em-name').value;
+  m.role=document.getElementById('em-role').value;
+  m.obs=document.getElementById('em-obs').value;
+  saveTeam(team);toast('✅ Membro atualizado!');closeMo();renderTeam();
+}
+
+function renderAudit(){
+  document.getElementById('audit-log').innerHTML=AUDIT_LOG.map(a=>`
+    <div class="logrow fade"><div class="logico">${a.ico}</div><div class="logb">${a.msg}<div class="logm">${a.meta}</div></div></div>`).join('');
+}
+
+// ======= NOTIFS =======
+function sendNotif(){
+  const t=document.getElementById('n-title').value;
+  const m=document.getElementById('n-msg').value;
+  if(!t||!m){toast('Preencha título e mensagem');return;}
+  const seg=document.getElementById('n-seg').options[document.getElementById('n-seg').selectedIndex].text;
+  toast('🔔 Notificação enviada para '+seg+'!');
+  AUDIT_LOG.unshift({ico:'🔔',msg:`<b>${sessionUser?.name||'Admin'}</b> enviou notificação: "${t}"`,meta:'Agora'});
+  document.getElementById('n-title').value='';
+  document.getElementById('n-msg').value='';
+  renderNotifHist();
+}
+
+function renderNotifHist(){
+  document.getElementById('notif-hist').innerHTML=`
+    <div class="nhi"><div class="nhic">🔥</div><div class="nhb"><div class="nht">Oferta relâmpago: Netflix 4K</div><div class="nhm">Enviado há 2h • 312 destinatários</div></div><div class="nhr">68% abriram</div></div>
+    <div class="nhi"><div class="nhic">⏰</div><div class="nhb"><div class="nht">Lembrete: assinatura vencendo</div><div class="nhm">Enviado ontem • 45 destinatários</div></div><div class="nhr">82% abriram</div></div>
+    <div class="nhi"><div class="nhic">🎉</div><div class="nhb"><div class="nht">Promoção fim de semana</div><div class="nhm">Enviado há 3 dias • 312 destinatários</div></div><div class="nhr">54% abriram</div></div>`;
+}
+
+// ======= CONFIG =======
+function toggleMaint(){
+  maintOn=!maintOn;
+  const sw=document.getElementById('maint-sw');
+  sw.className='tsw '+(maintOn?'on':'off');
+  document.getElementById('maint-lbl').textContent='App do cliente: '+(maintOn?'online':'em manutenção');
+  toast(maintOn?'✅ App online':'🔧 Modo manutenção ativado');
+}
+
+function openChangePass(){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">Alterar senha</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Senha atual</label><input class="finput" type="password" id="cp-old" placeholder="Sua senha atual"></div>
+      <div class="fgroup"><label class="flabel">Nova senha</label><input class="finput" type="password" id="cp-new" placeholder="Mínimo 8 caracteres"></div>
+      <div class="fgroup"><label class="flabel">Confirmar nova senha</label><input class="finput" type="password" id="cp-conf" placeholder="Repita a nova senha"></div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="changePass()">✅ Alterar senha</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+
+function changePass(){
+  const np=document.getElementById('cp-new').value;
+  const cf=document.getElementById('cp-conf').value;
+  if(np.length<8){toast('Senha deve ter mínimo 8 caracteres');return;}
+  if(np!==cf){toast('Senhas não coincidem');return;}
+  toast('✅ Senha alterada com sucesso!');closeMo();
+}
+
+function openChange2FA(){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">Alterar código 2FA</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Código 2FA atual</label><input class="finput" type="text" id="c2-old" placeholder="6 dígitos" maxlength="6" inputmode="numeric"></div>
+      <div class="fgroup"><label class="flabel">Novo código 2FA</label><input class="finput" type="text" id="c2-new" placeholder="6 dígitos" maxlength="6" inputmode="numeric"></div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="change2FA()">✅ Alterar código</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+
+function change2FA(){
+  const n=document.getElementById('c2-new').value;
+  if(n.length!==6||!/^\d+$/.test(n)){toast('Código deve ter 6 dígitos numéricos');return;}
+  toast('✅ Código 2FA alterado!');closeMo();
+}
+
+// ======= HELPERS =======
+function stTag(s){return s==='ativo'?'tg':s==='pendente'?'tw':'tr2';}
+function catLabel(c){return{streaming:'Streaming',musica:'Música',internet:'Internet',ferramentas:'Ferramentas',tv:'TV Digital',cursos:'Cursos'}[c]||c;}
+function initials(n){return n.split(' ').map(x=>x[0]).join('').substring(0,2).toUpperCase();}
+function openMo(){document.getElementById('mo-main').classList.add('open');}
+function closeMo(e){if(!e||e.target===document.getElementById('mo-main'))document.getElementById('mo-main').classList.remove('open');}
+function toast(m){const t=document.getElementById('toast-el');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function openAddMember(){document.getElementById('m-name').focus();document.getElementById('m-name').scrollIntoView({behavior:'smooth'});}
 </script>
 </body>
 </html>
