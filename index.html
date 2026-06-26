@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0A1628">
+<meta name="description" content="Litorale Digital — Streaming, Internet, Ferramentas e muito mais.">
+<title>Litorale Digital</title>
+<style>
+:root {
+  --blue: #0057FF;
+  --blue-dark: #0A1628;
+  --blue-mid: #0D2147;
+  --blue-light: #1A3A6B;
+  --green: #00C896;
+  --green-dark: #00A07A;
+  --green-glow: rgba(0,200,150,0.12);
+  --white: #FFFFFF;
+  --white-90: rgba(255,255,255,0.90);
+  --white-70: rgba(255,255,255,0.70);
+  --white-15: rgba(255,255,255,0.15);
+  --white-08: rgba(255,255,255,0.08);
+  --white-05: rgba(255,255,255,0.05);
+  --gray-100: #F0F4FF;
+  --gray-200: #D6E0FF;
+  --gray-400: #8A9BC4;
+  --gray-600: #4A5C8A;
+  --border: rgba(255,255,255,0.10);
+  --border-green: rgba(0,200,150,0.30);
+  --border-white: rgba(255,255,255,0.25);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-xs: 8px;
+  --transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --shadow: 0 8px 32px rgba(0,0,0,0.3);
+  --shadow-green: 0 4px 20px rgba(0,200,150,0.25);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:var(--font);background:var(--blue-dark);color:var(--white);display:flex;flex-direction:column;max-width:430px;margin:0 auto;position:relative;}
+
+.screen{display:none;flex-direction:column;height:100%;overflow:hidden;}
+.screen.active{display:flex;}
+.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:90px;}
+.scroll-area::-webkit-scrollbar{display:none;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;position:sticky;top:0;z-index:10;background:linear-gradient(180deg,var(--blue-dark) 75%,transparent);}
+.logo{display:flex;align-items:center;gap:9px;}
+.logo-mark{position:relative;width:34px;height:34px;}
+.logo-mark-bg{width:34px;height:34px;background:linear-gradient(135deg,var(--blue) 0%,var(--green) 100%);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:white;letter-spacing:-0.5px;}
+.logo-verify{position:absolute;bottom:-3px;right:-3px;width:14px;height:14px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.logo-verify svg{width:10px;height:10px;}
+.logo-name{font-size:15px;font-weight:700;letter-spacing:-0.3px;}
+.logo-name span{color:var(--green);}
+.logo-name-badge{display:flex;align-items:center;gap:4px;}
+.brand-verify{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;background:var(--blue);border-radius:50%;flex-shrink:0;}
+.brand-verify svg{width:9px;height:9px;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:var(--white-08);border:0.5px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--white);transition:var(--transition);}
+.icon-btn:hover{background:var(--white-15);}
+.notif-dot{position:relative;}
+.notif-dot::after{content:'';position:absolute;top:7px;right:7px;width:7px;height:7px;background:var(--green);border-radius:50%;border:1.5px solid var(--blue-dark);}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:rgba(13,33,71,0.97);backdrop-filter:blur(24px);border-top:0.5px solid var(--border);display:flex;padding:10px 0 22px;z-index:100;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:4px;border:none;background:none;color:var(--gray-400);transition:var(--transition);}
+.nav-item.active{color:var(--green);}
+.nav-item svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.nav-item span{font-size:10px;font-weight:500;}
+
+/* HERO */
+.hero{margin:4px 16px 20px;background:linear-gradient(135deg,var(--blue-mid) 0%,var(--blue-light) 100%);border-radius:var(--radius);padding:22px 20px 20px;border:0.5px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,200,150,0.12) 0%,transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-20px;width:150px;height:150px;background:radial-gradient(circle,rgba(0,87,255,0.10) 0%,transparent 70%);pointer-events:none;}
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-glow);border:0.5px solid var(--border-green);border-radius:99px;padding:4px 10px;font-size:11px;color:var(--green);font-weight:600;}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.verified-seal{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.20);border-radius:99px;padding:4px 10px;}
+.verified-seal-icon{width:14px;height:14px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.verified-seal-icon svg{width:9px;height:9px;}
+.verified-seal-text{font-size:10px;color:var(--white-90);font-weight:600;letter-spacing:0.3px;}
+.hero h1{font-size:22px;font-weight:800;line-height:1.2;margin-bottom:8px;letter-spacing:-0.6px;color:var(--white);}
+.hero h1 em{font-style:normal;color:var(--green);}
+.hero p{font-size:13px;color:var(--white-70);line-height:1.5;margin-bottom:18px;}
+.hero-actions{display:flex;gap:10px;}
+.btn-primary{background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:var(--blue-dark);border:none;border-radius:99px;padding:11px 22px;font-size:13px;font-weight:700;cursor:pointer;transition:var(--transition);box-shadow:var(--shadow-green);white-space:nowrap;}
+.btn-primary:active{transform:scale(0.97);}
+.btn-ghost{background:var(--white-08);color:var(--white);border:0.5px solid var(--border-white);border-radius:99px;padding:11px 20px;font-size:13px;font-weight:500;cursor:pointer;transition:var(--transition);white-space:nowrap;}
+.btn-ghost:active{transform:scale(0.97);}
+
+/* WHITE CARDS SECTION */
+.white-section{background:var(--white);border-radius:var(--radius) var(--radius) 0 0;margin:0 0 0;padding:20px 0 0;min-height:60vh;}
+.white-section-inner{padding:0;}
+
+/* TRUST */
+.trust-row{display:flex;gap:8px;padding:0 16px;margin-bottom:20px;overflow-x:auto;scrollbar-width:none;}
+.trust-row::-webkit-scrollbar{display:none;}
+.trust-badge{display:flex;align-items:center;gap:6px;background:var(--gray-100);border:0.5px solid #E0E8FF;border-radius:99px;padding:7px 12px;white-space:nowrap;flex-shrink:0;}
+.trust-badge-icon{font-size:13px;}
+.trust-badge-text{font-size:11px;color:#344A7A;font-weight:500;}
+
+/* SECTION HEADER ON WHITE */
+.section-header-white{display:flex;align-items:center;justify-content:space-between;padding:0 16px;margin-bottom:12px;}
+.section-title-white{font-size:16px;font-weight:700;color:#0A1628;}
+.section-link-white{font-size:13px;color:var(--blue);cursor:pointer;font-weight:500;}
+
+/* CATEGORIES ON WHITE */
+.cats-white{display:flex;gap:8px;padding:0 16px;overflow-x:auto;scrollbar-width:none;margin-bottom:20px;}
+.cats-white::-webkit-scrollbar{display:none;}
+.cat-pill{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;border:1.5px solid #E0E8FF;background:white;cursor:pointer;transition:var(--transition);flex-shrink:0;}
+.cat-pill span{font-size:15px;}
+.cat-pill label{font-size:12px;font-weight:500;color:#5A6E9A;cursor:pointer;}
+.cat-pill.active{background:var(--blue-dark);border-color:var(--blue-dark);}
+.cat-pill.active label{color:white;}
+
+/* PRODUCT CARD WHITE */
+.products-grid-white{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px;}
+.product-card-white{background:white;border:1.5px solid #E8EFFF;border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:var(--transition);position:relative;box-shadow:0 2px 12px rgba(0,87,255,0.06);}
+.product-card-white:active{transform:scale(0.97);}
+.product-card-white:hover{border-color:var(--blue);box-shadow:0 4px 20px rgba(0,87,255,0.12);}
+.product-img-white{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:44px;background:var(--gray-100);}
+.discount-badge-white{position:absolute;top:8px;left:8px;background:var(--green);color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;box-shadow:0 2px 8px rgba(0,200,150,0.4);}
+.verified-badge-prod{position:absolute;top:8px;right:8px;width:20px;height:20px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,87,255,0.4);}
+.verified-badge-prod svg{width:12px;height:12px;}
+.product-info-white{padding:10px 12px 12px;}
+.product-cat-white{font-size:10px;color:#8A9BC4;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:4px;font-weight:600;}
+.product-name-white{font-size:13px;font-weight:700;color:#0A1628;margin-bottom:6px;line-height:1.3;}
+.product-pricing-white{display:flex;align-items:baseline;gap:5px;}
+.price-old-white{font-size:11px;color:#B0BCD8;text-decoration:line-through;}
+.price-new-white{font-size:15px;font-weight:800;color:var(--green);}
+
+/* VERIFIED SEAL SECTION */
+.verify-strip{margin:0 16px 20px;background:linear-gradient(135deg,#EEF3FF 0%,#E6F9F3 100%);border:1.5px solid #C5D8FF;border-radius:var(--radius-sm);padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.verify-strip-icon{width:40px;height:40px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.verify-strip-icon svg{width:22px;height:22px;}
+.verify-strip-body{}
+.verify-strip-title{font-size:13px;font-weight:700;color:#0A1628;margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.verify-strip-desc{font-size:11px;color:#5A6E9A;line-height:1.4;}
+
+/* PRODUCT DETAIL */
+.detail-hero{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);padding:32px 20px 28px;text-align:center;position:relative;}
+.detail-emoji{font-size:72px;margin-bottom:4px;display:block;}
+.back-btn{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:0.5px solid var(--border-white);display:flex;align-items:center;justify-content:center;cursor:pointer;color:white;font-size:18px;}
+.detail-white-body{background:white;border-radius:var(--radius) var(--radius) 0 0;margin-top:-16px;padding:24px 20px 120px;}
+.detail-cat-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.detail-cat-label{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+.detail-verified{display:flex;align-items:center;gap:4px;background:#EEF3FF;border-radius:99px;padding:3px 8px;}
+.detail-verified-icon{width:13px;height:13px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.detail-verified-icon svg{width:8px;height:8px;}
+.detail-verified-text{font-size:10px;color:var(--blue);font-weight:600;}
+.detail-name{font-size:24px;font-weight:800;color:#0A1628;letter-spacing:-0.6px;margin-bottom:6px;}
+.detail-pricing{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;}
+.detail-old{font-size:15px;color:#B0BCD8;text-decoration:line-through;}
+.detail-new{font-size:34px;font-weight:800;color:var(--green);}
+.detail-desc{font-size:14px;color:#5A6E9A;line-height:1.6;margin-bottom:20px;}
+.benefits-list{margin-bottom:20px;}
+.benefit-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F0F4FF;}
+.benefit-row:last-child{border:none;}
+.benefit-check{width:22px;height:22px;background:#E6F9F3;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.benefit-check svg{width:12px;height:12px;stroke:var(--green);}
+.benefit-text{font-size:13px;color:#0A1628;font-weight:500;}
+.payment-pills-white{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.payment-pill-white{padding:6px 14px;border-radius:99px;border:1.5px solid #E0E8FF;font-size:12px;color:#344A7A;background:white;font-weight:500;}
+.trust-detail{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+.trust-pill{display:flex;align-items:center;gap:5px;background:#F5F8FF;border-radius:99px;padding:5px 12px;font-size:11px;color:#344A7A;}
+.buy-bar-white{position:sticky;bottom:80px;background:linear-gradient(0deg,white 60%,rgba(255,255,255,0) 100%);padding:16px 20px 8px;}
+.btn-buy-white{width:100%;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:white;border:none;border-radius:99px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-green);transition:var(--transition);}
+.btn-buy-white:active{transform:scale(0.98);}
+
+/* AUTH */
+.auth-wrap{display:flex;flex-direction:column;height:100%;overflow-y:auto;background:white;}
+.auth-dark-top{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);padding:40px 24px 32px;text-align:center;}
+.auth-logo-mark{width:64px;height:64px;background:linear-gradient(135deg,var(--blue) 0%,var(--green) 100%);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;margin:0 auto 16px;position:relative;}
+.auth-logo-verify{position:absolute;bottom:-4px;right:-4px;width:20px;height:20px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.auth-logo-verify svg{width:13px;height:13px;}
+.auth-title{font-size:22px;font-weight:800;color:white;margin-bottom:6px;}
+.auth-sub{font-size:13px;color:var(--white-70);line-height:1.5;}
+.auth-form-white{padding:24px;}
+.form-group-white{margin-bottom:16px;}
+.form-label-white{font-size:12px;color:#5A6E9A;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block;}
+.form-input-white{width:100%;background:#F5F8FF;border:1.5px solid #E0E8FF;border-radius:var(--radius-sm);padding:14px 16px;font-size:15px;color:#0A1628;font-family:var(--font);transition:var(--transition);outline:none;}
+.form-input-white:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 3px rgba(0,87,255,0.08);}
+.form-input-white::placeholder{color:#B0BCD8;}
+.strength-wrap{display:flex;gap:4px;margin-top:6px;}
+.sbar{flex:1;height:3px;border-radius:99px;background:#E8EFFF;}
+.sbar.w{background:#FF4444;}
+.sbar.m{background:#FFAA00;}
+.sbar.s{background:var(--green);}
+.btn-full-white{width:100%;background:linear-gradient(135deg,var(--blue) 0%,#0040CC 100%);color:white;border:none;border-radius:99px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;margin-top:4px;box-shadow:0 4px 20px rgba(0,87,255,0.25);transition:var(--transition);}
+.btn-full-white:active{transform:scale(0.98);}
+.auth-divider{text-align:center;margin:18px 0;font-size:13px;color:#B0BCD8;}
+.auth-switch-white{text-align:center;font-size:14px;color:#5A6E9A;}
+.auth-switch-white a{color:var(--blue);cursor:pointer;font-weight:600;}
+.privacy-note-white{font-size:11px;color:#B0BCD8;text-align:center;margin-top:16px;line-height:1.5;padding:0 8px;}
+.privacy-note-white a{color:var(--blue);}
+.form-check{display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;}
+.form-check input{margin-top:2px;accent-color:var(--blue);}
+.form-check label{font-size:13px;color:#5A6E9A;line-height:1.4;}
+.form-check a{color:var(--blue);}
+
+/* ACCOUNT WHITE */
+.account-dark-header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);padding:0 20px 24px;}
+.profile-card{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.profile-av{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--blue) 0%,var(--green) 100%);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0;position:relative;}
+.profile-av-verify{position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.profile-av-verify svg{width:10px;height:10px;}
+.profile-name-row{font-size:18px;font-weight:800;color:white;display:flex;align-items:center;gap:6px;}
+.profile-since{font-size:12px;color:var(--white-70);margin-top:3px;}
+.profile-stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.pstat{background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.12);border-radius:var(--radius-sm);padding:12px;text-align:center;}
+.pstat-val{font-size:20px;font-weight:800;color:var(--green);}
+.pstat-label{font-size:10px;color:var(--white-70);margin-top:3px;}
+.account-white-body{background:white;border-radius:var(--radius) var(--radius) 0 0;margin-top:-16px;padding:20px 0;}
+.points-card-white{margin:0 16px 16px;background:linear-gradient(135deg,#EEF3FF 0%,#E6F9F3 100%);border:1.5px solid #C5D8FF;border-radius:var(--radius);padding:16px;}
+.pts-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.pts-title{font-size:14px;font-weight:700;color:#0A1628;display:flex;align-items:center;gap:6px;}
+.pts-balance{font-size:30px;font-weight:800;color:var(--green);}
+.pts-sub{font-size:11px;color:#5A6E9A;}
+.pbar{height:7px;background:#E0E8FF;border-radius:99px;overflow:hidden;margin:10px 0 5px;}
+.pbar-fill{height:100%;background:linear-gradient(90deg,var(--blue) 0%,var(--green) 100%);border-radius:99px;transition:width 1s ease;}
+.pbar-labels{display:flex;justify-content:space-between;font-size:10px;color:#8A9BC4;}
+.level-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;}
+.lv-bronze{background:#FFF4E5;color:#B8860B;}
+.lv-prata{background:#F5F5F5;color:#808080;}
+.lv-ouro{background:#FFFBE5;color:#B8860B;}
+.lv-diamante{background:#E6F9F3;color:var(--green-dark);}
+.order-card-white{margin:0 16px 10px;background:white;border:1.5px solid #E8EFFF;border-radius:var(--radius);padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:var(--transition);box-shadow:0 2px 8px rgba(0,87,255,0.04);}
+.order-card-white:active{transform:scale(0.98);}
+.order-emoji-white{font-size:30px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:#F5F8FF;border-radius:12px;flex-shrink:0;}
+.order-body{flex:1;}
+.order-name-white{font-size:14px;font-weight:700;color:#0A1628;margin-bottom:3px;}
+.order-date-white{font-size:11px;color:#8A9BC4;}
+.order-right-white{text-align:right;}
+.order-price-white{font-size:14px;font-weight:700;color:var(--green);}
+.order-status-white{font-size:10px;padding:2px 8px;border-radius:99px;margin-top:4px;display:inline-block;font-weight:600;}
+.st-active{background:#E6F9F3;color:var(--green-dark);}
+.st-expired{background:#FFE5E5;color:#CC0000;}
+
+/* SUPPORT WHITE */
+.support-card{margin:0 16px 10px;background:white;border:1.5px solid #E8EFFF;border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:var(--transition);box-shadow:0 2px 8px rgba(0,87,255,0.04);}
+.support-card:active{transform:scale(0.98);}
+.support-ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.ic-wpp{background:#E5F9EC;}
+.ic-faq{background:#EEF3FF;}
+.support-body{flex:1;}
+.support-name-white{font-size:14px;font-weight:700;color:#0A1628;margin-bottom:3px;}
+.support-desc-white{font-size:12px;color:#8A9BC4;}
+.support-arr{color:#C5D8FF;font-size:20px;font-weight:300;}
+.faq-item{background:#F5F8FF;border:1.5px solid #E0E8FF;border-radius:var(--radius-sm);padding:14px;margin-bottom:8px;}
+.faq-q{font-size:13px;font-weight:700;color:#0A1628;margin-bottom:6px;}
+.faq-a{font-size:12px;color:#5A6E9A;line-height:1.5;}
+
+/* CHECKOUT WHITE */
+.checkout-product{margin:0 16px 16px;background:white;border:1.5px solid #E8EFFF;border-radius:var(--radius);padding:16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,87,255,0.04);}
+.checkout-emoji{font-size:38px;width:58px;height:58px;display:flex;align-items:center;justify-content:center;background:#F5F8FF;border-radius:14px;flex-shrink:0;}
+.checkout-info-white{flex:1;}
+.checkout-name-white{font-size:15px;font-weight:700;color:#0A1628;}
+.checkout-sub-white{font-size:12px;color:#8A9BC4;margin-top:3px;}
+.checkout-price-white{font-size:18px;font-weight:800;color:var(--green);}
+.checkout-sec-title{font-size:12px;color:#8A9BC4;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:0 16px;margin-bottom:10px;}
+.pay-opt{background:white;border:1.5px solid #E0E8FF;border-radius:var(--radius-sm);padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;margin:0 16px 8px;transition:var(--transition);}
+.pay-opt.sel{border-color:var(--green);background:#F0FBF7;}
+.pay-opt-icon{font-size:22px;width:38px;text-align:center;}
+.pay-opt-body{flex:1;}
+.pay-opt-name{font-size:14px;font-weight:600;color:#0A1628;}
+.pay-opt-desc{font-size:11px;color:#8A9BC4;margin-top:2px;}
+.radio-w{width:20px;height:20px;border-radius:50%;border:2px solid #C5D8FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pay-opt.sel .radio-w{border-color:var(--green);}
+.radio-fill-w{width:10px;height:10px;border-radius:50%;background:var(--green);display:none;}
+.pay-opt.sel .radio-fill-w{display:block;}
+.summary-white{margin:16px 16px 0;background:white;border:1.5px solid #E8EFFF;border-radius:var(--radius);padding:16px;box-shadow:0 2px 8px rgba(0,87,255,0.04);}
+.sum-row{display:flex;justify-content:space-between;font-size:14px;color:#5A6E9A;padding:6px 0;}
+.sum-row.total{border-top:1.5px solid #E8EFFF;margin-top:8px;padding-top:12px;font-weight:800;font-size:16px;color:#0A1628;}
+.sum-row.total .sum-val{color:var(--green);}
+.buy-footer{padding:16px 16px 0;}
+.btn-buy-final{width:100%;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:white;border:none;border-radius:99px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:var(--shadow-green);transition:var(--transition);}
+.btn-buy-final:active{transform:scale(0.98);}
+
+/* NOTIFS */
+.notif-card{margin:0 16px 10px;background:white;border:1.5px solid #E8EFFF;border-radius:var(--radius);padding:14px;display:flex;gap:12px;box-shadow:0 2px 8px rgba(0,87,255,0.04);}
+.notif-card.unread{border-color:#C5D8FF;background:#F5F8FF;}
+.notif-ic{font-size:24px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:#F5F8FF;border-radius:10px;flex-shrink:0;}
+.notif-card.unread .notif-ic{background:#EEF3FF;}
+.notif-body-white{flex:1;}
+.notif-title-white{font-size:13px;font-weight:700;color:#0A1628;margin-bottom:3px;}
+.notif-desc-white{font-size:12px;color:#5A6E9A;line-height:1.4;}
+.notif-time-white{font-size:10px;color:#B0BCD8;margin-top:4px;}
+.unread-dot{width:8px;height:8px;background:var(--blue);border-radius:50%;margin-top:4px;flex-shrink:0;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:white;border-radius:var(--radius) var(--radius) 0 0;width:100%;max-width:430px;padding:0 0 32px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-handle{width:36px;height:4px;background:#E0E8FF;border-radius:99px;margin:14px auto 0;}
+.modal-dark-top{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);padding:20px 24px 24px;border-radius:var(--radius) var(--radius) 0 0;}
+.modal-white-body{padding:20px 24px 0;}
+
+/* GATE */
+.gate-dark{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);padding:28px 24px 24px;text-align:center;border-radius:var(--radius) var(--radius) 0 0;}
+.gate-icon{font-size:40px;margin-bottom:12px;}
+.gate-title{font-size:20px;font-weight:800;color:white;margin-bottom:8px;}
+.gate-desc{font-size:14px;color:var(--white-70);line-height:1.5;}
+.gate-white{padding:20px 24px 0;}
+.btn-gate-p{width:100%;background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:white;border:none;border-radius:99px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;box-shadow:var(--shadow-green);}
+.btn-gate-s{width:100%;background:white;border:1.5px solid #E0E8FF;color:#344A7A;border-radius:99px;padding:15px;font-size:15px;font-weight:500;cursor:pointer;}
+
+/* PIX */
+.pix-dark{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue-mid) 100%);padding:20px 24px;border-radius:var(--radius) var(--radius) 0 0;text-align:center;}
+.pix-label-top{font-size:12px;color:var(--white-70);margin-bottom:4px;}
+.pix-amount{font-size:36px;font-weight:800;color:var(--green);}
+.pix-product{font-size:13px;color:var(--white-70);margin-top:4px;}
+.pix-white{padding:20px 24px 0;}
+.pix-qr{width:150px;height:150px;margin:0 auto 16px;background:white;border-radius:12px;border:2px solid #E0E8FF;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.pix-code{background:#F5F8FF;border:1.5px solid #E0E8FF;border-radius:var(--radius-sm);padding:12px 14px;font-size:11px;color:#344A7A;word-break:break-all;margin-bottom:12px;font-family:monospace;}
+.btn-pix-copy{width:100%;background:white;border:1.5px solid var(--blue);color:var(--blue);border-radius:99px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px;}
+.btn-pix-wpp{width:100%;background:#25D366;border:none;color:white;border-radius:99px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;}
+
+/* PRIVACY */
+.privacy-modal{padding:20px 24px 0;}
+.privacy-modal h3{font-size:16px;font-weight:800;color:#0A1628;margin-bottom:12px;}
+.privacy-modal p{font-size:13px;color:#5A6E9A;line-height:1.7;margin-bottom:12px;}
+.privacy-modal strong{color:#0A1628;}
+
+/* TOAST */
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(10px);background:#0A1628;border:0.5px solid rgba(0,200,150,0.4);border-radius:99px;padding:10px 20px;font-size:13px;color:white;z-index:300;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* EMPTY STATE */
+.empty-state-white{text-align:center;padding:48px 24px;}
+.empty-ic{font-size:48px;margin-bottom:16px;}
+.empty-t{font-size:16px;font-weight:700;color:#0A1628;margin-bottom:8px;}
+.empty-d{font-size:13px;color:#8A9BC4;line-height:1.5;}
+
+/* WHITE TOPBAR */
+.topbar-white{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 12px;position:sticky;top:0;z-index:10;background:white;}
+.icon-btn-white{width:36px;height:36px;border-radius:50%;background:#F5F8FF;border:1.5px solid #E0E8FF;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0A1628;transition:var(--transition);}
+.icon-btn-white:hover{background:#EEF3FF;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.fade-in{animation:fadeIn 0.3s ease;}
+
+/* SVG CHECKMARK */
+.check-svg{stroke:var(--green);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.check-svg-white{stroke:white;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+  <div class="scroll-area">
+    <div class="topbar">
+      <div class="logo">
+        <div class="logo-mark">
+          <div class="logo-mark-bg">L</div>
+          <div class="logo-verify">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke="#0057FF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="logo-name-badge">
+          <span class="logo-name">Litorale <span>Digital</span></span>
+          <div class="brand-verify">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn notif-dot" onclick="goScreen('screen-notifs')" aria-label="Notificações">
+          <svg viewBox="0 0 24 24" width="19" height="19" stroke="white" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <button class="icon-btn" onclick="goOrLogin('account')" aria-label="Perfil">
+          <svg viewBox="0 0 24 24" width="19" height="19" stroke="white" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-badge">Novidades disponíveis</div>
+        <div class="verified-seal">
+          <div class="verified-seal-icon">
+            <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" class="check-svg-white"/></svg>
+          </div>
+          <span class="verified-seal-text">Verificado</span>
+        </div>
+      </div>
+      <h1>A experiência que você <em>merece</em></h1>
+      <p>Streaming, internet, ferramentas e muito mais com os melhores preços.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="navTo('catalog',document.getElementById('nav-catalog'))">Ver catálogo</button>
+        <button class="btn-ghost" onclick="goOrLogin('account')">Meus pontos</button>
+      </div>
+    </div>
+
+    <div class="white-section">
+      <div class="white-section-inner">
+        <!-- VERIFY STRIP -->
+        <div class="verify-strip">
+          <div class="verify-strip-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="white" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg>
+          </div>
+          <div class="verify-strip-body">
+            <div class="verify-strip-title">
+              Empresa verificada
+              <div style="width:16px;height:16px;background:#0057FF;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                <svg viewBox="0 0 12 12" width="10" height="10"><polyline points="2,6 5,9 10,3" class="check-svg-white"/></svg>
+              </div>
+            </div>
+            <div class="verify-strip-desc">Pagamentos seguros • Dados protegidos • Suporte real via WhatsApp</div>
+          </div>
+        </div>
+
+        <!-- TRUST -->
+        <div class="trust-row">
+          <div class="trust-badge"><span class="trust-badge-icon">🔒</span><span class="trust-badge-text">Compra 100% segura</span></div>
+          <div class="trust-badge"><span class="trust-badge-icon">⚡</span><span class="trust-badge-text">Ativação rápida</span></div>
+          <div class="trust-badge"><span class="trust-badge-icon">💬</span><span class="trust-badge-text">Suporte WhatsApp</span></div>
+          <div class="trust-badge"><span class="trust-badge-icon">🏆</span><span class="trust-badge-text">+500 clientes</span></div>
+        </div>
+
+        <!-- CATS -->
+        <div class="section-header-white"><div class="section-title-white">Categorias</div></div>
+        <div class="cats-white" id="cats-home">
+          <div class="cat-pill active" onclick="filterCat('todos',this)"><span>🌟</span><label>Todos</label></div>
+          <div class="cat-pill" onclick="filterCat('streaming',this)"><span>🎬</span><label>Streaming</label></div>
+          <div class="cat-pill" onclick="filterCat('musica',this)"><span>🎵</span><label>Música</label></div>
+          <div class="cat-pill" onclick="filterCat('internet',this)"><span>📡</span><label>Internet</label></div>
+          <div class="cat-pill" onclick="filterCat('ferramentas',this)"><span>🛠️</span><label>Ferramentas</label></div>
+          <div class="cat-pill" onclick="filterCat('cursos',this)"><span>🎓</span><label>Cursos</label></div>
+          <div class="cat-pill" onclick="filterCat('tv',this)"><span>📺</span><label>TV Digital</label></div>
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="section-header-white">
+          <div class="section-title-white">Em destaque</div>
+          <div class="section-link-white" onclick="navTo('catalog',document.getElementById('nav-catalog'))">Ver todos</div>
+        </div>
+        <div class="products-grid-white" id="products-grid"></div>
+        <div style="height:12px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CATALOG -->
+<div class="screen" id="screen-catalog">
+  <div class="scroll-area" style="background:white;">
+    <div class="topbar-white">
+      <button class="icon-btn-white" onclick="goScreen('screen-home')" aria-label="Voltar">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="#0A1628" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style="font-size:17px;font-weight:800;color:#0A1628;">Catálogo</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div class="cats-white" id="cats-catalog" style="margin-top:4px;">
+      <div class="cat-pill active" onclick="filterCatCatalog('todos',this)"><span>🌟</span><label>Todos</label></div>
+      <div class="cat-pill" onclick="filterCatCatalog('streaming',this)"><span>🎬</span><label>Streaming</label></div>
+      <div class="cat-pill" onclick="filterCatCatalog('musica',this)"><span>🎵</span><label>Música</label></div>
+      <div class="cat-pill" onclick="filterCatCatalog('internet',this)"><span>📡</span><label>Internet</label></div>
+      <div class="cat-pill" onclick="filterCatCatalog('ferramentas',this)"><span>🛠️</span><label>Ferramentas</label></div>
+      <div class="cat-pill" onclick="filterCatCatalog('cursos',this)"><span>🎓</span><label>Cursos</label></div>
+      <div class="cat-pill" onclick="filterCatCatalog('tv',this)"><span>📺</span><label>TV Digital</label></div>
+    </div>
+    <div class="products-grid-white" id="catalog-grid" style="margin-top:16px;"></div>
+    <div style="height:16px;"></div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<div class="screen" id="screen-product">
+  <div class="scroll-area" id="product-detail-content"></div>
+</div>
+
+<!-- LOGIN -->
+<div class="screen" id="screen-login">
+  <div class="auth-wrap">
+    <div class="auth-dark-top">
+      <div class="auth-logo-mark">
+        L
+        <div class="auth-logo-verify">
+          <svg viewBox="0 0 14 14" width="13" height="13"><polyline points="2,7 6,11 12,3" stroke="#0057FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <h2 class="auth-title">Bem-vindo de volta</h2>
+      <p class="auth-sub">Entre na sua conta para comprar e acompanhar seus serviços.</p>
+    </div>
+    <div class="auth-form-white">
+      <div class="form-group-white">
+        <label class="form-label-white">Email</label>
+        <input class="form-input-white" type="email" placeholder="seu@email.com" id="login-email" autocomplete="email">
+      </div>
+      <div class="form-group-white">
+        <label class="form-label-white">Senha</label>
+        <input class="form-input-white" type="password" placeholder="Sua senha" id="login-password" autocomplete="current-password">
+      </div>
+      <button class="btn-full-white" onclick="doLogin()">Entrar</button>
+      <div class="auth-divider">ou</div>
+      <div class="auth-switch-white">Não tem conta? <a onclick="goScreen('screen-register')">Criar agora — grátis</a></div>
+      <div class="privacy-note-white" style="margin-top:24px;">Ao entrar, você concorda com nossa <a onclick="showPrivacy()">Política de Privacidade</a>.</div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div class="screen" id="screen-register">
+  <div class="auth-wrap">
+    <div class="auth-dark-top">
+      <div class="auth-logo-mark">
+        L
+        <div class="auth-logo-verify">
+          <svg viewBox="0 0 14 14" width="13" height="13"><polyline points="2,7 6,11 12,3" stroke="#0057FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <h2 class="auth-title">Criar conta</h2>
+      <p class="auth-sub">30 segundos. Histórico, pontos e muito mais esperando por você.</p>
+    </div>
+    <div class="auth-form-white">
+      <div class="form-group-white">
+        <label class="form-label-white">Nome completo</label>
+        <input class="form-input-white" type="text" placeholder="Seu nome" id="reg-name" autocomplete="name">
+      </div>
+      <div class="form-group-white">
+        <label class="form-label-white">WhatsApp</label>
+        <input class="form-input-white" type="tel" placeholder="(00) 00000-0000" id="reg-whatsapp" autocomplete="tel">
+      </div>
+      <div class="form-group-white">
+        <label class="form-label-white">Email</label>
+        <input class="form-input-white" type="email" placeholder="seu@email.com" id="reg-email" autocomplete="email">
+      </div>
+      <div class="form-group-white">
+        <label class="form-label-white">Senha</label>
+        <input class="form-input-white" type="password" placeholder="Mínimo 8 caracteres" id="reg-password" oninput="checkStr(this.value)" autocomplete="new-password">
+        <div class="strength-wrap"><div class="sbar" id="sb1"></div><div class="sbar" id="sb2"></div><div class="sbar" id="sb3"></div></div>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="terms-check">
+        <label for="terms-check">Li e aceito a <a onclick="showPrivacy()">Política de Privacidade</a> e Termos de Uso. Entendo que dados de acesso são coletados para segurança.</label>
+      </div>
+      <button class="btn-full-white" onclick="doRegister()">Criar minha conta</button>
+      <div class="auth-switch-white" style="margin-top:16px;">Já tem conta? <a onclick="goScreen('screen-login')">Entrar</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT -->
+<div class="screen" id="screen-account">
+  <div class="scroll-area" id="account-content" style="background:var(--blue-dark);"></div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="screen" id="screen-checkout">
+  <div class="scroll-area" style="background:white;">
+    <div class="topbar-white">
+      <button class="icon-btn-white" onclick="goScreen('screen-product')" aria-label="Voltar">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="#0A1628" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style="font-size:17px;font-weight:800;color:#0A1628;">Finalizar compra</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div id="checkout-content"></div>
+  </div>
+</div>
+
+<!-- SUPPORT -->
+<div class="screen" id="screen-support">
+  <div class="scroll-area" style="background:white;">
+    <div class="topbar-white">
+      <button class="icon-btn-white" onclick="goScreen('screen-home')" aria-label="Voltar">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="#0A1628" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style="font-size:17px;font-weight:800;color:#0A1628;">Suporte</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div id="support-content"></div>
+  </div>
+</div>
+
+<!-- NOTIFS -->
+<div class="screen" id="screen-notifs">
+  <div class="scroll-area" style="background:white;">
+    <div class="topbar-white">
+      <button class="icon-btn-white" onclick="goScreen('screen-home')" aria-label="Voltar">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="#0A1628" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style="font-size:17px;font-weight:800;color:#0A1628;">Notificações</div>
+      <div style="width:36px;"></div>
+    </div>
+    <div style="height:8px;"></div>
+    <div class="notif-card unread"><div class="notif-ic">🎉</div><div class="notif-body-white"><div class="notif-title-white">Bem-vindo à Litorale Digital!</div><div class="notif-desc-white">Explore o catálogo e aproveite as melhores ofertas.</div><div class="notif-time-white">Agora</div></div><div class="unread-dot"></div></div>
+    <div class="notif-card unread"><div class="notif-ic">🔥</div><div class="notif-body-white"><div class="notif-title-white">Oferta: Netflix 4K por R$ 35,99</div><div class="notif-desc-white">Ativação imediata e suporte via WhatsApp.</div><div class="notif-time-white">2h atrás</div></div><div class="unread-dot"></div></div>
+    <div class="notif-card"><div class="notif-ic">⭐</div><div class="notif-body-white"><div class="notif-title-white">Programa de pontos ativo</div><div class="notif-desc-white">Ganhe pontos a cada compra. Crie sua conta!</div><div class="notif-time-white">1 dia atrás</div></div></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" id="nav-home" onclick="navTo('home',this)">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Início</span>
+  </button>
+  <button class="nav-item" id="nav-catalog" onclick="navTo('catalog',this)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span>Catálogo</span>
+  </button>
+  <button class="nav-item" id="nav-support" onclick="goOrLogin('support')">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>Suporte</span>
+  </button>
+  <button class="nav-item" id="nav-account" onclick="goOrLogin('account')">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>Conta</span>
+  </button>
+</nav>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <div class="modal-handle"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+const PRODUCTS=[
+  {id:1,name:'Netflix 4K',cat:'streaming',emoji:'🎬',price:35.99,oldPrice:44.90,discount:20,desc:'Filmes, séries e documentários ilimitados na melhor qualidade 4K disponível.',benefits:['Qualidade 4K Ultra HD','Sem anúncios','Múltiplos dispositivos','Conteúdo exclusivo Netflix']},
+  {id:2,name:'Spotify Premium',cat:'musica',emoji:'🎵',price:45.00,oldPrice:71.70,discount:37,desc:'Música sem anúncios, modo offline e qualidade máxima de áudio.',benefits:['Zero anúncios','Modo offline','Qualidade máxima','Funciona em qualquer dispositivo']},
+  {id:3,name:'Disney+ 4K',cat:'streaming',emoji:'🏰',price:29.99,oldPrice:46.90,discount:36,desc:'Marvel, Star Wars, Pixar e Disney — todo o conteúdo que você ama em 4K.',benefits:['Catálogo completo 4K','Marvel e Star Wars','Conteúdo infantil','Download offline']},
+  {id:4,name:'YouTube Premium',cat:'musica',emoji:'▶️',price:14.99,oldPrice:26.90,discount:44,desc:'YouTube sem anúncios, downloads ilimitados e YouTube Music incluído.',benefits:['Zero anúncios','Downloads ilimitados','YouTube Music incluído','Tela bloqueada']},
+  {id:5,name:'Internet Ilimitada',cat:'internet',emoji:'📡',price:25.00,oldPrice:50.00,discount:50,desc:'VPN Premium com internet ilimitada para jogos, vídeos e downloads em todo o Brasil.',benefits:['Sem limite de dados','Cobertura nacional','Alta velocidade','Todos os dispositivos']},
+  {id:6,name:'Canva Pro',cat:'ferramentas',emoji:'🎨',price:20.00,oldPrice:35.00,discount:43,desc:'Designs profissionais com acesso a todos os recursos premium.',benefits:['Templates premium','Remoção de fundo','Banco de imagens','Alta qualidade']},
+  {id:7,name:'ChatGPT Plus',cat:'ferramentas',emoji:'🤖',price:34.99,oldPrice:95.99,discount:64,desc:'GPT-4 mais rápido, sem filas e com plugins avançados.',benefits:['GPT-4 completo','Sem filas','Plugins avançados','DALL-E incluído']},
+  {id:8,name:'HBO Max',cat:'streaming',emoji:'🔴',price:29.99,oldPrice:44.90,discount:33,desc:'Séries exclusivas, filmes de cinema e documentários premiados.',benefits:['Séries exclusivas HBO','Filmes recentes','4K disponível','Conteúdo DC e Warner']},
+  {id:9,name:'TV Digital',cat:'tv',emoji:'📺',price:35.00,oldPrice:80.00,discount:56,desc:'Centenas de canais ao vivo, filmes e esportes em tempo real.',benefits:['Canais ao vivo','Esportes ao vivo','Filmes e séries','Smart TV e celular']},
+  {id:10,name:'Prime Video',cat:'streaming',emoji:'🎥',price:13.00,oldPrice:19.90,discount:35,desc:'Filmes, séries Amazon Originals e esportes ao vivo.',benefits:['Amazon Originals','Filmes em 4K','Esportes ao vivo','Download offline']},
+  {id:11,name:'Gemini Pro',cat:'ferramentas',emoji:'✨',price:66.99,oldPrice:96.99,discount:31,desc:'IA avançada do Google com acesso a modelos Gemini Ultra.',benefits:['Gemini Ultra','Integração Google','Análise de imagens','Respostas longas']},
+  {id:12,name:'Conecta Max 62GB',cat:'internet',emoji:'📶',price:45.00,oldPrice:199.99,discount:77,desc:'Chip 4G/5G com 62GB + aplicativos ilimitados para todo o Brasil.',benefits:['62GB de dados','Apps ilimitados','Ligações e SMS','4G/5G nacional']},
+];
+
+let currentUser=JSON.parse(localStorage.getItem('ld_user')||'null');
+let currentProduct=null;
+let selectedPayment='pix';
+let afterLoginAction=null;
+
+function collectSec(){
+  return{ts:new Date().toISOString(),ua:navigator.userAgent,lang:navigator.language,tz:Intl.DateTimeFormat().resolvedOptions().timeZone,res:`${screen.width}x${screen.height}`,fp:btoa(navigator.userAgent+screen.width+screen.colorDepth)};
+}
+
+function catLabel(c){return{streaming:'Streaming',musica:'Música',internet:'Internet',ferramentas:'Ferramentas',cursos:'Cursos',tv:'TV Digital'}[c]||c;}
+function getLevel(pts){if(pts>=4000)return{l:'Diamante',c:'lv-diamante'};if(pts>=1500)return{l:'Ouro',c:'lv-ouro'};if(pts>=500)return{l:'Prata',c:'lv-prata'};return{l:'Bronze',c:'lv-bronze'};}
+
+function goScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const sa=document.querySelector('#'+id+' .scroll-area');
+  if(sa)sa.scrollTop=0;
+}
+
+function navTo(tab,el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(tab==='home')goScreen('screen-home');
+  else if(tab==='catalog'){goScreen('screen-catalog');renderCatalog('todos');}
+  else if(tab==='support'){goScreen('screen-support');renderSupport();}
+  else if(tab==='account'){goScreen('screen-account');renderAccount();}
+}
+
+function goOrLogin(action){
+  if(currentUser){
+    if(action==='account'){navTo('account',document.getElementById('nav-account'));renderAccount();}
+    else if(action==='support'){navTo('support',document.getElementById('nav-support'));renderSupport();}
+    else if(action==='buy'&&currentProduct){goScreen('screen-checkout');renderCheckout(currentProduct);}
+    return;
+  }
+  afterLoginAction=action;
+  openModal(`
+    <div class="gate-dark">
+      <div class="gate-icon">🔐</div>
+      <div class="gate-title">Crie sua conta grátis</div>
+      <div class="gate-desc">30 segundos. Histórico, pontos e compra segura.</div>
+    </div>
+    <div class="gate-white">
+      <button class="btn-gate-p" onclick="closeModal();goScreen('screen-register')">Criar conta agora</button>
+      <button class="btn-gate-s" onclick="closeModal();goScreen('screen-login')">Já tenho conta — Entrar</button>
+    </div>
+  `);
+}
+
+function doLogin(){
+  const email=document.getElementById('login-email').value;
+  const pass=document.getElementById('login-password').value;
+  if(!email||!pass){showToast('Preencha todos os campos');return;}
+  const accs=JSON.parse(localStorage.getItem('ld_accounts')||'{}');
+  if(accs[email]&&accs[email].password===btoa(pass)){
+    currentUser={...accs[email]};delete currentUser.password;
+    currentUser.lastLogin=new Date().toISOString();
+    currentUser.secData=collectSec();
+    localStorage.setItem('ld_user',JSON.stringify(currentUser));
+    showToast('✅ Login realizado!');
+    setTimeout(()=>{if(afterLoginAction)handleAfterLogin();else{goScreen('screen-account');renderAccount();}},700);
+  }else{showToast('❌ Email ou senha incorretos');}
+}
+
+function doRegister(){
+  const name=document.getElementById('reg-name').value;
+  const wpp=document.getElementById('reg-whatsapp').value;
+  const email=document.getElementById('reg-email').value;
+  const pass=document.getElementById('reg-password').value;
+  const terms=document.getElementById('terms-check').checked;
+  if(!name||!wpp||!email||!pass){showToast('Preencha todos os campos');return;}
+  if(!terms){showToast('Aceite a Política de Privacidade');return;}
+  if(pass.length<8){showToast('Senha mínima: 8 caracteres');return;}
+  const accs=JSON.parse(localStorage.getItem('ld_accounts')||'{}');
+  if(accs[email]){showToast('Este email já está cadastrado');return;}
+  const sec=collectSec();
+  const user={name,email,whatsapp:wpp,createdAt:new Date().toISOString(),points:100,orders:[],secData:sec};
+  accs[email]={...user,password:btoa(pass)};
+  localStorage.setItem('ld_accounts',JSON.stringify(accs));
+  currentUser=user;
+  localStorage.setItem('ld_user',JSON.stringify(currentUser));
+  showToast('🎉 Conta criada! +100 pontos de bônus!');
+  setTimeout(()=>{if(afterLoginAction)handleAfterLogin();else{goScreen('screen-account');renderAccount();}},900);
+}
+
+function doLogout(){
+  currentUser=null;localStorage.removeItem('ld_user');
+  showToast('Até logo!');setTimeout(()=>goScreen('screen-home'),600);
+}
+
+function handleAfterLogin(){
+  const a=afterLoginAction;afterLoginAction=null;
+  if(a==='buy'&&currentProduct){goScreen('screen-checkout');renderCheckout(currentProduct);}
+  else if(a==='support'){navTo('support',document.getElementById('nav-support'));renderSupport();}
+  else{navTo('account',document.getElementById('nav-account'));renderAccount();}
+}
+
+function checkStr(v){
+  ['sb1','sb2','sb3'].forEach(id=>document.getElementById(id).className='sbar');
+  if(v.length>=4)document.getElementById('sb1').classList.add('w');
+  if(v.length>=8)document.getElementById('sb2').classList.add('m');
+  if(v.length>=12&&/[A-Z]/.test(v)&&/[0-9]/.test(v))document.getElementById('sb3').classList.add('s');
+}
+
+function renderProducts(container,cat){
+  const list=cat==='todos'?PRODUCTS:PRODUCTS.filter(p=>p.cat===cat);
+  document.getElementById(container).innerHTML=list.map(p=>`
+    <div class="product-card-white fade-in" onclick="openProduct(${p.id})">
+      <div class="product-img-white">${p.emoji}</div>
+      <div class="discount-badge-white">-${p.discount}%</div>
+      <div class="verified-badge-prod">
+        <svg viewBox="0 0 12 12" width="10" height="10"><polyline points="2,6 5,9 10,3" class="check-svg-white"/></svg>
+      </div>
+      <div class="product-info-white">
+        <div class="product-cat-white">${catLabel(p.cat)}</div>
+        <div class="product-name-white">${p.name}</div>
+        <div class="product-pricing-white">
+          <span class="price-old-white">R$ ${p.oldPrice.toFixed(2)}</span>
+          <span class="price-new-white">R$ ${p.price.toFixed(2)}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderCatalog(cat){renderProducts('catalog-grid',cat);}
+
+function filterCat(cat,el){
+  document.querySelectorAll('#cats-home .cat-pill').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');renderProducts('products-grid',cat);
+}
+function filterCatCatalog(cat,el){
+  document.querySelectorAll('#cats-catalog .cat-pill').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');renderCatalog(cat);
+}
+
+function openProduct(id){
+  currentProduct=PRODUCTS.find(p=>p.id===id);
+  if(!currentProduct)return;
+  const p=currentProduct;
+  document.getElementById('product-detail-content').innerHTML=`
+    <div class="detail-hero">
+      <span class="detail-emoji">${p.emoji}</span>
+      <button class="back-btn" onclick="goScreen('screen-catalog')">←</button>
+    </div>
+    <div class="detail-white-body">
+      <div class="detail-cat-row">
+        <div class="detail-cat-label">${catLabel(p.cat)}</div>
+        <div class="detail-verified">
+          <div class="detail-verified-icon"><svg viewBox="0 0 12 12" width="8" height="8"><polyline points="2,6 5,9 10,3" class="check-svg-white"/></svg></div>
+          <span class="detail-verified-text">Verificado</span>
+        </div>
+      </div>
+      <div class="detail-name">${p.name}</div>
+      <div class="detail-pricing">
+        <span class="detail-old">R$ ${p.oldPrice.toFixed(2)}</span>
+        <span class="detail-new">R$ ${p.price.toFixed(2)}</span>
+      </div>
+      <p class="detail-desc">${p.desc}</p>
+      <div class="benefits-list">
+        ${p.benefits.map(b=>`
+          <div class="benefit-row">
+            <div class="benefit-check"><svg viewBox="0 0 12 12" width="12" height="12"><polyline points="2,6 5,9 10,3" class="check-svg"/></svg></div>
+            <span class="benefit-text">${b}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div style="font-size:12px;color:#8A9BC4;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Formas de pagamento</div>
+      <div class="payment-pills-white">
+        <div class="payment-pill-white">⚡ PIX</div>
+        <div class="payment-pill-white">💳 Cartão</div>
+        <div class="payment-pill-white">💬 WhatsApp</div>
+      </div>
+      <div class="trust-detail">
+        <div class="trust-pill">🔒 Compra segura</div>
+        <div class="trust-pill">⚡ Ativação rápida</div>
+        <div class="trust-pill">💬 Suporte WPP</div>
+      </div>
+    </div>
+    <div class="buy-bar-white">
+      <button class="btn-buy-white" onclick="goOrLogin('buy')">Comprar agora — R$ ${p.price.toFixed(2)}</button>
+    </div>
+  `;
+  goScreen('screen-product');
+}
+
+function renderCheckout(p){
+  document.getElementById('checkout-content').innerHTML=`
+    <div class="checkout-product">
+      <div class="checkout-emoji">${p.emoji}</div>
+      <div class="checkout-info-white">
+        <div class="checkout-name-white">${p.name}</div>
+        <div class="checkout-sub-white">${catLabel(p.cat)} • Ativação imediata</div>
+      </div>
+      <div class="checkout-price-white">R$ ${p.price.toFixed(2)}</div>
+    </div>
+    <div class="checkout-sec-title">Como quer pagar?</div>
+    <div class="pay-opt sel" id="opt-pix" onclick="selPay('pix')">
+      <div class="pay-opt-icon">⚡</div>
+      <div class="pay-opt-body"><div class="pay-opt-name">PIX</div><div class="pay-opt-desc">Confirmação instantânea</div></div>
+      <div class="radio-w"><div class="radio-fill-w"></div></div>
+    </div>
+    <div class="pay-opt" id="opt-card" onclick="selPay('card')">
+      <div class="pay-opt-icon">💳</div>
+      <div class="pay-opt-body"><div class="pay-opt-name">Cartão de crédito</div><div class="pay-opt-desc">Aprovação imediata</div></div>
+      <div class="radio-w"><div class="radio-fill-w"></div></div>
+    </div>
+    <div class="pay-opt" id="opt-wpp" onclick="selPay('wpp')">
+      <div class="pay-opt-icon">💬</div>
+      <div class="pay-opt-body"><div class="pay-opt-name">WhatsApp</div><div class="pay-opt-desc">Atendimento humano</div></div>
+      <div class="radio-w"><div class="radio-fill-w"></div></div>
+    </div>
+    <div class="summary-white">
+      <div class="sum-row"><span>Produto</span><span>${p.name}</span></div>
+      <div class="sum-row"><span>Original</span><span style="text-decoration:line-through;color:#B0BCD8">R$ ${p.oldPrice.toFixed(2)}</span></div>
+      <div class="sum-row"><span>Desconto</span><span style="color:var(--green)">-R$ ${(p.oldPrice-p.price).toFixed(2)}</span></div>
+      <div class="sum-row total"><span>Total</span><span class="sum-val">R$ ${p.price.toFixed(2)}</span></div>
+    </div>
+    <div class="buy-footer">
+      <button class="btn-buy-final" onclick="processPayment()">Confirmar pagamento</button>
+    </div>
+    <div style="height:16px;"></div>
+  `;
+}
+
+function selPay(m){
+  selectedPayment=m;
+  document.querySelectorAll('.pay-opt').forEach(o=>o.classList.remove('sel'));
+  document.getElementById('opt-'+m).classList.add('sel');
+}
+
+function processPayment(){
+  if(selectedPayment==='pix'){
+    const p=currentProduct;
+    openModal(`
+      <div class="pix-dark">
+        <div class="pix-label-top">Valor a pagar</div>
+        <div class="pix-amount">R$ ${p.price.toFixed(2)}</div>
+        <div class="pix-product">${p.name} • Litorale Digital</div>
+      </div>
+      <div class="pix-white">
+        <div class="pix-qr">
+          <svg viewBox="0 0 120 120" width="120" height="120">
+            ${Array.from({length:144},(_,i)=>{const x=(i%12)*10,y=Math.floor(i/12)*10;return Math.random()>0.45?`<rect x="${x}" y="${y}" width="9" height="9" fill="#000" rx="1"/>`:'';}).join('')}
+            <rect x="5" y="5" width="35" height="35" fill="none" stroke="#000" stroke-width="4" rx="3"/>
+            <rect x="15" y="15" width="15" height="15" fill="#000" rx="2"/>
+            <rect x="80" y="5" width="35" height="35" fill="none" stroke="#000" stroke-width="4" rx="3"/>
+            <rect x="90" y="15" width="15" height="15" fill="#000" rx="2"/>
+            <rect x="5" y="80" width="35" height="35" fill="none" stroke="#000" stroke-width="4" rx="3"/>
+            <rect x="15" y="90" width="15" height="15" fill="#000" rx="2"/>
+          </svg>
+        </div>
+        <div style="font-size:12px;color:#5A6E9A;text-align:center;margin-bottom:10px;">Escaneie ou copie o código abaixo</div>
+        <div class="pix-code">00020126580014br.gov.bcb.pix0136${Date.now()}5204000053039865406${(p.price*100).toFixed(0)}5802BR5921LITORALE DIGITAL LTDA6014SAO PAULO SP6304</div>
+        <button class="btn-pix-copy" onclick="copyPix()">📋 Copiar código PIX</button>
+        <button class="btn-pix-wpp" onclick="confirmWpp()">✅ Paguei — Confirmar no WhatsApp</button>
+      </div>
+    `);
+  }else if(selectedPayment==='wpp'){
+    const msg=encodeURIComponent(`Olá! Quero comprar ${currentProduct.name} por R$ ${currentProduct.price.toFixed(2)}. Pode me ajudar?`);
+    window.open(`https://wa.me/5500000000000?text=${msg}`,'_blank');
+  }else{
+    showToast('Processando pagamento...');
+    setTimeout(()=>{addOrder();showToast('✅ Pagamento aprovado!');closeModal();},1500);
+  }
+}
+
+function copyPix(){navigator.clipboard.writeText('PIX_LITORALE_'+Date.now()).then(()=>showToast('✅ Código PIX copiado!'));}
+function confirmWpp(){
+  const msg=encodeURIComponent(`Olá! Acabei de pagar via PIX: ${currentProduct?.name}. Pode confirmar?`);
+  window.open(`https://wa.me/5500000000000?text=${msg}`,'_blank');
+  closeModal();addOrder();
+}
+
+function addOrder(){
+  if(!currentUser||!currentProduct)return;
+  if(!currentUser.orders)currentUser.orders=[];
+  currentUser.orders.unshift({id:Date.now(),product:currentProduct.name,emoji:currentProduct.emoji,price:currentProduct.price,date:new Date().toLocaleDateString('pt-BR'),status:'active'});
+  currentUser.points=(currentUser.points||0)+Math.floor(currentProduct.price);
+  localStorage.setItem('ld_user',JSON.stringify(currentUser));
+  const accs=JSON.parse(localStorage.getItem('ld_accounts')||'{}');
+  if(accs[currentUser.email]){accs[currentUser.email]={...accs[currentUser.email],...currentUser};localStorage.setItem('ld_accounts',JSON.stringify(accs));}
+}
+
+function renderAccount(){
+  if(!currentUser){goScreen('screen-login');return;}
+  const lv=getLevel(currentUser.points||0);
+  const init=currentUser.name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  const months=Math.floor((Date.now()-new Date(currentUser.createdAt).getTime())/(1000*60*60*24*30));
+  const since=months===0?'Novo membro':`Membro há ${months} mês${months>1?'es':''}`;
+  const orders=currentUser.orders||[];
+  const nextPts=((currentUser.points||0)<500)?500:((currentUser.points||0)<1500)?1500:((currentUser.points||0)<4000)?4000:9999;
+  const prog=Math.min(100,((currentUser.points||0)/nextPts)*100);
+  document.getElementById('account-content').innerHTML=`
+    <div class="account-dark-header" style="padding-top:60px;">
+      <div class="profile-card">
+        <div class="profile-av">
+          ${init}
+          <div class="profile-av-verify">
+            <svg viewBox="0 0 12 12" width="10" height="10"><polyline points="2,6 5,9 10,3" stroke="#0057FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div>
+          <div class="profile-name-row">
+            ${currentUser.name}
+            <div style="width:16px;height:16px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 12 12" width="9" height="9"><polyline points="2,6 5,9 10,3" class="check-svg-white"/></svg>
+            </div>
+          </div>
+          <div class="profile-since">${since}</div>
+          <div style="margin-top:6px;"><span class="level-badge ${lv.c}">⭐ ${lv.l}</span></div>
+        </div>
+      </div>
+      <div class="profile-stats-row">
+        <div class="pstat"><div class="pstat-val">${orders.length}</div><div class="pstat-label">Pedidos</div></div>
+        <div class="pstat"><div class="pstat-val">${currentUser.points||0}</div><div class="pstat-label">Pontos</div></div>
+        <div class="pstat"><div class="pstat-val">${orders.filter(o=>o.status==='active').length}</div><div class="pstat-label">Ativos</div></div>
+      </div>
+    </div>
+    <div class="account-white-body">
+      <div class="points-card-white">
+        <div class="pts-top">
+          <div class="pts-title">⭐ Meus pontos</div>
+          <span class="level-badge ${lv.c}">${lv.l}</span>
+        </div>
+        <div class="pts-balance">${currentUser.points||0}</div>
+        <div class="pts-sub">pontos acumulados</div>
+        <div class="pbar"><div class="pbar-fill" style="width:${prog}%"></div></div>
+        <div class="pbar-labels"><span>${currentUser.points||0} pts</span><span>Próximo: ${nextPts} pts</span></div>
+      </div>
+      <div class="section-header-white" style="margin-top:8px;"><div class="section-title-white">Meus pedidos</div></div>
+      ${orders.length>0?orders.map(o=>`
+        <div class="order-card-white">
+          <div class="order-emoji-white">${o.emoji}</div>
+          <div class="order-body">
+            <div class="order-name-white">${o.product}</div>
+            <div class="order-date-white">${o.date}</div>
+          </div>
+          <div class="order-right-white">
+            <div class="order-price-white">R$ ${o.price.toFixed(2)}</div>
+            <div class="order-status-white ${o.status==='active'?'st-active':'st-expired'}">${o.status==='active'?'Ativo':'Vencido'}</div>
+          </div>
+        </div>
+      `).join(''):`
+        <div class="empty-state-white">
+          <div class="empty-ic">🛒</div>
+          <div class="empty-t">Nenhum pedido ainda</div>
+          <div class="empty-d">Explore o catálogo e faça sua primeira compra!</div>
+          <button class="btn-primary" style="margin-top:16px;" onclick="navTo('catalog',document.getElementById('nav-catalog'))">Ver catálogo</button>
+        </div>
+      `}
+      <div style="padding:16px;"><button onclick="doLogout()" style="width:100%;background:white;border:1.5px solid #E0E8FF;color:#8A9BC4;border-radius:99px;padding:12px;font-size:14px;cursor:pointer;">Sair da conta</button></div>
+    </div>
+  `;
+  // fix scroll bg
+  document.querySelector('#screen-account .scroll-area').style.background='var(--blue-dark)';
+}
+
+function renderSupport(){
+  const name=currentUser?currentUser.name:'Cliente';
+  const msg=encodeURIComponent(`Olá! Sou ${name} e preciso de suporte.`);
+  document.getElementById('support-content').innerHTML=`
+    <div style="padding:4px 16px 12px;">
+      <div style="font-size:14px;color:#5A6E9A;">Como podemos te ajudar hoje?</div>
+    </div>
+    <div class="support-card" onclick="window.open('https://wa.me/5500000000000?text=${msg}','_blank')">
+      <div class="support-ic ic-wpp">💬</div>
+      <div class="support-body">
+        <div class="support-name-white">WhatsApp</div>
+        <div class="support-desc-white">Atendimento humano • Resposta rápida</div>
+      </div>
+      <div class="support-arr">›</div>
+    </div>
+    <div class="support-card" onclick="toggleFaq()">
+      <div class="support-ic ic-faq">❓</div>
+      <div class="support-body">
+        <div class="support-name-white">Perguntas frequentes</div>
+        <div class="support-desc-white">Respostas para as dúvidas mais comuns</div>
+      </div>
+      <div class="support-arr">›</div>
+    </div>
+    <div id="faq-section" style="display:none;padding:0 16px;">
+      ${[['Como funciona a ativação?','Após confirmar o pagamento, você recebe o acesso em até 30 minutos via WhatsApp.'],['Posso cancelar quando quiser?','Sim! Sem fidelidade. Cancele a qualquer momento pelo suporte.'],['O app funciona no meu celular?','Sim, funciona em Android e iPhone. Basta instalar pelo navegador.'],['Como renovar?','Na área Minha Conta, clique no pedido ativo e em Renovar.'],['Meus dados estão seguros?','Sim. Criptografados e jamais compartilhados com terceiros.']].map(([q,a])=>`<div class="faq-item"><div class="faq-q">${q}</div><div class="faq-a">${a}</div></div>`).join('')}
+    </div>
+    <div style="padding:16px;text-align:center;font-size:12px;color:#B0BCD8;">Atendimento: Seg–Sex 9h–22h • Sáb–Dom 10h–20h</div>
+  `;
+}
+function toggleFaq(){const f=document.getElementById('faq-section');f.style.display=f.style.display==='none'?'block':'none';}
+
+function openModal(html){
+  document.getElementById('modal-body').innerHTML=html;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-overlay'))
+    document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function showPrivacy(){
+  openModal(`
+    <div class="modal-dark-top">
+      <div style="font-size:16px;font-weight:800;color:white;margin-bottom:4px;">Política de Privacidade</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.6);">Litorale Digital</div>
+    </div>
+    <div class="privacy-modal" style="max-height:50vh;overflow-y:auto;">
+      <p><strong>O que coletamos:</strong> Nome, email e WhatsApp para processar pedidos. Para segurança, coletamos dados técnicos: IP, localização aproximada via IP, tipo de dispositivo e timestamp de cada acesso.</p>
+      <p><strong>Como usamos:</strong> Exclusivamente para pedidos, suporte e segurança. Nunca vendemos ou compartilhamos dados com terceiros.</p>
+      <p><strong>Seus direitos (LGPD):</strong> Solicite exclusão pelo suporte. Você pode corrigir ou consultar seus dados a qualquer momento.</p>
+      <p><strong>Segurança:</strong> Dados criptografados. Sem rastreadores de terceiros (Google Analytics, Facebook Pixel, etc).</p>
+    </div>
+  `);
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+renderProducts('products-grid','todos');
+renderCatalog('todos');
+</script>
+</body>
+</html>
