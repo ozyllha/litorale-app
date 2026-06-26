@@ -94,6 +94,7 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
 .tr2{background:var(--rg);color:var(--red);border:.5px solid var(--bred);}
 .tw{background:var(--yg);color:var(--yellow);border:.5px solid var(--byellow);}
 .ti{background:rgba(0,87,255,.14);color:#6699FF;border:.5px solid rgba(0,87,255,.3);}
+.tp{background:var(--pg);color:var(--purple);border:.5px solid rgba(139,92,246,.3);}
 .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}
 
 /* SEARCH + PILLS */
@@ -469,6 +470,7 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
           <tr><td>Equipe</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
           <tr><td>Notificações</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td></tr>
           <tr><td>Config/PIX</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td colspan="4" style="padding:6px 0;font-size:10px;color:var(--yellow);font-style:italic;">★ Administrador: acesso total exceto ações exclusivas do Dono</td></tr>
         </tbody>
       </table>
       <div style="font-size:10px;color:var(--g6);margin-top:6px;">✓ Total &nbsp; ~ Visualização &nbsp; □ Sem acesso</div>
@@ -482,9 +484,9 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
       <div class="fgroup"><label class="flabel">Código 2FA (6 dígitos)</label><input class="finput" type="text" id="m-2fa" placeholder="000000" maxlength="6" inputmode="numeric"></div>
       <div class="fgroup"><label class="flabel">Nível de acesso</label>
         <select class="fselect" id="m-role">
-          <option value="editor">Editor — produtos e pedidos</option>
           <option value="suporte">Suporte — pedidos e clientes</option>
-          <option value="dono">Dono — acesso total</option>
+          <option value="editor">Editor — produtos e pedidos</option>
+          <option value="administrador">Administrador — acesso total (sem ações exclusivas do Dono)</option>
         </select>
       </div>
       <div class="fgroup"><label class="flabel">Observação (opcional)</label><textarea class="ftarea" id="m-obs" placeholder="Ex: atendimento noturno"></textarea></div>
@@ -687,7 +689,10 @@ function doLogin(){
   if(!u){err.innerHTML='Email, senha ou código 2FA incorretos.<br><small>Verifique se não há espaços extras.</small>';err.style.display='block';return;}
   SESSION={...u,loginAt:new Date().toISOString()};
   toast('✅ Bem-vindo, '+u.name+'!');
-  AUDIT_LOG.unshift({ico:'🔑',msg:`<b>${u.name}</b> fez login`,meta:'Agora • IP registrado'});
+  // Só registra log se NÃO for o dono principal
+  if(u.role!=='dono'||u.email!==ADMIN_USERS[0].email){
+    AUDIT_LOG.unshift({ico:'🔑',msg:`<b>${u.name}</b> fez login (${u.role})`,meta:'Agora • IP registrado'});
+  }
   setTimeout(()=>{
     document.getElementById('s-login').classList.remove('active');
     document.getElementById('s-dash').classList.add('active');
@@ -1182,15 +1187,18 @@ function exportCSV(){
 // ===== TEAM =====
 function renderTeam(){
   const team=getTeam();
-  document.getElementById('team-list').innerHTML=team.map(m=>`
+  // Dono principal (index 0) é invisível na lista da equipe
+  const isDonoPrincipal=(m)=>m.email===ADMIN_USERS[0].email;
+  const visibleTeam=SESSION?.email===ADMIN_USERS[0].email?team:team.filter(m=>!isDonoPrincipal(m));
+  document.getElementById('team-list').innerHTML=visibleTeam.map(m=>`
     <div class="mrow fade">
       <div class="mavwrap"><div class="av">${initials(m.name)}</div>${m.online?'<div class="monline"></div>':''}</div>
       <div class="minfo">
-        <div class="mname">${m.name}<span class="tag ${m.role==='dono'?'tg':m.role==='editor'?'ti':'tw'}">${m.role}</span></div>
+        <div class="mname">${m.name}<span class="tag ${m.role==='dono'?'tg':m.role==='administrador'?'tp':m.role==='editor'?'ti':'tw'}">${m.role}</span></div>
         <div class="mrole">${m.email}${m.obs?' • '+m.obs:''}</div>
       </div>
       <div class="mbtns">
-        ${m.role!=='dono'?`<button class="mbtn" onclick="editMember(${m.id})">✏️</button><button class="mbtn mbtn-r" onclick="removeMember(${m.id})">✕</button>`:''}
+        ${!isDonoPrincipal(m)?`<button class="mbtn" onclick="editMember(${m.id})">✏️</button><button class="mbtn mbtn-r" onclick="removeMember(${m.id})">✕</button>`:''}
       </div>
     </div>`).join('');
   renderAudit();
@@ -1206,6 +1214,8 @@ function addMember(){
   if(!name||!email||!pass||!code){toast('Preencha nome, email, senha e 2FA');return;}
   if(pass.length<8){toast('Senha mínima: 8 caracteres');return;}
   if(code.length!==6||!/^\d+$/.test(code)){toast('Código 2FA: 6 dígitos');return;}
+  // Apenas o dono principal pode cadastrar outros donos/administradores com role dono
+  if(role==='dono'&&SESSION?.email!==ADMIN_USERS[0].email){toast('❌ Apenas o Dono pode cadastrar outros Donos');return;}
   const team=getTeam();
   if(team.find(m=>m.email===email)){toast('Email já cadastrado');return;}
   team.push({id:Date.now(),name,email,wpp,role,obs,online:false});
@@ -1219,6 +1229,7 @@ function addMember(){
 function removeMember(id){
   const team=getTeam();
   const m=team.find(x=>x.id===id);
+  if(m?.email===ADMIN_USERS[0].email){toast('❌ Ação não permitida');return;}
   saveTeam(team.filter(x=>x.id!==id));
   AUDIT_LOG.unshift({ico:'🗑️',msg:`<b>${SESSION?.name}</b> removeu membro: ${m?.name||id}`,meta:'Agora'});
   toast('Membro removido');renderTeam();
@@ -1231,7 +1242,7 @@ function editMember(id){
       <div class="fgroup"><label class="flabel">Nome</label><input class="finput" id="em-name" value="${m.name}"></div>
       <div class="fgroup"><label class="flabel">Email</label><input class="finput" type="email" id="em-email" value="${m.email}"></div>
       <div class="fgroup"><label class="flabel">Nível de acesso</label>
-        <select class="fselect" id="em-role"><option value="editor" ${m.role==='editor'?'selected':''}>Editor</option><option value="suporte" ${m.role==='suporte'?'selected':''}>Suporte</option><option value="dono" ${m.role==='dono'?'selected':''}>Dono</option></select>
+        <select class="fselect" id="em-role"><option value="suporte" ${m.role==='suporte'?'selected':''}>Suporte</option><option value="editor" ${m.role==='editor'?'selected':''}>Editor</option><option value="administrador" ${m.role==='administrador'?'selected':''}>Administrador</option></select>
       </div>
       <div class="fgroup"><label class="flabel">Observação</label><input class="finput" id="em-obs" value="${m.obs||''}"></div>
     </div>
@@ -1244,9 +1255,12 @@ function editMember(id){
 function saveMemberEdit(id){
   const team=getTeam();
   const m=team.find(x=>x.id===id);if(!m)return;
+  const isDono=m.email===ADMIN_USERS[0].email;
   m.name=document.getElementById('em-name').value||m.name;
-  m.email=document.getElementById('em-email').value||m.email;
-  m.role=document.getElementById('em-role').value;
+  // Email do dono principal não pode ser alterado
+  if(!isDono)m.email=document.getElementById('em-email').value||m.email;
+  // Role do dono principal não pode ser rebaixado
+  if(!isDono)m.role=document.getElementById('em-role').value;
   m.obs=document.getElementById('em-obs').value;
   saveTeam(team);
   AUDIT_LOG.unshift({ico:'✏️',msg:`<b>${SESSION?.name}</b> editou membro: ${m.name}`,meta:'Agora'});
@@ -1399,36 +1413,75 @@ function savePIX(){
 
 // ===== BANNERS + FOTOS =====
 function openBanners(){
-  const saved=JSON.parse(localStorage.getItem('ld_banners')||JSON.stringify([
-    {id:1,title:'A experiência que você merece',sub:'Streaming, internet e ferramentas com os melhores preços.',img:'',active:true},
-    {id:2,title:'TV Digital com TESTE GRÁTIS',sub:'Canais ao vivo, filmes e esportes — veja antes de pagar.',img:'',active:true}
-  ]));
+  const dflt=JSON.stringify([
+    {id:1,title:'A experiência que você merece',sub:'Streaming, internet e ferramentas com os melhores preços.',imgs:[],active:true},
+    {id:2,title:'TV Digital com TESTE GRÁTIS',sub:'Canais ao vivo, filmes e esportes — veja antes de pagar.',imgs:[],active:true}
+  ]);
+  const saved=JSON.parse(localStorage.getItem('ld_banners')||dflt);
+  // Migrar formato antigo (img -> imgs)
+  saved.forEach(b=>{if(!b.imgs){b.imgs=b.img?[b.img]:[];delete b.img;}});
   window._banners=saved;
-  openMo(`
-    <div class="mhdr"><div class="mtitle">🖼️ Banners e anúncios</div><div class="msub">Edite textos e fotos dos banners</div></div>
+  renderBannersModal();
+}
+
+function renderBannersModal(){
+  const saved=window._banners||[];
+  const fotasTotal=saved.reduce((a,b)=>a+b.imgs.length,0);
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr">
+      <div class="mtitle">🖼️ Banners e anúncios</div>
+      <div class="msub">Até 10 fotos por banner • ${fotasTotal} foto${fotasTotal!==1?'s':''} cadastradas</div>
+    </div>
     <div class="mbody">
       ${saved.map((b,i)=>`
-        <div style="background:var(--s2);border:.5px solid var(--br2);border-radius:var(--rs);padding:12px;margin-bottom:10px;">
+        <div style="background:var(--s2);border:.5px solid var(--br2);border-radius:var(--rs);padding:12px;margin-bottom:12px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-            <span style="font-size:12px;font-weight:600;">Banner ${i+1}</span>
+            <span style="font-size:12px;font-weight:600;color:var(--g2);">Banner ${i+1} &nbsp;<span style="font-size:10px;color:var(--g6);">${b.imgs.length}/10 fotos</span></span>
             <div class="tsw ${b.active?'on':'off'}" id="bn-sw-${b.id}" onclick="toggleBannerSw(${b.id})" style="width:32px;height:17px;"><div class="tknob" style="width:13px;height:13px;top:2px;"></div></div>
           </div>
-          <div class="fgroup"><label class="flabel">Título</label><input class="finput" id="bn-t-${b.id}" value="${b.title}"></div>
-          <div class="fgroup"><label class="flabel">Subtítulo</label><input class="finput" id="bn-s-${b.id}" value="${b.sub}"></div>
+          <div class="fgroup"><label class="flabel">Título</label><input class="finput" id="bn-t-${b.id}" value="${b.title}" placeholder="Título do banner" onchange="window._banners.find(x=>x.id===${b.id}).title=this.value"></div>
+          <div class="fgroup"><label class="flabel">Subtítulo</label><input class="finput" id="bn-s-${b.id}" value="${b.sub}" placeholder="Subtítulo" onchange="window._banners.find(x=>x.id===${b.id}).sub=this.value"></div>
           <div class="fgroup">
-            <label class="flabel">Foto do banner</label>
-            <div class="img-upload" onclick="document.getElementById('bn-img-${b.id}').click()">
-              ${b.img?`<img src="${b.img}" class="img-preview">`:'<div style="font-size:20px;">📸</div><div style="font-size:11px;color:var(--g4);">Toque para escolher foto</div>'}
-              <input type="file" id="bn-img-${b.id}" accept="image/*" onchange="previewBannerImg(this,${b.id})" style="display:none;">
+            <label class="flabel">Fotos do anúncio (${b.imgs.length}/10)</label>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;">
+              ${b.imgs.map((img,j)=>`
+                <div style="position:relative;width:70px;height:70px;flex-shrink:0;">
+                  <img src="${img}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;border:.5px solid var(--br2);">
+                  <button onclick="removeBannerImg(${b.id},${j})" style="position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:var(--red);border:1.5px solid var(--bd);color:#fff;font-size:9px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;">✕</button>
+                  <div style="position:absolute;bottom:2px;left:2px;background:rgba(0,0,0,.6);color:#fff;font-size:8px;padding:1px 4px;border-radius:3px;">${j+1}</div>
+                </div>`).join('')}
+              ${b.imgs.length<10?`
+                <div onclick="document.getElementById('bn-add-${b.id}').click()" style="width:70px;height:70px;border:1.5px dashed var(--br2);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:2px;flex-shrink:0;">
+                  <span style="font-size:20px;">➕</span>
+                  <span style="font-size:9px;color:var(--g4);">foto</span>
+                </div>
+                <input type="file" id="bn-add-${b.id}" accept="image/*" multiple style="display:none;" onchange="addBannerImgs(this,${b.id})">
+              `:`<div style="font-size:10px;color:var(--yellow);padding:4px;align-self:center;">Máx. 10 atingido</div>`}
             </div>
           </div>
+          ${saved.length>1?`<button onclick="removeBanner(${b.id})" style="background:var(--rg);border:.5px solid var(--bred);border-radius:99px;padding:4px 10px;font-size:11px;color:var(--red);cursor:pointer;">🗑️ Remover banner</button>`:''}
         </div>`).join('')}
+      <button onclick="addNewBanner()" style="width:100%;background:var(--s2);border:.5px dashed var(--br2);border-radius:var(--rs);padding:10px;font-size:13px;cursor:pointer;color:var(--g4);">＋ Adicionar novo banner</button>
     </div>
     <div class="macts">
-      <button class="mact mact-g" onclick="saveBanners()">✅ Salvar banners</button>
+      <button class="mact mact-g" onclick="saveBanners()">✅ Salvar todos os banners</button>
       <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
-    </div>`);
+    </div>`;
 }
+
+function addNewBanner(){
+  if(!window._banners)return;
+  if(window._banners.length>=6){toast('Máximo de 6 banners');return;}
+  window._banners.push({id:Date.now(),title:'Novo banner',sub:'',imgs:[],active:true});
+  renderBannersModal();
+}
+
+function removeBanner(id){
+  if(!window._banners||window._banners.length<=1){toast('Mantenha ao menos 1 banner');return;}
+  window._banners=window._banners.filter(b=>b.id!==id);
+  renderBannersModal();
+}
+
 function toggleBannerSw(id){
   const b=window._banners?.find(x=>x.id===id);
   if(!b)return;
@@ -1436,28 +1489,56 @@ function toggleBannerSw(id){
   const sw=document.getElementById('bn-sw-'+id);
   if(sw)sw.className='tsw '+(b.active?'on':'off');
 }
-function previewBannerImg(input,id){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const b=window._banners?.find(x=>x.id===id);
-    if(b)b.img=e.target.result;
-    const upload=input.closest('.img-upload');
-    let img=upload.querySelector('img.img-preview');
-    if(!img){img=document.createElement('img');img.className='img-preview';upload.insertBefore(img,input);}
-    img.src=e.target.result;
-    upload.querySelectorAll('div').forEach(d=>d.remove());
-    toast('📸 Foto carregada!');
-  };
-  reader.readAsDataURL(file);
+
+function addBannerImgs(input,id){
+  const b=window._banners?.find(x=>x.id===id);
+  if(!b)return;
+  const slots=10-b.imgs.length;
+  if(slots<=0){toast('Máximo de 10 fotos atingido');return;}
+  const files=Array.from(input.files).slice(0,slots);
+  let loaded=0;
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      b.imgs.push(e.target.result);
+      loaded++;
+      if(loaded===files.length){
+        toast('📸 '+files.length+' foto'+(files.length>1?'s':'')+' adicionada'+(files.length>1?'s':'')+'!');
+        renderBannersModal();
+      }
+    };
+    reader.readAsDataURL(file);
+  });
 }
+
+function removeBannerImg(id,idx){
+  const b=window._banners?.find(x=>x.id===id);
+  if(!b)return;
+  b.imgs.splice(idx,1);
+  toast('Foto removida');
+  renderBannersModal();
+}
+
 function saveBanners(){
   const b=window._banners||[];
-  const updated=b.map(x=>({...x,title:document.getElementById('bn-t-'+x.id)?.value||x.title,sub:document.getElementById('bn-s-'+x.id)?.value||x.sub}));
-  localStorage.setItem('ld_banners',JSON.stringify(updated));
-  AUDIT_LOG.unshift({ico:'🖼️',msg:`<b>${SESSION?.name}</b> atualizou banners da home`,meta:'Agora'});
-  toast('✅ Banners salvos!');closeMo();
+  // Salvar valores atuais dos inputs de texto
+  b.forEach(x=>{
+    const t=document.getElementById('bn-t-'+x.id);
+    const s=document.getElementById('bn-s-'+x.id);
+    if(t)x.title=t.value;
+    if(s)x.sub=s.value;
+  });
+  try{
+    localStorage.setItem('ld_banners',JSON.stringify(b));
+    AUDIT_LOG.unshift({ico:'🖼️',msg:`<b>${SESSION?.name}</b> atualizou banners (${b.length} banners, ${b.reduce((a,x)=>a+x.imgs.length,0)} fotos)`,meta:'Agora'});
+    toast('✅ Banners salvos!');closeMo();
+  }catch(e){
+    toast('⚠️ Erro ao salvar — fotos muito grandes. Reduza o tamanho.');
+  }
 }
+
+function previewBannerImg(){} // compatibilidade
+
 
 // ===== WHATSAPP CONFIG =====
 function openWppConfig(){
