@@ -460,20 +460,30 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
     <div class="slbl">Tabela de permissões</div>
     <div class="sc" style="padding:12px;">
       <table class="ptable">
-        <thead><tr><th>Módulo</th><th>Dono</th><th>Editor</th><th>Suporte</th></tr></thead>
+        <thead><tr><th>Módulo / Ação</th><th>Dono</th><th style="color:var(--purple);">Admin</th><th>Editor</th><th>Suporte</th></tr></thead>
         <tbody>
-          <tr><td>Dashboard</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td></tr>
-          <tr><td>Pedidos</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td></tr>
-          <tr><td>Clientes</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td></tr>
-          <tr><td>Produtos</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td></tr>
-          <tr><td>Financeiro</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-p">~</div></td><td><div class="pck pck-n"></div></td></tr>
-          <tr><td>Equipe</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
-          <tr><td>Notificações</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td></tr>
-          <tr><td>Config/PIX</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
-          <tr><td colspan="4" style="padding:6px 0;font-size:10px;color:var(--yellow);font-style:italic;">★ Administrador: acesso total exceto ações exclusivas do Dono</td></tr>
+          <tr><td>Dashboard</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td></tr>
+          <tr><td>Pedidos — ver</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td></tr>
+          <tr><td>Pedidos — cancelar</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Clientes — ver/editar</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td></tr>
+          <tr><td>Clientes — bloquear</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Produtos — editar</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Produtos — excluir</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Financeiro — ver</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Financeiro — exportar CSV</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Financeiro — excluir</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Equipe — gerenciar</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Notificações push</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Redes sociais</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>PIX e pagamentos</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Backup e sistema</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Senha e 2FA</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Modo manutenção</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
+          <tr><td>Cadastrar Dono</td><td><div class="pck pck-y">✓</div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td><td><div class="pck pck-n"></div></td></tr>
         </tbody>
       </table>
-      <div style="font-size:10px;color:var(--g6);margin-top:6px;">✓ Total &nbsp; ~ Visualização &nbsp; □ Sem acesso</div>
+      <div style="font-size:10px;color:var(--g6);margin-top:6px;">✓ Permitido &nbsp; □ Bloqueado</div>
+      <div style="font-size:10px;color:var(--purple);margin-top:4px;">★ Admin: acesso total exceto config críticas e exclusões permanentes do Dono</div>
     </div>
     <div class="slbl">Cadastrar novo membro</div>
     <div class="fcard">
@@ -549,22 +559,22 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
     </div>
     <div class="slbl">Minha conta</div>
     <div class="sc" style="padding:0;">
-      <div class="srow" onclick="openChangePass()"><div class="sl"><div class="sico sig">🔑</div><div><div class="stitle2">Alterar senha</div><div class="ssub">Troque sua senha de acesso</div></div></div><div style="color:var(--g6);">›</div></div>
-      <div class="srow" onclick="openChange2FA()"><div class="sl"><div class="sico siy">📱</div><div><div class="stitle2">Alterar código 2FA</div><div class="ssub">Código de autenticação</div></div></div><div style="color:var(--g6);">›</div></div>
+      <div id="cfg-pass" class="srow" onclick="openChangePass()"><div class="sl"><div class="sico sig">🔑</div><div><div class="stitle2">Alterar senha</div><div class="ssub">Troque sua senha de acesso</div></div></div><div style="color:var(--g6);">›</div></div>
+      <div id="cfg-2fa" class="srow" onclick="openChange2FA()"><div class="sl"><div class="sico siy">📱</div><div><div class="stitle2">Alterar código 2FA</div><div class="ssub">Código de autenticação</div></div></div><div style="color:var(--g6);">›</div></div>
     </div>
     <div class="slbl">App do cliente</div>
     <div class="sc" style="padding:0;">
-      <div class="srow" onclick="openPIX()"><div class="sl"><div class="sico sig">💳</div><div><div class="stitle2">Chave PIX</div><div class="ssub" id="pix-lbl">Não configurado</div></div></div><div style="color:var(--g6);">›</div></div>
+      <div id="cfg-pix" class="srow" onclick="openPIX()"><div class="sl"><div class="sico sig">💳</div><div><div class="stitle2">Chave PIX</div><div class="ssub" id="pix-lbl">Não configurado</div></div></div><div style="color:var(--g6);">›</div></div>
       <div class="srow" onclick="openBanners()"><div class="sl"><div class="sico sib">🖼️</div><div><div class="stitle2">Banners e anúncios</div><div class="ssub">Editar imagens e textos</div></div></div><div style="color:var(--g6);">›</div></div>
       <div class="srow" onclick="openWppConfig()"><div class="sl"><div class="sico sig">💬</div><div><div class="stitle2">WhatsApp Business</div><div class="ssub">Mensagem automática</div></div></div><div style="color:var(--g6);">›</div></div>
-      <div class="srow" onclick="toggleMaint()">
+      <div id="cfg-maint" class="srow" onclick="toggleMaint()">
         <div class="sl"><div class="sico siy">🔧</div><div><div class="stitle2">Modo manutenção</div><div class="ssub" id="maint-lbl">App do cliente: online</div></div></div>
         <div class="tsw on" id="maint-sw" onclick="event.stopPropagation();toggleMaint()"><div class="tknob"></div></div>
       </div>
     </div>
     <div class="slbl">Sistema</div>
     <div class="sc" style="padding:0;">
-      <div class="srow" onclick="doBackup()"><div class="sl"><div class="sico sib">💾</div><div><div class="stitle2">Backup manual</div><div class="ssub" id="backup-lbl">Clique para fazer backup</div></div></div><div style="color:var(--g6);">›</div></div>
+      <div class="srow" onclick="doBackup()" id="config-backup-row" style="${!can('configBackup')?'opacity:.4;pointer-events:none;':''}"><div class="sl"><div class="sico sib">💾</div><div><div class="stitle2">Backup manual</div><div class="ssub" id="backup-lbl">Clique para fazer backup</div></div></div><div style="color:var(--g6);">›</div></div>
       <div class="srow" onclick="exportCSV()"><div class="sl"><div class="sico sig">📊</div><div><div class="stitle2">Exportar dados (CSV)</div><div class="ssub">Todos os pedidos</div></div></div><div style="color:var(--g6);">›</div></div>
       <div class="srow" onclick="doLogout()"><div class="sl"><div class="sico sir">🚪</div><div><div class="stitle2" style="color:var(--red);">Sair da sessão</div><div class="ssub">Encerrar acesso</div></div></div><div style="color:var(--g6);">›</div></div>
     </div>
@@ -623,6 +633,65 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
 const ADMIN_USERS=[
   {email:'admin@litorale.com',pass:'Admin123',code:'123456',role:'dono',name:'Admin'}
 ];
+
+// ===== SISTEMA DE PERMISSÕES =====
+// Hierarquia: dono > administrador > editor > suporte
+const PERMS={
+  dono:{
+    dashboard:true,orders:true,clients:true,products:true,
+    finance:true,financeDelete:true,
+    team:true,teamAddDono:true,
+    notifs:true,
+    config:true,configPIX:true,configSocial:true,configPass:true,config2FA:true,configBackup:true,configMaint:true,
+    exportCSV:true,exportDelete:true,
+    deleteProduct:true,deleteOrder:true,deleteClient:true,deleteReport:true,
+    editDonoEmail:true,editDonoRole:true
+  },
+  administrador:{
+    dashboard:true,orders:true,clients:true,products:true,
+    finance:true,financeDelete:false,       // vê mas não exclui relatórios
+    team:true,teamAddDono:false,            // não cadastra dono
+    notifs:true,
+    config:false,configPIX:false,configSocial:true,configPass:false,config2FA:false,configBackup:false,configMaint:false,
+    exportCSV:true,exportDelete:false,       // exporta mas não exclui
+    deleteProduct:true,deleteOrder:false,    // remove produto mas não pedido
+    deleteClient:false,deleteReport:false,
+    editDonoEmail:false,editDonoRole:false
+  },
+  editor:{
+    dashboard:true,orders:true,clients:true,products:true,
+    finance:false,financeDelete:false,
+    team:false,teamAddDono:false,
+    notifs:true,
+    config:false,configPIX:false,configSocial:false,configPass:false,config2FA:false,configBackup:false,configMaint:false,
+    exportCSV:false,exportDelete:false,
+    deleteProduct:false,deleteOrder:false,deleteClient:false,deleteReport:false,
+    editDonoEmail:false,editDonoRole:false
+  },
+  suporte:{
+    dashboard:true,orders:true,clients:true,products:false,
+    finance:false,financeDelete:false,
+    team:false,teamAddDono:false,
+    notifs:false,
+    config:false,configPIX:false,configSocial:false,configPass:false,config2FA:false,configBackup:false,configMaint:false,
+    exportCSV:false,exportDelete:false,
+    deleteProduct:false,deleteOrder:false,deleteClient:false,deleteReport:false,
+    editDonoEmail:false,editDonoRole:false
+  }
+};
+
+function can(perm){
+  const role=SESSION?.role||'suporte';
+  return !!(PERMS[role]&&PERMS[role][perm]);
+}
+
+function blockIfCant(perm,msg){
+  if(!can(perm)){
+    toast('🚫 '+(msg||'Sem permissão para esta ação'));
+    return true;
+  }
+  return false;
+}
 
 // ===== DATA =====
 const PRODS=[
@@ -697,7 +766,7 @@ function doLogin(){
     document.getElementById('s-login').classList.remove('active');
     document.getElementById('s-dash').classList.add('active');
     document.getElementById('bnav').style.display='flex';
-    initDash();loadSocialLabels();loadPIXLabel();
+    initDash();loadSocialLabels();loadPIXLabel();applyConfigPerms();
   },700);
 }
 
@@ -879,6 +948,7 @@ function confirmOrd(id){
   toast('✅ Entrega confirmada!');closeMo();renderOrders(ORDERS);renderDashRecent();
 }
 function openCancelMo(){
+  if(blockIfCant('deleteOrder','Apenas Dono pode cancelar pedidos'))return;
   openMo(`
     <div class="mhdr"><div class="mtitle">⚠️ Cancelar pedido</div><div class="msub">Esta ação não pode ser desfeita</div></div>
     <div class="mbody">
@@ -1012,6 +1082,7 @@ function saveNote(id){
   toast('✅ Nota salva!');closeMo();
 }
 function openBlockClient(id){
+  if(blockIfCant('deleteClient','Apenas Dono e Administrador podem bloquear clientes'))return;
   openMo(`
     <div class="mhdr"><div class="mtitle">🚫 Bloquear cliente</div><div class="msub">O cliente perde acesso ao app</div></div>
     <div class="mbody">
@@ -1106,6 +1177,7 @@ function saveProdEdit(id){
   toast('✅ Produto atualizado!');closeMo();renderProds(PRODS);renderDashTopProds();
 }
 function deleteProd(id){
+  if(blockIfCant('deleteProduct','Apenas Dono e Administrador podem excluir produtos'))return;
   const idx=PRODS.findIndex(x=>x.id===id);
   const nome=PRODS[idx]?.name||'';
   if(idx>-1)PRODS.splice(idx,1);
@@ -1176,6 +1248,7 @@ function renderFinance(){
     </div>`).join('');
 }
 function exportCSV(){
+  if(blockIfCant('exportCSV','Apenas Dono e Administrador podem exportar relatórios'))return;
   const rows=[['Produto','Cliente','WhatsApp','Valor','Data','Status'],...ORDERS.map(o=>[o.prod,o.client,o.wpp,'R$'+o.price.toFixed(2),o.date,o.status])];
   const csv=rows.map(r=>r.join(',')).join('\n');
   const b=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
@@ -1315,6 +1388,7 @@ function confirmExpiry(){
 
 // ===== CONFIG =====
 function toggleMaint(){
+  if(blockIfCant('configMaint','Apenas o Dono pode ativar o modo manutenção'))return;
   MAINT=!MAINT;
   document.getElementById('maint-sw').className='tsw '+(MAINT?'on':'off');
   document.getElementById('maint-lbl').textContent='App do cliente: '+(MAINT?'online':'em manutenção');
@@ -1322,6 +1396,7 @@ function toggleMaint(){
   toast(MAINT?'✅ App online':'🔧 Manutenção ativada');
 }
 function doBackup(){
+  if(blockIfCant('configBackup','Apenas o Dono pode realizar backups'))return;
   const data={orders:ORDERS,clients:CLIENTS,products:PRODS,team:getTeam(),exportedAt:new Date().toISOString()};
   const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
@@ -1332,6 +1407,7 @@ function doBackup(){
   toast('💾 Backup exportado!');
 }
 function openChangePass(){
+  if(blockIfCant('configPass','Apenas o Dono pode alterar a senha neste painel'))return;
   openMo(`
     <div class="mhdr"><div class="mtitle">🔑 Alterar senha</div></div>
     <div class="mbody">
@@ -1358,6 +1434,7 @@ function changePass(){
   toast('✅ Senha alterada!');closeMo();
 }
 function openChange2FA(){
+  if(blockIfCant('config2FA','Apenas o Dono pode alterar o código 2FA'))return;
   openMo(`
     <div class="mhdr"><div class="mtitle">📱 Alterar código 2FA</div></div>
     <div class="mbody">
@@ -1387,6 +1464,7 @@ function loadPIXLabel(){
   if(lbl&&s?.key)lbl.textContent=s.type+': '+s.key.substring(0,12)+'...';
 }
 function openPIX(){
+  if(blockIfCant('configPIX','Apenas o Dono pode configurar o PIX'))return;
   const s=JSON.parse(localStorage.getItem('ld_pix')||'{"key":"","type":"email","name":"Litorale Digital"}');
   openMo(`
     <div class="mhdr"><div class="mtitle">💳 Chave PIX</div><div class="msub">Configure como você recebe pagamentos</div></div>
@@ -1570,6 +1648,27 @@ function testWpp(){
 }
 
 // ===== REDES SOCIAIS =====
+function applyConfigPerms(){
+  // Oculta itens de config que o usuário não pode acessar
+  const items=[
+    {id:'cfg-pix',perm:'configPIX'},
+    {id:'cfg-pass',perm:'configPass'},
+    {id:'cfg-2fa',perm:'config2FA'},
+    {id:'cfg-backup',perm:'configBackup'},
+    {id:'cfg-maint',perm:'configMaint'},
+  ];
+  items.forEach(({id,perm})=>{
+    const el=document.getElementById(id);
+    if(el){
+      if(!can(perm)){el.style.opacity='.35';el.style.pointerEvents='none';el.title='Apenas o Dono pode alterar esta configuração';}
+      else{el.style.opacity='1';el.style.pointerEvents='';}
+    }
+  });
+  // Mostrar/ocultar nav financeiro para quem não tem permissão
+  const finNav=document.querySelector('.srow[onclick*="finance"]');
+  if(finNav&&!can('finance')){finNav.style.opacity='.35';finNav.style.pointerEvents='none';}
+}
+
 function loadSocialLabels(){
   const s=JSON.parse(localStorage.getItem('ld_social')||'{}');
   if(s.ig)document.getElementById('ig-url-lbl').textContent=s.ig;
