@@ -523,15 +523,15 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
 
     <div class="slbl">App do cliente</div>
     <div class="sc" style="padding:0;">
-      <div class="settingrow" onclick="toast('Abrindo configurações de pagamento...')">
+      <div class="settingrow" onclick="openPIX()">
         <div class="sl"><div class="sico sig">💳</div><div><div class="stitle2">Chave PIX e pagamentos</div><div class="ssub">Configurar recebimento</div></div></div>
         <div class="sarr">›</div>
       </div>
-      <div class="settingrow" onclick="toast('Editando banners...')">
+      <div class="settingrow" onclick="openBanners()">
         <div class="sl"><div class="sico sib">🖼️</div><div><div class="stitle2">Banners da home</div><div class="ssub">Editar destaques</div></div></div>
         <div class="sarr">›</div>
       </div>
-      <div class="settingrow" onclick="toast('Configurando WhatsApp...')">
+      <div class="settingrow" onclick="openWppConfig()">
         <div class="sl"><div class="sico sig">💬</div><div><div class="stitle2">WhatsApp Business</div><div class="ssub">Mensagem automática</div></div></div>
         <div class="sarr">›</div>
       </div>
@@ -543,11 +543,11 @@ body{font-family:var(--f);color:var(--w);display:flex;flex-direction:column;max-
 
     <div class="slbl">Sistema</div>
     <div class="sc" style="padding:0;">
-      <div class="settingrow" onclick="toast('Backup iniciado com sucesso!')">
+      <div class="settingrow" onclick="doBackup()">
         <div class="sl"><div class="sico sib">💾</div><div><div class="stitle2">Backup manual</div><div class="ssub">Último: hoje às 14h32</div></div></div>
         <div class="sarr">›</div>
       </div>
-      <div class="settingrow" onclick="toast('Relatório exportado!')">
+      <div class="settingrow" onclick="exportFinance()">
         <div class="sl"><div class="sico sig">📊</div><div><div class="stitle2">Exportar dados</div><div class="ssub">CSV com todos os pedidos</div></div></div>
         <div class="sarr">›</div>
       </div>
@@ -774,7 +774,7 @@ function renderChart(){
 
 function renderAlerts(){
   document.getElementById('d-alerts').innerHTML=`
-    <div class="ai"><div class="adot ar"></div><div class="ab2"><div class="at">3 assinaturas vencem em 24h</div><div class="ad">Netflix 4K ×2, Spotify ×1</div></div><button class="tag tw" onclick="toast('Lembretes enviados!')" style="cursor:pointer;border:none;">Avisar</button></div>
+    <div class="ai"><div class="adot ar"></div><div class="ab2"><div class="at">3 assinaturas vencem em 24h</div><div class="ad">Netflix 4K ×2, Spotify ×1</div></div><button class="tag tw" onclick="sendExpiryReminders()" style="cursor:pointer;border:none;">Avisar</button></div>
     <div class="ai"><div class="adot ay"></div><div class="ab2"><div class="at">5 pedidos aguardando confirmação PIX</div><div class="ad">Confirmar no extrato do banco</div></div><button class="tag ti" onclick="nav('orders',document.getElementById('ni-orders'))" style="cursor:pointer;border:none;">Ver</button></div>
     <div class="ai"><div class="adot ar"></div><div class="ab2"><div class="at">Acesso suspeito: Carlos Melo</div><div class="ad">IP diferente — localização EUA</div></div><button class="tag tr2" onclick="nav('clients',document.getElementById('ni-clients'))" style="cursor:pointer;border:none;">Ver</button></div>
     <div class="ai"><div class="adot ag"></div><div class="ab2"><div class="at">Sistema funcionando normalmente</div><div class="ad">Uptime 99.9% • Backup: 2h atrás</div></div><span class="atm">Agora</span></div>`;
@@ -826,8 +826,8 @@ function openOrder(id){
     <div class="macts">
       ${o.status==='pendente'?`<button class="mact mact-g" onclick="confirmOrd(${o.id})">✅ Confirmar entrega</button>`:''}
       <button class="mact mact-b" onclick="window.open('https://wa.me/55${o.wpp.replace(/\D/g,'')}?text=${wMsg}','_blank');closeMo()">💬 WhatsApp cliente</button>
-      ${o.status==='ativo'?`<button class="mact mact-gh" onclick="toast('Lembrete enviado!');closeMo()">🔄 Solicitar renovação</button>`:''}
-      <button class="mact mact-r" onclick="toast('Pedido cancelado');closeMo()">🚫 Cancelar pedido</button>
+      ${o.status==='ativo'?`<button class="mact mact-gh" onclick="sendRenewal(this)">🔄 Solicitar renovação</button>`:''}
+      <button class="mact mact-r" onclick="cancelOrder(this)">🚫 Cancelar pedido</button>
     </div>`;
   openMo();
 }
@@ -883,8 +883,8 @@ function openClient(id){
     </div>
     <div class="macts">
       <button class="mact mact-b" onclick="window.open('https://wa.me/55${c.wpp.replace(/\D/g,'')}?text=${wMsg}','_blank');closeMo()">💬 WhatsApp</button>
-      <button class="mact mact-gh" onclick="toast('Nota salva!');closeMo()">📝 Adicionar nota</button>
-      ${c.flag?`<button class="mact mact-r" onclick="toast('Cliente bloqueado!');closeMo()">🚫 Bloquear cliente</button>`:''}
+      <button class="mact mact-gh" onclick="openAddNote(this)">📝 Adicionar nota</button>
+      ${c.flag?`<button class="mact mact-r" onclick="blockClient(this)">🚫 Bloquear cliente</button>`:''}
     </div>`;
   openMo();
 }
@@ -1183,7 +1183,245 @@ function initials(n){return n.split(' ').map(x=>x[0]).join('').substring(0,2).to
 function openMo(){document.getElementById('mo-main').classList.add('open');}
 function closeMo(e){if(!e||e.target===document.getElementById('mo-main'))document.getElementById('mo-main').classList.remove('open');}
 function toast(m){const t=document.getElementById('toast-el');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
 function openAddMember(){document.getElementById('m-name').focus();document.getElementById('m-name').scrollIntoView({behavior:'smooth'});}
+
+function openPIX(){
+  const saved=JSON.parse(localStorage.getItem('ld_pix')||'{"key":"","type":"email","name":"Litorale Digital"}');
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">💳 Chave PIX e pagamentos</div><div class="msub">Configure como você recebe</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Tipo de chave PIX</label>
+        <select class="fselect" id="pix-type">
+          <option value="email" ${saved.type==='email'?'selected':''}>Email</option>
+          <option value="cnpj" ${saved.type==='cnpj'?'selected':''}>CNPJ</option>
+          <option value="telefone" ${saved.type==='telefone'?'selected':''}>Telefone</option>
+          <option value="aleatoria" ${saved.type==='aleatoria'?'selected':''}>Chave aleatória (recomendado)</option>
+        </select>
+      </div>
+      <div class="fgroup"><label class="flabel">Chave PIX</label><input class="finput" type="text" id="pix-key" value="${saved.key}" placeholder="Sua chave PIX"></div>
+      <div class="fgroup"><label class="flabel">Nome no comprovante</label><input class="finput" type="text" id="pix-name" value="${saved.name}" placeholder="Nome que aparece no PIX"></div>
+      <div style="background:var(--yg);border:.5px solid var(--byellow);border-radius:var(--rs);padding:9px 12px;font-size:12px;color:var(--yellow);line-height:1.5;">⚠️ Nunca use CPF como chave pública. Use email ou chave aleatória.</div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="savePIX()">✅ Salvar configuração</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+function savePIX(){
+  const data={key:document.getElementById('pix-key').value.trim(),type:document.getElementById('pix-type').value,name:document.getElementById('pix-name').value.trim()};
+  if(!data.key){toast('Informe a chave PIX');return;}
+  if(!data.name){toast('Informe o nome');return;}
+  localStorage.setItem('ld_pix',JSON.stringify(data));
+  AUDIT_LOG.unshift({ico:'💳',msg:`<b>${sessionUser?.name||'Admin'}</b> atualizou a chave PIX`,meta:'Agora'});
+  toast('✅ Chave PIX salva!');closeMo();
+}
+
+function openBanners(){
+  const saved=JSON.parse(localStorage.getItem('ld_banners')||JSON.stringify([
+    {id:1,title:'A experiência que você merece',sub:'Streaming, internet e ferramentas com os melhores preços.',active:true},
+    {id:2,title:'TV Digital com TESTE GRÁTIS',sub:'Canais ao vivo, filmes e esportes.',active:true}
+  ]));
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">🖼️ Banners da home</div><div class="msub">Edite os banners visíveis aos clientes</div></div>
+    <div class="mbody" style="max-height:50vh;overflow-y:auto;padding-bottom:0;">
+      ${saved.map((b,i)=>`
+        <div style="background:var(--s2);border:.5px solid var(--br2);border-radius:var(--rs);padding:12px;margin-bottom:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-size:12px;font-weight:600;color:var(--g2);">Banner ${i+1}</span>
+            <span class="tag ${b.active?'tg':'tr2'}">${b.active?'ativo':'inativo'}</span>
+          </div>
+          <div class="fgroup"><input class="finput" type="text" id="bn-t-${b.id}" value="${b.title}" placeholder="Título"></div>
+          <div class="fgroup" style="margin-bottom:0;"><input class="finput" type="text" id="bn-s-${b.id}" value="${b.sub}" placeholder="Subtítulo"></div>
+        </div>`).join('')}
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="saveBanners()">✅ Salvar banners</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  window._banners=saved;
+  openMo();
+}
+function saveBanners(){
+  const saved=window._banners||[];
+  const updated=saved.map(b=>({...b,title:document.getElementById('bn-t-'+b.id)?.value||b.title,sub:document.getElementById('bn-s-'+b.id)?.value||b.sub}));
+  localStorage.setItem('ld_banners',JSON.stringify(updated));
+  AUDIT_LOG.unshift({ico:'🖼️',msg:`<b>${sessionUser?.name||'Admin'}</b> atualizou banners da home`,meta:'Agora'});
+  toast('✅ Banners salvos!');closeMo();
+}
+
+function openWppConfig(){
+  const saved=JSON.parse(localStorage.getItem('ld_wpp')||'{"number":"","welcome":"Olá! Bem-vindo à Litorale Digital! Como posso ajudar?","hours":"Seg-Sex 9h-22h | Sáb-Dom 10h-20h"}');
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">💬 WhatsApp Business</div><div class="msub">Configure seu atendimento</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Número WhatsApp (só números com DDD)</label><input class="finput" type="tel" id="wpp-num" value="${saved.number}" placeholder="11999990000"></div>
+      <div class="fgroup"><label class="flabel">Mensagem automática de boas-vindas</label><textarea class="ftextarea" id="wpp-welcome" style="height:80px;">${saved.welcome}</textarea></div>
+      <div class="fgroup"><label class="flabel">Horário de atendimento</label><input class="finput" type="text" id="wpp-hours" value="${saved.hours}" placeholder="Seg-Sex 9h-22h"></div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="saveWppConfig()">✅ Salvar</button>
+      <button class="mact mact-b" onclick="testWpp()">📲 Testar WhatsApp</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+function saveWppConfig(){
+  const data={number:document.getElementById('wpp-num').value.trim().replace(/\D/g,''),welcome:document.getElementById('wpp-welcome').value.trim(),hours:document.getElementById('wpp-hours').value.trim()};
+  if(!data.number){toast('Informe o número do WhatsApp');return;}
+  localStorage.setItem('ld_wpp',JSON.stringify(data));
+  AUDIT_LOG.unshift({ico:'💬',msg:`<b>${sessionUser?.name||'Admin'}</b> atualizou configuração do WhatsApp`,meta:'Agora'});
+  toast('✅ WhatsApp configurado!');closeMo();
+}
+function testWpp(){
+  const num=document.getElementById('wpp-num').value.replace(/\D/g,'');
+  if(!num){toast('Informe o número primeiro');return;}
+  window.open('https://wa.me/55'+num+'?text=Teste+Litorale+Admin','_blank');
+}
+
+function doBackup(){
+  const data={orders:ORDERS,clients:CLIENTS,products:PRODUCTS,team:getTeam(),pix:JSON.parse(localStorage.getItem('ld_pix')||'{}'),wpp:JSON.parse(localStorage.getItem('ld_wpp')||'{}'),banners:JSON.parse(localStorage.getItem('ld_banners')||'[]'),exportedAt:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='litorale-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  AUDIT_LOG.unshift({ico:'💾',msg:`<b>${sessionUser?.name||'Admin'}</b> realizou backup manual`,meta:'Agora'});
+  toast('💾 Backup exportado!');
+}
+
+function cancelOrder(btn){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">⚠️ Cancelar pedido</div><div class="msub">Esta ação não pode ser desfeita</div></div>
+    <div class="mbody">
+      <div style="font-size:13px;color:var(--g2);line-height:1.7;">Tem certeza? O cliente será notificado via WhatsApp.</div>
+      <div class="fgroup" style="margin-top:12px;"><label class="flabel">Motivo</label>
+        <select class="fselect" id="cancel-reason">
+          <option value="pagamento_nao_confirmado">Pagamento não confirmado</option>
+          <option value="solicitacao_cliente">Solicitação do cliente</option>
+          <option value="produto_indisponivel">Produto indisponível</option>
+          <option value="fraude_suspeita">Suspeita de fraude</option>
+          <option value="outro">Outro</option>
+        </select>
+      </div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-r" onclick="confirmCancel()">🚫 Confirmar cancelamento</button>
+      <button class="mact mact-gh" onclick="closeMo()">Voltar</button>
+    </div>`;
+}
+function confirmCancel(){
+  const reason=document.getElementById('cancel-reason')?.value||'';
+  AUDIT_LOG.unshift({ico:'🚫',msg:`<b>${sessionUser?.name||'Admin'}</b> cancelou pedido — motivo: ${reason}`,meta:'Agora'});
+  toast('Pedido cancelado');closeMo();renderOrders(ORDERS);
+}
+
+function sendRenewal(btn){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">🔄 Solicitar renovação</div><div class="msub">Enviar lembrete ao cliente</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Mensagem personalizada</label>
+        <textarea class="ftextarea" id="renew-msg" placeholder="Olá! Sua assinatura está próxima do vencimento. Renove agora!"></textarea>
+      </div>
+      <div class="fgroup"><label class="flabel">Desconto para renovação</label>
+        <select class="fselect" id="renew-disc">
+          <option value="0">Sem desconto</option>
+          <option value="5">5% de desconto</option>
+          <option value="10">10% de desconto</option>
+          <option value="15">15% — cliente fiel</option>
+        </select>
+      </div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="confirmRenewal()">📲 Enviar lembrete</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+}
+function confirmRenewal(){
+  const disc=document.getElementById('renew-disc')?.value||'0';
+  AUDIT_LOG.unshift({ico:'🔄',msg:`<b>${sessionUser?.name||'Admin'}</b> enviou lembrete de renovação${disc!=='0'?' com '+disc+'% desconto':''}`,meta:'Agora'});
+  toast('✅ Lembrete enviado!');closeMo();
+}
+
+function sendExpiryReminders(){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">⏰ Lembretes de vencimento</div><div class="msub">Clientes que vencem em 24h</div></div>
+    <div class="mbody">
+      <div style="font-size:13px;color:var(--g2);line-height:1.9;">
+        📺 <b>João Silva</b> — Netflix 4K vence amanhã<br>
+        🎬 <b>Ana Costa</b> — Netflix 4K vence amanhã<br>
+        🎵 <b>Pedro Lima</b> — Spotify vence amanhã
+      </div>
+      <div style="background:var(--gg);border:.5px solid var(--bgreen);border-radius:var(--rs);padding:9px 12px;font-size:12px;color:var(--green);margin-top:10px;">Cada cliente recebe mensagem personalizada no WhatsApp.</div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="confirmExpiryReminders()">📲 Enviar para os 3 clientes</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+  openMo();
+}
+function confirmExpiryReminders(){
+  AUDIT_LOG.unshift({ico:'⏰',msg:`<b>${sessionUser?.name||'Admin'}</b> enviou lembretes para 3 clientes com vencimento próximo`,meta:'Agora'});
+  toast('✅ Lembretes enviados para 3 clientes!');closeMo();
+}
+
+function openAddNote(btn){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">📝 Adicionar nota interna</div><div class="msub">Visível apenas para a equipe</div></div>
+    <div class="mbody" style="padding-bottom:0;">
+      <div class="fgroup"><label class="flabel">Tipo de nota</label>
+        <select class="fselect" id="note-type">
+          <option value="geral">Geral</option>
+          <option value="vip">Cliente VIP ⭐</option>
+          <option value="atencao">Requer atenção ⚠️</option>
+          <option value="elogio">Elogio 👍</option>
+          <option value="problema">Problema relatado</option>
+        </select>
+      </div>
+      <div class="fgroup"><label class="flabel">Texto da nota</label>
+        <textarea class="ftextarea" id="note-text" placeholder="Ex: Cliente preferencial, sempre renova no prazo."></textarea>
+      </div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-g" onclick="saveNote()">✅ Salvar nota</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+}
+function saveNote(){
+  const text=document.getElementById('note-text')?.value.trim();
+  const type=document.getElementById('note-type')?.value;
+  if(!text){toast('Escreva a nota antes de salvar');return;}
+  AUDIT_LOG.unshift({ico:'📝',msg:`<b>${sessionUser?.name||'Admin'}</b> adicionou nota interna (${type}) em cliente`,meta:'Agora'});
+  toast('✅ Nota salva!');closeMo();
+}
+
+function blockClient(btn){
+  document.getElementById('mo-body').innerHTML=`
+    <div class="mhdr"><div class="mtitle">🚫 Bloquear cliente</div><div class="msub">O cliente perderá acesso ao app</div></div>
+    <div class="mbody">
+      <div style="font-size:13px;color:var(--g2);line-height:1.7;margin-bottom:12px;">Tem certeza? O cliente não conseguirá mais fazer login ou compras.</div>
+      <div class="fgroup"><label class="flabel">Motivo do bloqueio</label>
+        <select class="fselect" id="block-reason">
+          <option value="fraude">Suspeita de fraude</option>
+          <option value="ip_suspeito">IP suspeito / fora do Brasil</option>
+          <option value="multiplas_contas">Múltiplas contas detectadas</option>
+          <option value="chargeback">Tentativa de chargeback</option>
+          <option value="abuso">Uso abusivo do serviço</option>
+        </select>
+      </div>
+    </div>
+    <div class="macts">
+      <button class="mact mact-r" onclick="confirmBlock()">🚫 Confirmar bloqueio</button>
+      <button class="mact mact-gh" onclick="closeMo()">Cancelar</button>
+    </div>`;
+}
+function confirmBlock(){
+  const reason=document.getElementById('block-reason')?.value||'';
+  AUDIT_LOG.unshift({ico:'🚫',msg:`<b>${sessionUser?.name||'Admin'}</b> bloqueou cliente — motivo: ${reason}`,meta:'Agora'});
+  toast('🚫 Cliente bloqueado!');closeMo();renderClients(CLIENTS);
+}
+
 </script>
 </body>
 </html>
