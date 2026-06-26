@@ -719,8 +719,8 @@ function navAdmin(tab,el){
 
 function initDash(){
   const h=new Date().getHours();
-  const greet=h<12?'Bom dia':'h<18?'Boa tarde':'Boa noite';
-  document.getElementById('dash-greeting').textContent=(h<12?'Bom dia':'h<18?'Boa tarde':'Boa noite')+', Admin 👋';
+  const greet=h<12?"Bom dia":h<18?"Boa tarde":"Boa noite";
+  document.getElementById('dash-greeting').textContent=greet+', Admin 👋';
   document.getElementById('dash-date').textContent=new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   renderChart();renderRecentOrders();
 }
